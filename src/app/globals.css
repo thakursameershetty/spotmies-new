@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+/* --- 1. THEME CONFIGURATION (Animations) --- */
+@theme inline {
+  /* Ripple Animation */
+  --animate-cell-ripple: cell-ripple var(--duration, 200ms) ease-out none 1 var(--delay, 0ms);
+
+  @keyframes cell-ripple {
+    0% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0.4;
+    }
+  }
+
+  /* Shimmer Animation */
+  --animate-shimmer-x: shimmer-x 2s linear infinite;
+
+  @keyframes shimmer-x {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+
+  /* Marquee/Scroll Animation */
+  --animate-scroll-left: scroll-left var(--duration, 40s) linear infinite;
+  
+  @keyframes scroll-left {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Blob Bounce (Required for Hero Section) */
+  --animate-blob-bounce: blob-bounce 10s infinite ease-in-out;
+
+  @keyframes blob-bounce {
+    0%, 100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(20px, -20px);
+    }
+  }
+}
+
+/* --- 2. BASE STYLES --- */
+@layer base {
+  html {
+    /* Enables smooth scrolling for anchor links (e.g., #services) */
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: #050505; /* Matches your dark theme default */
+    color: #ffffff;
+  }
+}
+
+/* --- 3. UTILITIES --- */
+@layer utilities {
+  /* Hide Scrollbar but keep functionality */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
