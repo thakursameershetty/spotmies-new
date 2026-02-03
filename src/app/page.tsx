@@ -12,7 +12,7 @@ import { ContactSection } from "@/components/landing/contact-section";
 import { ProjectsSection } from "@/components/landing/projects-section";
 import Footer from "@/components/landing/footer";
 import { GlowDivider } from "@/components/ui/glow-divider";
-import { getProjects } from "@/lib/api"; // Import the fetch function
+import { getProjects } from "@/lib/api";
 
 export default async function Home() {
 
@@ -22,7 +22,9 @@ export default async function Home() {
   return (
     <main className="bg-[#050505] min-h-screen w-full selection:bg-brand-cyan/30">
       <Navbar />
-      <HeroSection />
+
+      {/* Pass projects to HeroSection */}
+      <HeroSection projects={projects} />
 
       <div className="my-8 md:my-16"><GlowDivider /></div>
 
@@ -38,7 +40,6 @@ export default async function Home() {
 
       <div className="my-8 md:my-16"><GlowDivider /></div>
 
-      {/* Pass the projects data here */}
       <ProjectsSection data={projects} />
 
       <div className="my-8 md:my-16"><GlowDivider /></div>

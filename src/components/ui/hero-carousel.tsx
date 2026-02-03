@@ -1,23 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, useSpring, useTransform, MotionValue } from "framer-motion";
-
-// --- Types & Data ---
-export interface Project {
-    id: number;
-    title: string;
-    thumbnail: string;
-}
-
-const PROJECTS: Project[] = Array.from({ length: 25 }, (_, i) => {
-    const id = i + 1;
-    return {
-        id: i,
-        title: `Web Project ${id}`,
-        thumbnail: `/projects/${id}/main.png`,
-    };
-});
+import { Project } from "@/types/types"; // Import shared type
 
 // --- Constants ---
 const BASE_WIDTH = 320;
@@ -32,10 +17,11 @@ interface FlipCardProps {
     index: number;
     rotation: MotionValue<number>;
     dimensions: { width: number; height: number };
+    totalCount: number; // Added to calculate angle step dynamically
 }
 
-function FlipCard({ project, index, rotation, dimensions }: FlipCardProps) {
-    const angleStep = 360 / PROJECTS.length;
+function FlipCard({ project, index, rotation, dimensions, totalCount }: FlipCardProps) {
+    const angleStep = 360 / totalCount;
     const baseAngle = index * angleStep;
 
     const isMobile = dimensions.width < 640;
@@ -101,7 +87,6 @@ function FlipCard({ project, index, rotation, dimensions }: FlipCardProps) {
         return Math.round(100 - Math.abs(effectiveAngle));
     });
 
-    // --- NEW: Handle Click Scroll ---
     const handleCardClick = () => {
         const portfolioSection = document.getElementById("portfolio");
         if (portfolioSection) {
@@ -111,7 +96,7 @@ function FlipCard({ project, index, rotation, dimensions }: FlipCardProps) {
 
     return (
         <motion.div
-            onClick={handleCardClick} // Trigger Scroll
+            onClick={handleCardClick}
             style={{
                 width: currentCardWidth,
                 height: currentCardHeight,
@@ -119,7 +104,6 @@ function FlipCard({ project, index, rotation, dimensions }: FlipCardProps) {
                 transformStyle: "preserve-3d",
                 x, y, z, rotateY, scale, opacity, zIndex,
             }}
-            // Added 'cursor-pointer' so user knows it's clickable
             className="group cursor-pointer"
         >
             <div
@@ -129,9 +113,10 @@ function FlipCard({ project, index, rotation, dimensions }: FlipCardProps) {
                 <div className="relative h-full w-full overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                        src={project.thumbnail}
+                        // USE THE API IMAGE
+                        src={project.image || "https://placehold.co/600x400/1a1a1a/FFF?text=No+Image"}
                         onError={(e) => {
-                            e.currentTarget.src = "https://placehold.co/600x400/1a1a1a/FFF?text=Image";
+                            e.currentTarget.src = "https://placehold.co/600x400/1a1a1a/FFF?text=Error";
                         }}
                         alt={project.title}
                         className="h-full w-full object-cover opacity-90 transition-opacity duration-300"
@@ -143,11 +128,22 @@ function FlipCard({ project, index, rotation, dimensions }: FlipCardProps) {
     );
 }
 
-export default function ScrollMorphHero() {
+export default function ScrollMorphHero({ projects }: { projects: Project[] }) {
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const angleStep = 360 / PROJECTS.length;
+    // Filter valid projects
+    const validProjects = useMemo(() => {
+        const list = (projects && projects.length > 0) ? projects : [];
+        // If list is too short, duplicate it to fill carousel visually
+        if (list.length > 0 && list.length < 10) {
+            return [...list, ...list, ...list];
+        }
+        return list;
+    }, [projects]);
+
+    const count = validProjects.length || 1;
+    const angleStep = 360 / count;
     const targetRotation = -activeIndex * angleStep;
     const rotation = useSpring(targetRotation, { stiffness: 80, damping: 20 });
     const DURATION_MS = 3000;
@@ -168,11 +164,14 @@ export default function ScrollMorphHero() {
     }, [targetRotation, rotation]);
 
     useEffect(() => {
+        if (validProjects.length === 0) return;
         const timer = setInterval(() => {
             setActiveIndex((prev) => (prev + 1));
         }, DURATION_MS);
         return () => clearInterval(timer);
-    }, []);
+    }, [validProjects.length]);
+
+    if (validProjects.length === 0) return null;
 
     return (
         <motion.div
@@ -183,13 +182,15 @@ export default function ScrollMorphHero() {
             <motion.div
                 className="relative w-full flex-1 flex items-center justify-center transform-style-3d overflow-visible"
             >
-                {PROJECTS.map((project, i) => (
+                {validProjects.map((project, i) => (
                     <FlipCard
-                        key={project.id}
+                        // Use index as key if projects are duplicated, or composite key
+                        key={`${project.id}-${i}`}
                         project={project}
                         index={i}
                         rotation={rotation}
                         dimensions={dimensions}
+                        totalCount={count}
                     />
                 ))}
             </motion.div>
