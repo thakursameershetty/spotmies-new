@@ -140,7 +140,8 @@ export const TechStack = () => {
                             <div className="flex items-center gap-4">
                                 {/* Small Icon Box */}
                                 <div className="p-2.5 bg-black/40 rounded-xl border border-white/5 text-white/80">
-                                    {React.cloneElement(step.icon as React.ReactElement, { className: "w-6 h-6" })}
+                                    {/* FIX: Explicitly cast to ReactElement<{ className?: string }> */}
+                                    {React.cloneElement(step.icon as React.ReactElement<{ className?: string }>, { className: "w-6 h-6" })}
                                 </div>
                                 <div className="flex flex-col">
                                     <h3 className="text-lg font-bold text-white group-active:text-brand-cyan transition-colors">

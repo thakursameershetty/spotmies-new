@@ -7,6 +7,7 @@ import HeroCarousel from "@/components/ui/hero-carousel";
 import { PointerHighlight } from "@/components/ui/pointer-highlight";
 import { GooeyText } from "@/components/ui/gooey-text-morphing";
 import { cn } from "@/lib/utils";
+import { Project } from "@/types/types"; // Import Project type
 
 const MagneticButton = ({ children, className, onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) => {
     const ref = useRef<HTMLButtonElement>(null);
@@ -42,7 +43,8 @@ const MagneticButton = ({ children, className, onClick }: { children: React.Reac
     );
 };
 
-export function HeroSection() {
+// Accept projects prop
+export function HeroSection({ projects }: { projects: Project[] }) {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
@@ -60,8 +62,6 @@ export function HeroSection() {
     return (
         <section
             onMouseMove={handleMouseMove}
-            // PUSH FIX: Increased mobile padding from 'pt-32' to 'pt-40'.
-            // This adds ~32px (quarter inch) of extra space at the top on mobile.
             className="relative w-full min-h-[100vh] flex flex-col justify-start items-center overflow-hidden bg-[#030014] text-white selection:bg-cyan-500/30 pt-40 md:pt-52"
         >
             {/* LAYER 0: Ambient Color Blobs */}
@@ -198,7 +198,8 @@ export function HeroSection() {
             >
                 <div className="w-full h-full flex items-center justify-center mask-image:linear-gradient(to bottom, black 80%, transparent 100%)">
                     <div className="relative w-full h-full flex items-center justify-center scale-90 md:scale-100 origin-center">
-                        <HeroCarousel />
+                        {/* Pass projects data to Carousel */}
+                        <HeroCarousel projects={projects} />
                     </div>
                 </div>
                 <div className="absolute bottom-0 left-0 w-full h-24 md:h-40 bg-gradient-to-t from-[#030014] via-[#030014]/80 to-transparent pointer-events-none" />
