@@ -71,13 +71,13 @@ const PILLS = {
         {
             label: "Growth Hacking",
             top: "53%", left: "19%",
-            mobileTop: "26%", mobileLeft: "12%", // Far Left
+            mobileTop: "26%", mobileLeft: "15%", // Far Left
             delay: 0.6
         },
         {
             label: "AI Integration",
             top: "64%", left: "25%",
-            mobileTop: "38%", mobileLeft: "8%", // Lower Left Edge
+            mobileTop: "20%", mobileLeft: "77%", // Lower Left Edge
             delay: 0.5
         },
 
@@ -86,13 +86,13 @@ const PILLS = {
         {
             label: "Data Science",
             top: "31%", left: "70%",
-            mobileTop: "62%", mobileLeft: "92%", // High Right Edge
+            mobileTop: "75%", mobileLeft: "15%", // High Right Edge
             delay: 0.4
         },
         {
             label: "Product Strategy",
             top: "42%", left: "76%",
-            mobileTop: "76%", mobileLeft: "88%", // Mid-Right
+            mobileTop: "76%", mobileLeft: "85%", // Mid-Right
             delay: 0.5
         },
         {
@@ -104,13 +104,13 @@ const PILLS = {
         {
             label: "Community",
             top: "53%", left: "80%",
-            mobileTop: "92%", mobileLeft: "55%", // Bottom point of arc
+            mobileTop: "90%", mobileLeft: "50%", // Bottom point of arc
             delay: 0.5
         },
         {
             label: "Tech Docs",
             top: "64%", left: "77%",
-            mobileTop: "94%", mobileLeft: "30%", // Tucked bottom-left-ish
+            mobileTop: "85%", mobileLeft: "30%", // Tucked bottom-left-ish
             delay: 0.4
         },
     ],
