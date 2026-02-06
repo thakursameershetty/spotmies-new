@@ -84,9 +84,25 @@ export default function Navbar() {
         { name: "Process", href: "/#process", id: "process" },
         { name: "Careers", href: "/careers", id: "careers" },
         { name: "About Us", href: "/about", id: "about" },
-        { name: "Blogs", href: "/blogs", id: "blogs" },
+        { name: "Blogs", href: "/blog", id: "blog" }, // Updated to /blog
         { name: "Contact Us", href: "/#contact", id: "contact" },
     ];
+
+    // Helper to determine active state including sub-routes (e.g., /blog/post-1)
+    const isItemActive = (item: typeof navItems[0]) => {
+        // 1. Home page section highlight
+        if (pathname === "/" && activeSection === item.id) return true;
+
+        // 2. Exact match (e.g., /about)
+        if (pathname === item.href) return true;
+
+        // 3. Nested route match (e.g., /blog/slug keeps /blog active)
+        if (item.href !== "/" && !item.href.includes("#") && pathname.startsWith(`${item.href}/`)) {
+            return true;
+        }
+
+        return false;
+    };
 
     return (
         <div className="fixed top-0 w-full flex justify-center z-[100] p-4 md:p-6 pointer-events-none">
@@ -118,9 +134,7 @@ export default function Navbar() {
 
                 <div className="hidden md:flex items-center gap-5 lg:gap-8">
                     {navItems.map((item) => {
-                        const isActive =
-                            (pathname === "/" && activeSection === item.id) ||
-                            (pathname === item.href);
+                        const isActive = isItemActive(item);
 
                         return (
                             <Link
@@ -170,7 +184,7 @@ export default function Navbar() {
                         <div className="flex flex-col w-full max-w-lg mx-auto h-full justify-between">
                             <div className="flex flex-col gap-1">
                                 {navItems.map((item, i) => {
-                                    const isActive = (pathname === "/" && activeSection === item.id) || (pathname === item.href);
+                                    const isActive = isItemActive(item);
                                     return (
                                         <motion.div
                                             key={item.name}

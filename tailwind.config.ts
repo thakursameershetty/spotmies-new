@@ -46,7 +46,10 @@ const config: Config = {
       },
     },
   },
-  plugins: [addVariablesForColors],
+  plugins: [
+    require('@tailwindcss/typography'),
+    addVariablesForColors
+  ],
 };
 
 // Plugin to add Tailwind colors as CSS variables
