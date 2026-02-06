@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter
 import { motion, AnimatePresence } from "framer-motion";
 import {
     ArrowRight, MapPin, Clock, Briefcase,
@@ -14,7 +15,7 @@ import { getJobs } from "@/lib/api";
 import { Job } from "@/types/types";
 import { cn } from "@/lib/utils";
 
-// --- Tech Stack Logos (SVGs & Images) ---
+// ... (Keep existing TechLogos and TECH_STACK constants exactly as they were) ...
 const TechLogos = {
     React: () => (
         <svg viewBox="-10.5 -9.45 21 18.9" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 md:w-16 md:h-16 text-[#61DAFB]"><circle cx="0" cy="0" r="2" fill="currentColor"></circle><g stroke="currentColor" strokeWidth="1" fill="none"><ellipse rx="10" ry="4.5"></ellipse><ellipse rx="10" ry="4.5" transform="rotate(60)"></ellipse><ellipse rx="10" ry="4.5" transform="rotate(120)"></ellipse></g></svg>
@@ -62,6 +63,7 @@ const TECH_STACK = [
 ];
 
 export default function CareersPage() {
+    const router = useRouter(); // Initialize router
     // --- State Management ---
     const [jobs, setJobs] = useState<Job[]>([]);
     const [loading, setLoading] = useState(true);
@@ -115,29 +117,42 @@ export default function CareersPage() {
 
                 {/* --- Hero Section --- */}
                 <section className="relative px-6 z-10 mb-20">
-                    <div className="max-w-7xl mx-auto text-center">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00d3f3]/10 border border-[#00d3f3]/20 text-sm text-[#00d3f3] font-medium mb-8 backdrop-blur-md"
+                    <div className="max-w-7xl mx-auto">
+                        {/* BACK BUTTON ADDED HERE */}
+                        <button
+                            onClick={() => router.back()}
+                            className="mb-8 flex items-center gap-2 text-neutral-400 hover:text-white transition-colors group text-sm font-medium"
                         >
-                            <span className="relative flex h-2.5 w-2.5 mr-1">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00d3f3] opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#00d3f3]"></span>
-                            </span>
-                            We are hiring
-                        </motion.div>
+                            <div className="p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 group-hover:-translate-x-1 transition-all">
+                                <ChevronLeft className="w-4 h-4" />
+                            </div>
+                            Back
+                        </button>
 
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 }}
-                            className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-white"
-                        >
-                            Build the future <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-gray-500">with </span>{" "}
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d3f3] to-cyan-600">Spotmies.</span>
-                        </motion.h1>
+                        <div className="text-center">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00d3f3]/10 border border-[#00d3f3]/20 text-sm text-[#00d3f3] font-medium mb-8 backdrop-blur-md"
+                            >
+                                <span className="relative flex h-2.5 w-2.5 mr-1">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00d3f3] opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#00d3f3]"></span>
+                                </span>
+                                We are hiring
+                            </motion.div>
+
+                            <motion.h1
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.1 }}
+                                className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-white"
+                            >
+                                Build the future <br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-gray-500">with </span>{" "}
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d3f3] to-cyan-600">Spotmies.</span>
+                            </motion.h1>
+                        </div>
                     </div>
                 </section>
 
@@ -191,6 +206,7 @@ export default function CareersPage() {
 
                 {/* --- Job Listings Section --- */}
                 <section className="py-32 px-6 relative z-10" id="openings">
+                    {/* ... (Rest of the component remains exactly the same as original) ... */}
                     <div className="max-w-7xl mx-auto">
 
                         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 border-b border-white/10 pb-6 gap-6">

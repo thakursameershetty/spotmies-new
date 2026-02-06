@@ -42,7 +42,7 @@ const NoiseOverlay = () => (
 
 export function ProcessSection() {
     return (
-        <div className="relative bg-[#050505] text-white font-sans selection:bg-brand-cyan/30 overflow-hidden">
+        <div id="process" className="relative bg-[#050505] text-white font-sans selection:bg-brand-cyan/30 overflow-hidden">
             <NoiseOverlay />
             <AmbientBackground intensity="medium" className="z-0" />
 

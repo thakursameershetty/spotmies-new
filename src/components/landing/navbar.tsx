@@ -1,48 +1,91 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { motion, useMotionValueEvent, useScroll, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Menu, X, ArrowRight } from "lucide-react";
 
 export default function Navbar() {
+    const pathname = usePathname();
     const { scrollY } = useScroll();
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState<string>("");
 
     useMotionValueEvent(scrollY, "change", (latest) => {
         setScrolled(latest > 20);
     });
 
+    // --- Active Section Observer ---
+    useEffect(() => {
+        if (pathname !== "/") {
+            setActiveSection("");
+            return;
+        }
+
+        // List of IDs to observe on the home page
+        const sectionIds = ["hero", "services", "portfolio", "process", "contact"];
+
+        const observerOptions = {
+            root: null,
+            rootMargin: "-40% 0px -40% 0px",
+            threshold: 0,
+        };
+
+        const observerCallback = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    // Reset highlight only for the hero section
+                    if (id === "hero") {
+                        setActiveSection("");
+                    } else {
+                        setActiveSection(id);
+                    }
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        sectionIds.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el);
+        });
+
+        return () => observer.disconnect();
+    }, [pathname]);
+
     const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
-        if (href.startsWith("#")) {
-            e.preventDefault();
-            const targetId = href.substring(1);
+        if (href.startsWith("#") || (pathname === "/" && href.startsWith("/#"))) {
+            const targetId = href.includes("#") ? href.split("#")[1] : "";
             const elem = document.getElementById(targetId);
             if (elem) {
+                e.preventDefault();
                 elem.scrollIntoView({ behavior: "smooth", block: "start" });
                 window.history.pushState(null, "", href);
-                setMobileMenuOpen(false); // Close menu on click
+                setMobileMenuOpen(false);
             }
         }
     };
 
     const scheduleMeeting = (e: React.MouseEvent) => {
         e.preventDefault();
-        const calendlyLink = "https://calendly.com/spotmies/30min";
-        window.open(calendlyLink, "_blank");
+        window.open("https://calendly.com/spotmies/30min", "_blank");
         setMobileMenuOpen(false);
     };
 
     const navItems = [
-        { name: "Services", href: "/#services" },
-        { name: "Portfolio", href: "/#portfolio" },
-        { name: "Process", href: "#process" },
-        { name: "Careers", href: "/careers" },
-        { name: "About Us", href: "/about" },
-        { name: "Blogs", href: "/blogs" },
+        { name: "Services", href: "/#services", id: "services" },
+        { name: "Portfolio", href: "/#portfolio", id: "portfolio" },
+        { name: "Process", href: "/#process", id: "process" },
+        { name: "Careers", href: "/careers", id: "careers" },
+        { name: "About Us", href: "/about", id: "about" },
+        { name: "Blogs", href: "/blogs", id: "blogs" },
+        { name: "Contact Us", href: "/#contact", id: "contact" },
     ];
 
     return (
@@ -58,58 +101,55 @@ export default function Navbar() {
                         : "bg-black/50 backdrop-blur-sm border border-white/5"
                 )}
             >
-                {/* 1. Logo Section */}
                 <Link
                     href="/"
                     className="flex items-center gap-2 cursor-pointer z-[102]"
                     onClick={() => {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        if (pathname === "/") {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
                         setMobileMenuOpen(false);
                     }}
                 >
                     <div className="relative w-32 h-8 md:w-40 md:h-8">
-                        <Image
-                            src="/spotmies_banner.png"
-                            alt="Spotmies"
-                            fill
-                            className="object-contain"
-                            priority
-                        />
+                        <Image src="/spotmies_banner.png" alt="Spotmies" fill className="object-contain" priority />
                     </div>
                 </Link>
 
-                {/* 2. Desktop Navigation */}
-                <div className="hidden md:flex items-center gap-8">
-                    {navItems.map((item) => (
-                        <Link
-                            key={item.name}
-                            href={item.href}
-                            onClick={(e) => item.href.startsWith("#") ? handleScroll(e, item.href) : null}
-                            className="text-sm font-medium text-gray-300 hover:text-white transition-colors relative group"
-                        >
-                            {item.name}
-                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#00d3f3] transition-all duration-300 group-hover:w-full" />
-                        </Link>
-                    ))}
+                <div className="hidden md:flex items-center gap-5 lg:gap-8">
+                    {navItems.map((item) => {
+                        const isActive =
+                            (pathname === "/" && activeSection === item.id) ||
+                            (pathname === item.href);
+
+                        return (
+                            <Link
+                                key={item.name}
+                                href={item.href}
+                                onClick={(e) => item.href.includes("#") ? handleScroll(e, item.href) : null}
+                                className={cn(
+                                    "text-sm font-medium transition-colors relative group",
+                                    isActive ? "text-[#00d3f3]" : "text-gray-300 hover:text-white"
+                                )}
+                            >
+                                {item.name}
+                                <span className={cn(
+                                    "absolute -bottom-1 left-0 h-0.5 bg-[#00d3f3] transition-all duration-300",
+                                    isActive ? "w-full" : "w-0 group-hover:w-full"
+                                )} />
+                            </Link>
+                        );
+                    })}
                 </div>
 
-                {/* 3. Desktop CTA */}
                 <button
                     onClick={scheduleMeeting}
                     className="hidden md:flex group relative items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 rounded-full text-white text-xs md:text-sm font-medium transition-all cursor-pointer"
                 >
                     <span>Schedule a Call</span>
-                    <svg
-                        className="w-3 h-3 group-hover:translate-x-0.5 transition-transform"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </button>
 
-                {/* 4. Mobile Menu Toggle (Hamburger) */}
                 <button
                     className="md:hidden text-white p-2 z-[102] relative outline-none"
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -118,7 +158,6 @@ export default function Navbar() {
                 </button>
             </motion.nav>
 
-            {/* 5. FULL SCREEN MOBILE MENU OVERLAY */}
             <AnimatePresence>
                 {mobileMenuOpen && (
                     <motion.div
@@ -128,56 +167,45 @@ export default function Navbar() {
                         transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
                         className="fixed inset-0 bg-[#050505] z-[90] flex flex-col pt-32 px-6 pb-6 md:hidden pointer-events-auto"
                     >
-                        {/* Background Ambient Effect */}
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#00d3f3]/10 rounded-full blur-[100px] pointer-events-none" />
-                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
-
-                        {/* NAV ITEMS CONTAINER (Left Aligned) */}
                         <div className="flex flex-col w-full max-w-lg mx-auto h-full justify-between">
-
-                            {/* Menu Links */}
-                            <div className="flex flex-col gap-2">
-                                {navItems.map((item, i) => (
-                                    <motion.div
-                                        key={item.name}
-                                        initial={{ opacity: 0, x: -30 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: 0.1 + i * 0.1, duration: 0.4 }}
-                                        className="border-b border-white/5 last:border-none"
-                                    >
-                                        <Link
-                                            href={item.href}
-                                            onClick={(e) => item.href.startsWith("#") ? handleScroll(e, item.href) : setMobileMenuOpen(false)}
-                                            className="group flex items-center justify-between py-5 w-full active:opacity-70"
+                            <div className="flex flex-col gap-1">
+                                {navItems.map((item, i) => {
+                                    const isActive = (pathname === "/" && activeSection === item.id) || (pathname === item.href);
+                                    return (
+                                        <motion.div
+                                            key={item.name}
+                                            initial={{ opacity: 0, x: -30 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0.1 + i * 0.05, duration: 0.4 }}
+                                            className="border-b border-white/5 last:border-none"
                                         >
-                                            <span className="text-3xl font-outfit font-bold text-white/90 group-hover:text-[#00d3f3] group-active:text-[#00d3f3] transition-colors">
-                                                {item.name}
-                                            </span>
-
-                                            {/* Interaction Arrow */}
-                                            <ArrowRight
-                                                className="w-6 h-6 text-white/30 group-hover:text-[#00d3f3] group-active:text-[#00d3f3] transform group-hover:translate-x-2 group-active:translate-x-2 transition-all duration-300"
-                                            />
-                                        </Link>
-                                    </motion.div>
-                                ))}
+                                            <Link
+                                                href={item.href}
+                                                onClick={(e) => item.href.includes("#") ? handleScroll(e, item.href) : setMobileMenuOpen(false)}
+                                                className="group flex items-center justify-between py-4 w-full active:opacity-70"
+                                            >
+                                                <span className={cn(
+                                                    "text-2xl font-bold transition-colors",
+                                                    isActive ? "text-[#00d3f3]" : "text-white/90 group-hover:text-[#00d3f3]"
+                                                )}>
+                                                    {item.name}
+                                                </span>
+                                                <ArrowRight className={cn(
+                                                    "w-5 h-5 transition-all duration-300",
+                                                    isActive ? "text-[#00d3f3] translate-x-2" : "text-white/30 group-hover:text-[#00d3f3]"
+                                                )} />
+                                            </Link>
+                                        </motion.div>
+                                    );
+                                })}
                             </div>
-
-                            {/* Schedule Call Button (Filled White) */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.5, duration: 0.4 }}
-                                className="w-full pb-8"
+                            <button
+                                onClick={scheduleMeeting}
+                                className="w-full py-4 rounded-full bg-white text-black font-bold text-lg hover:bg-neutral-200 active:scale-95 transition-all flex items-center justify-center gap-2"
                             >
-                                <button
-                                    onClick={scheduleMeeting}
-                                    className="w-full py-4 rounded-full bg-white text-black font-bold text-lg hover:bg-neutral-200 active:scale-95 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] flex items-center justify-center gap-2"
-                                >
-                                    Schedule a Call
-                                    <ArrowRight className="w-5 h-5" />
-                                </button>
-                            </motion.div>
+                                Schedule a Call
+                                <ArrowRight className="w-5 h-5" />
+                            </button>
                         </div>
                     </motion.div>
                 )}

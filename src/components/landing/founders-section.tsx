@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 
-// --- ANIMATION VARIANTS (FIXED) ---
+// --- ANIMATION VARIANTS ---
 const fadeUpVariant = {
     hidden: { opacity: 0, y: 30 },
     visible: (i: number = 0) => ({
@@ -29,7 +29,6 @@ export function FoundersSection() {
             name: "Satish Kumar Saride",
             designation: "Co-Founder & CEO",
             image: "https://spotmiesstorage.blob.core.windows.net/media/satish.jpeg",
-            // UPDATED
             link: "https://www.linkedin.com/in/saridesatishkumar/"
         },
         {
@@ -37,7 +36,6 @@ export function FoundersSection() {
             name: "Sekhar Javvadi",
             designation: "Co-Founder & CTO",
             image: "https://spotmiesstorage.blob.core.windows.net/media/sekhar.jpeg",
-            // UPDATED
             link: "https://www.linkedin.com/in/sekhar-javvadi/"
         },
         {
@@ -45,7 +43,6 @@ export function FoundersSection() {
             name: "Hemanth Kumar",
             designation: "Co-Founder",
             image: "https://spotmiesstorage.blob.core.windows.net/media/hemanth.jpeg",
-            // UPDATED
             link: "https://www.linkedin.com/in/hemanth-kumar-veeranala-967ba318a/"
         },
         {
@@ -53,16 +50,15 @@ export function FoundersSection() {
             name: "Naveen Kumar",
             designation: "Co-Founder & Head of Product Design",
             image: "https://spotmiesstorage.blob.core.windows.net/media/naveen.jpeg",
-            // UPDATED
             link: "https://www.linkedin.com/in/naveen-kumar-atava-318ba318a/"
         },
     ];
 
     return (
-        <section id="about" className="relative w-full bg-[#050505] py-24 px-6 md:px-10 overflow-visible">
+        <section id="about" className="relative w-full bg-[#050505] py-24 px-6 md:px-6 overflow-visible">
             <AmbientBackground intensity="subtle" />
 
-            <div className="relative z-10 max-w-7xl mx-auto">
+            <div className="relative z-10 max-w-[1320px] mx-auto">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-24">
 
                     {/* Left Side: Visuals */}
@@ -70,17 +66,17 @@ export function FoundersSection() {
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true }}
-                        className="flex-1 min-w-[300px] flex flex-col items-center lg:items-start"
+                        className="flex-1 min-w-[300px] flex flex-col w-full items-start lg:items-start"
                     >
                         {/* Image Stack */}
-                        <div className="flex items-center justify-center lg:justify-start mb-12 pl-10 md:pl-0">
+                        <div className="w-full flex items-center justify-center lg:justify-start mb-12">
                             <AnimatedTooltip items={founders} />
                         </div>
 
                         <motion.div
                             variants={fadeUpVariant}
                             custom={4}
-                            className="flex flex-col gap-3 pl-2 items-center lg:items-start"
+                            className="flex flex-col gap-3 pl-2 items-start lg:items-start"
                         >
                             <span className="text-sm font-medium tracking-[0.2em] text-neutral-400 uppercase mb-1">
                                 Founders of
@@ -101,7 +97,7 @@ export function FoundersSection() {
                                 {/* Vertical Divider */}
                                 <div className="h-8 w-px bg-white/10" />
 
-                                {/* EST 2019 - Integrated Typography Style */}
+                                {/* EST 2019 */}
                                 <div className="flex flex-col justify-center">
                                     <span className="text-[10px] text-neutral-500 font-medium uppercase tracking-widest leading-none mb-1">
                                         EST
@@ -120,7 +116,8 @@ export function FoundersSection() {
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true }}
-                        className="flex-[1.2] text-center lg:text-left"
+                        // FIX: Changed "text-center lg:text-left" to "text-left"
+                        className="flex-[1.2] text-left"
                     >
                         <motion.h2
                             variants={fadeUpVariant}

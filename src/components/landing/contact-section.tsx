@@ -85,7 +85,7 @@ export const ContactSection = () => {
     };
 
     return (
-        <section className="relative w-full py-24 px-4 md:px-6 overflow-hidden bg-[#0a0a0a]" id="contact">
+        <section id="contact" className="relative w-full py-24 px-4 md:px-6 overflow-hidden bg-[#0a0a0a]">
 
             <AmbientBackground intensity="subtle" />
 
