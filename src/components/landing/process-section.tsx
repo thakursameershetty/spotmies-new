@@ -171,7 +171,7 @@ export function ProcessSection() {
                     <TechItem name="Healthcare" icon={HeartPulse} index={0} />
                     <TechItem name="Fintech" icon={Landmark} index={1} />
                     <TechItem name="AgriTech" icon={Sprout} index={2} />
-                    <TechItem name="Web3 & Crypto" icon={Blocks} index={3} />
+                    <TechItem name=" Crypto" icon={Blocks} index={3} />
                     <TechItem name="Travel" icon={Plane} index={4} />
                     <TechItem name="Entertainment" icon={Clapperboard} index={5} />
                     <TechItem name="Logistics & Supply Chain" icon={Truck} index={6} />

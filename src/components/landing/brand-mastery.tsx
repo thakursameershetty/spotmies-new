@@ -6,29 +6,113 @@ import { ArrowRight } from "lucide-react";
 
 // --- CONFIGURATION ---
 const PILLS = {
-    // WHITE PILLS (Primary - Product & Design) -> Have Video Popups
+    // WHITE PILLS (Primary) -> CENTER CLUSTER (Honeycomb Layout)
+    // Kept compact in the center to allow space for the outer arcs
     inner: [
-        // MOBILE STRATEGY: Distributed vertically (20% to 60% range)
-        { label: "Design Systems", icon: "pentagon", top: "32%", left: "45%", mobileTop: "28%", mobileLeft: "50%", delay: 0.1, videoSrc: "/Art Galleries Web Design.mp4" },
-        { label: "Product Branding", icon: "circle", top: "43%", left: "36%", mobileTop: "36%", mobileLeft: "25%", delay: 0.2, videoSrc: "/Art Galleries Web Design.mp4" },
-        { label: "Mobile Apps", icon: "portrait", top: "43%", left: "58%", mobileTop: "36%", mobileLeft: "75%", delay: 0.2, videoSrc: "/Art Galleries Web Design.mp4" },
-        { label: "Brand Strategy", icon: "heart", top: "54%", left: "29%", mobileTop: "44%", mobileLeft: "50%", delay: 0.3, videoSrc: "/Art Galleries Web Design.mp4" },
-        { label: "UI/UX Design", icon: "play", top: "53%", left: "47%", mobileTop: "52%", mobileLeft: "25%", delay: 0.0, videoSrc: "/Art Galleries Web Design.mp4" },
-        { label: "Web Platforms", icon: "globe", top: "64%", left: "38%", mobileTop: "52%", mobileLeft: "75%", delay: 0.3, videoSrc: "/Art Galleries Web Design.mp4" },
-        { label: "SaaS Dev", icon: "landscape", top: "64%", left: "53%", mobileTop: "60%", mobileLeft: "50%", delay: 0.3, videoSrc: "/Art Galleries Web Design.mp4" },
+        {
+            label: "Design Systems", icon: "pentagon",
+            top: "32%", left: "52%",
+            mobileTop: "40%", mobileLeft: "30%", // Top-Left of Center
+            delay: 0.1, videoSrc: "/Art Galleries Web Design.mp4"
+        },
+        {
+            label: "Product Branding", icon: "circle",
+            top: "43%", left: "45%",
+            mobileTop: "43%", mobileLeft: "70%", // Top-Right of Center
+            delay: 0.2, videoSrc: "/Art Galleries Web Design.mp4"
+        },
+        {
+            label: "Mobile Apps", icon: "portrait",
+            top: "43%", left: "62%",
+            mobileTop: "52%", mobileLeft: "20%", // Far Left of Center
+            delay: 0.2, videoSrc: "/Art Galleries Web Design.mp4"
+        },
+        {
+            label: "UI/UX Design", icon: "play",
+            top: "53%", left: "55%",
+            mobileTop: "55%", mobileLeft: "80%", // Far Right of Center
+            delay: 0.0, videoSrc: "/Art Galleries Web Design.mp4"
+        },
+        {
+            label: "Web Platforms", icon: "globe",
+            top: "64%", left: "45%",
+            mobileTop: "65%", mobileLeft: "32%", // Bottom-Left of Center
+            delay: 0.3, videoSrc: "/Art Galleries Web Design.mp4"
+        },
+        {
+            label: "SaaS Dev", icon: "landscape",
+            top: "64%", left: "59%",
+            mobileTop: "66%", mobileLeft: "65%", // Bottom-Right of Center
+            delay: 0.3, videoSrc: "/Art Galleries Web Design.mp4"
+        },
+        {
+            label: "Brand Strategy", icon: "heart",
+            top: "54%", left: "37%",
+            mobileTop: "53%", mobileLeft: "50%", // DEAD CENTER
+            delay: 0.3, videoSrc: "/Art Galleries Web Design.mp4"
+        },
     ],
-    // DARK PILLS (Secondary - Tech & Strategy) -> NO Video Popups
+    // DARK PILLS (Secondary) -> ARRANGED IN "ARCS" (Top-Left & Bottom-Right)
     outer: [
-        // MOBILE STRATEGY: Distributed at edges (Top < 20% and Bottom > 65%)
-        { label: "Smart Contracts", top: "31%", left: "26%", mobileTop: "18%", mobileLeft: "20%", delay: 0.4 },
-        { label: "Motion Design", top: "42%", left: "21%", mobileTop: "68%", mobileLeft: "20%", delay: 0.5 },
-        { label: "Growth Hacking", top: "53%", left: "15%", mobileTop: "76%", mobileLeft: "30%", delay: 0.6 },
-        { label: "AI Integration", top: "64%", left: "22%", mobileTop: "84%", mobileLeft: "40%", delay: 0.5 },
-        { label: "Data Science", top: "31%", left: "66%", mobileTop: "18%", mobileLeft: "80%", delay: 0.4 },
-        { label: "Product Strategy", top: "42%", left: "72%", mobileTop: "68%", mobileLeft: "80%", delay: 0.5 },
-        { label: "GTM Strategy", top: "53%", left: "66%", mobileTop: "76%", mobileLeft: "70%", delay: 0.6 },
-        { label: "Community", top: "53%", left: "79%", mobileTop: "84%", mobileLeft: "60%", delay: 0.5 }, // Shortened label for mobile
-        { label: "Tech Docs", top: "64%", left: "76%", mobileTop: "90%", mobileLeft: "50%", delay: 0.4 }, // Shortened label
+        // --- TOP-LEFT ARC (Brand Space) ---
+        // Sweeps from top-center towards the left edge
+        {
+            label: "Smart Contracts",
+            top: "31%", left: "29%",
+            mobileTop: "12%", mobileLeft: "50%", // Top point of arc
+            delay: 0.4
+        },
+        {
+            label: "Motion Design",
+            top: "42%", left: "25%",
+            mobileTop: "16%", mobileLeft: "28%", // Mid-Top-Left
+            delay: 0.5
+        },
+        {
+            label: "Growth Hacking",
+            top: "53%", left: "19%",
+            mobileTop: "26%", mobileLeft: "12%", // Far Left
+            delay: 0.6
+        },
+        {
+            label: "AI Integration",
+            top: "64%", left: "25%",
+            mobileTop: "38%", mobileLeft: "8%", // Lower Left Edge
+            delay: 0.5
+        },
+
+        // --- BOTTOM-RIGHT ARC (Product Space) ---
+        // Sweeps from right edge down to bottom-center
+        {
+            label: "Data Science",
+            top: "31%", left: "70%",
+            mobileTop: "62%", mobileLeft: "92%", // High Right Edge
+            delay: 0.4
+        },
+        {
+            label: "Product Strategy",
+            top: "42%", left: "76%",
+            mobileTop: "76%", mobileLeft: "88%", // Mid-Right
+            delay: 0.5
+        },
+        {
+            label: "GTM Strategy",
+            top: "53%", left: "68%",
+            mobileTop: "86%", mobileLeft: "75%", // Low-Right
+            delay: 0.6
+        },
+        {
+            label: "Community",
+            top: "53%", left: "80%",
+            mobileTop: "92%", mobileLeft: "55%", // Bottom point of arc
+            delay: 0.5
+        },
+        {
+            label: "Tech Docs",
+            top: "64%", left: "77%",
+            mobileTop: "94%", mobileLeft: "30%", // Tucked bottom-left-ish
+            delay: 0.4
+        },
     ],
 };
 
@@ -36,7 +120,7 @@ export default function BrandMastery() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [isMobile, setIsMobile] = useState(false);
 
-    // SCROLL TRIGGER: Logic for Start/Rewind Animation
+    // SCROLL TRIGGER
     const isInView = useInView(containerRef, {
         amount: 0.3,
         once: false
@@ -60,10 +144,17 @@ export default function BrandMastery() {
     const springTransition = { type: "spring", stiffness: 200, damping: 20 };
 
     // --- DYNAMIC DISTANCES ---
-    // Reduced expansion on mobile to keep things in view
-    const expandDist = isMobile ? 120 : 500;
-    const labelOffset = isMobile ? 35 : 60;
-    const textFinalPos = expandDist + labelOffset;
+    // Desktop: Horizontal expansion (500px)
+    const expandDist = 500;
+
+    // Mobile Physics: 
+    // Wide diagonal spread to keep dots in corners
+    const mobileExpandDistX = 140;
+    const mobileExpandDistY = 270;
+
+    // Text Offsets relative to the DOT position
+    const labelOffset = 60; // Desktop
+    const mobileTextYOffset = 30; // Mobile vertical gap between dot and text
 
     // Initial Positions
     const blobInitialX = 50;
@@ -108,8 +199,28 @@ export default function BrandMastery() {
             </svg>
 
             {/* --- 2. ANIMATION CANVAS --- */}
-            {/* HEIGHT ADJUSTMENT: Increased mobile height to 600px to allow vertical stacking */}
             <div className="relative w-full max-w-[1200px] h-[600px] md:h-[600px] flex items-center justify-center">
+
+                {/* STRUCTURE LAYER (Orbits & Lines) */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: isExpanded ? 1 : 0 }}
+                    transition={{ duration: 1, delay: 1 }}
+                    className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
+                >
+                    <div className="absolute w-[80vw] h-[80vw] md:w-[380px] md:h-[380px] border border-dashed border-[#00d3f3]/20 rounded-full" />
+                    <div className="absolute w-[130vw] h-[130vw] md:w-[750px] md:h-[750px] border border-dashed border-[#00d3f3]/20 rounded-full" />
+
+                    {/* DIAGONAL LINE */}
+                    <motion.div
+                        animate={{
+                            rotate: isMobile ? 63 : 0,
+                            width: isMobile ? "620px" : "100%", // Long enough to reach corners
+                            maxWidth: isMobile ? "none" : "1000px"
+                        }}
+                        className="absolute h-px border-t border-dashed border-[#00d3f3]/70 origin-center z-20"
+                    />
+                </motion.div>
 
                 {/* LIQUID LAYER */}
                 <div
@@ -119,30 +230,38 @@ export default function BrandMastery() {
                     <motion.div
                         initial={{ width: 80, height: 90, opacity: 1 }}
                         animate={{
-                            width: isExpanded ? expandDist * 2 : 80,
+                            width: isExpanded ? (isMobile ? 500 : expandDist * 2) : 80,
                             height: isExpanded ? 0 : 90,
                             opacity: isExpanded ? 0 : 1,
+                            rotate: isMobile ? 63 : 0
                         }}
                         transition={{
                             width: { duration: 1.2, ease: bezierEase },
                             height: { duration: 0.4, delay: isExpanded ? 1.0 : 0, ease: "easeOut" },
-                            opacity: { duration: 0.1, delay: isExpanded ? 1.1 : 0, ease: "easeOut" }
+                            opacity: { duration: 0.1, delay: isExpanded ? 1.1 : 0, ease: "easeOut" },
+                            rotate: { duration: 0 }
                         }}
                         className="absolute bg-white rounded-full will-change-transform"
                     />
+
+                    {/* Blob 1: Top-Left (North-West) */}
                     <motion.div
-                        initial={{ x: -blobInitialX, scale: 1 }}
+                        initial={{ x: -blobInitialX, y: 0, scale: 1 }}
                         animate={{
-                            x: isExpanded ? -expandDist : -blobInitialX,
+                            x: isExpanded ? (isMobile ? -mobileExpandDistX : -expandDist) : -blobInitialX,
+                            y: isExpanded ? (isMobile ? -mobileExpandDistY : 0) : 0,
                             scale: isExpanded ? 0.12 : 1,
                         }}
                         transition={{ duration: 1.4, ease: bezierEase }}
                         className="absolute w-40 h-40 bg-white rounded-full will-change-transform"
                     />
+
+                    {/* Blob 2: Bottom-Right (South-East) */}
                     <motion.div
-                        initial={{ x: blobInitialX, scale: 1 }}
+                        initial={{ x: blobInitialX, y: 0, scale: 1 }}
                         animate={{
-                            x: isExpanded ? expandDist : blobInitialX,
+                            x: isExpanded ? (isMobile ? mobileExpandDistX : expandDist) : blobInitialX,
+                            y: isExpanded ? (isMobile ? mobileExpandDistY : 0) : 0,
                             scale: isExpanded ? 0.12 : 1,
                         }}
                         transition={{ duration: 1.4, ease: bezierEase }}
@@ -151,30 +270,39 @@ export default function BrandMastery() {
                 </div>
 
                 {/* CLEAN DOTS LAYER */}
-                <div className="absolute inset-0 z-15 pointer-events-none flex items-center justify-center">
+                <div className="absolute inset-0 z-30 pointer-events-none flex items-center justify-center">
+                    {/* BRAND DOT (Top-Left) */}
                     <motion.div
-                        initial={{ opacity: 0, x: -expandDist }}
-                        animate={{ opacity: isExpanded ? 1 : 0 }}
+                        initial={{ opacity: 0 }}
+                        animate={{
+                            opacity: isExpanded ? 1 : 0,
+                            x: isMobile ? -mobileExpandDistX : -expandDist,
+                            y: isMobile ? -mobileExpandDistY : 0
+                        }}
                         transition={{ duration: 0.5, delay: 1.2 }}
                         className="absolute w-[8px] h-[8px] bg-white rounded-full"
-                        style={{ x: -expandDist }}
                     />
+                    {/* PRODUCT DOT (Bottom-Right) */}
                     <motion.div
-                        initial={{ opacity: 0, x: expandDist }}
-                        animate={{ opacity: isExpanded ? 1 : 0 }}
+                        initial={{ opacity: 0 }}
+                        animate={{
+                            opacity: isExpanded ? 1 : 0,
+                            x: isMobile ? mobileExpandDistX : expandDist,
+                            y: isMobile ? mobileExpandDistY : 0
+                        }}
                         transition={{ duration: 0.5, delay: 1.2 }}
                         className="absolute w-[8px] h-[8px] bg-white rounded-full"
-                        style={{ x: expandDist }}
                     />
                 </div>
 
                 {/* TEXT LAYER */}
-                <div className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center">
+                <div className="absolute inset-0 z-40 pointer-events-none flex items-center justify-center">
+                    {/* CENTER TEXT */}
                     <motion.div
                         initial={{ y: 0, color: "#000000" }}
                         animate={{
-                            // Adjusted Mobile Y to -250 to sit comfortably above the stack
-                            y: isExpanded ? (isMobile ? -250 : -282) : 0,
+                            y: isExpanded ? (isMobile ? 0 : -282) : 0,
+                            opacity: isExpanded && isMobile ? 0 : 1,
                             color: isExpanded ? "#ffffff" : "#000000",
                         }}
                         transition={{ duration: 1.4, ease: bezierEase }}
@@ -183,11 +311,12 @@ export default function BrandMastery() {
                         Mastery<br />Area
                     </motion.div>
 
+                    {/* BRAND TEXT */}
                     <motion.div
-                        initial={{ x: -textInitialX, opacity: 1, color: "#000000" }}
+                        initial={{ x: -textInitialX, y: 0 }}
                         animate={{
-                            x: isExpanded ? -textFinalPos : -textInitialX,
-                            opacity: 1,
+                            x: isExpanded ? (isMobile ? -mobileExpandDistX : -(expandDist + labelOffset)) : -textInitialX,
+                            y: isExpanded ? (isMobile ? -(mobileExpandDistY + mobileTextYOffset) : 0) : 0,
                             color: isExpanded ? "#ffffff" : "#000000",
                         }}
                         transition={{ duration: 1.2, ease: bezierEase }}
@@ -196,11 +325,12 @@ export default function BrandMastery() {
                         Brand
                     </motion.div>
 
+                    {/* PRODUCT TEXT */}
                     <motion.div
-                        initial={{ x: textInitialX, opacity: 1, color: "#000000" }}
+                        initial={{ x: textInitialX, y: 0 }}
                         animate={{
-                            x: isExpanded ? textFinalPos : textInitialX,
-                            opacity: 1,
+                            x: isExpanded ? (isMobile ? mobileExpandDistX : (expandDist + labelOffset)) : textInitialX,
+                            y: isExpanded ? (isMobile ? (mobileExpandDistY + mobileTextYOffset) : 0) : 0,
                             color: isExpanded ? "#ffffff" : "#000000",
                         }}
                         transition={{ duration: 1.2, ease: bezierEase }}
@@ -210,20 +340,8 @@ export default function BrandMastery() {
                     </motion.div>
                 </div>
 
-                {/* STRUCTURE LAYER (Orbits) */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: isExpanded ? 1 : 0 }}
-                    transition={{ duration: 1, delay: 1 }}
-                    className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
-                >
-                    <div className="absolute w-[70vw] h-[70vw] md:w-[380px] md:h-[380px] border border-dashed border-[#00d3f3]/30 rounded-full" />
-                    <div className="absolute w-[120vw] h-[120vw] md:w-[750px] md:h-[750px] border border-dashed border-[#00d3f3]/30 rounded-full" />
-                    <div className="hidden md:block absolute w-[90%] max-w-[1000px] h-px border-t border-dashed border-[#00d3f3]/30" />
-                </motion.div>
-
                 {/* PILLS LAYER */}
-                <div className="absolute inset-0 z-40">
+                <div className="absolute inset-0 z-50">
                     {PILLS.inner.map((pill, i) => (
                         <Pill
                             key={`inner-${i}`}
@@ -303,7 +421,8 @@ function Pill({ label, icon, top, left, mobileTop, mobileLeft, delay, isExpanded
         <motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate={{
-                scale: isExpanded ? 1 : 0,
+                // SCALE ADJUSTMENT: 0.9 for better visibility
+                scale: isExpanded ? (isMobile ? 0.9 : 1) : 0,
                 opacity: isExpanded ? 1 : 0,
                 zIndex: isHovered ? 100 : 10,
             }}
@@ -314,11 +433,10 @@ function Pill({ label, icon, top, left, mobileTop, mobileLeft, delay, isExpanded
             style={{
                 top: finalTop,
                 left: finalLeft,
-                transform: "translate(-50%, -50%)" // Center anchor point for better positioning
+                transform: "translate(-50%, -50%)"
             }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            // Added -translate-x-1/2 -translate-y-1/2 to ensure positioning is from center
             className={`absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium whitespace-nowrap cursor-pointer pointer-events-auto transition-all duration-300
                 ${isPrimary
                     ? "bg-white text-black shadow-lg shadow-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]"
@@ -327,7 +445,7 @@ function Pill({ label, icon, top, left, mobileTop, mobileLeft, delay, isExpanded
             `}
         >
             <div className="relative flex items-center gap-2 overflow-hidden h-5">
-                {/* Left Icon: Fades OUT to Left on Hover (Only for White Pills) */}
+                {/* Left Icon */}
                 {icon && (
                     <motion.div
                         initial={{ x: 0, opacity: 1, width: "auto" }}
@@ -344,7 +462,7 @@ function Pill({ label, icon, top, left, mobileTop, mobileLeft, delay, isExpanded
 
                 <span className="pill-text">{label}</span>
 
-                {/* Right Arrow: Fades IN from Right on Hover (Only for White Pills) */}
+                {/* Right Arrow */}
                 {isPrimary && (
                     <motion.div
                         initial={{ x: 20, opacity: 0, width: 0 }}
@@ -360,34 +478,30 @@ function Pill({ label, icon, top, left, mobileTop, mobileLeft, delay, isExpanded
                 )}
             </div>
 
-            {/* --- CLEAN VIDEO POPUP (Only for White Pills) --- */}
+            {/* --- VIDEO POPUP (Desktop Only) --- */}
             <AnimatePresence>
                 {isHovered && isPrimary && videoSrc && !isMobile && (
                     <>
-                        {/* 1. Projector Beam */}
                         <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 12 }}
                             exit={{ opacity: 0, height: 0 }}
                             className="absolute bottom-full left-1/2 -translate-x-1/2 w-[80%] bg-gradient-to-t from-white/30 to-transparent blur-sm pointer-events-none z-40"
                         />
-
-                        {/* 2. Floating Video Card */}
                         <motion.div
                             initial={{ opacity: 0, scale: 0.8, y: -10, x: "-50%" }}
                             animate={{
                                 opacity: 1,
                                 scale: 1,
-                                y: -20, // Positioned close to the pill
+                                y: -20,
                                 x: "-50%",
                                 transition: { type: "spring", stiffness: 300, damping: 20 }
                             }}
                             exit={{ opacity: 0, scale: 0.8, y: -10, x: "-50%", transition: { duration: 0.15 } }}
                             className="absolute bottom-full left-1/2 w-48 md:w-64 aspect-video z-50 pointer-events-none"
                         >
-                            {/* Inner Container for Continuous Float Animation */}
                             <motion.div
-                                animate={{ y: [0, -4, 0] }} // Gentle float
+                                animate={{ y: [0, -4, 0] }}
                                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                                 className="relative w-full h-full rounded-xl overflow-hidden bg-black border border-white/20 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
                             >
@@ -397,10 +511,8 @@ function Pill({ label, icon, top, left, mobileTop, mobileLeft, delay, isExpanded
                                     loop
                                     muted
                                     playsInline
-                                    className="w-full h-full object-cover" // Full opacity
+                                    className="w-full h-full object-cover"
                                 />
-
-                                {/* Glow Border */}
                                 <div className="absolute inset-0 rounded-xl border border-white/10 ring-1 ring-white/20" />
                             </motion.div>
                         </motion.div>
