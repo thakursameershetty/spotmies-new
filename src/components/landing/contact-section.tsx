@@ -2,15 +2,27 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Phone, Twitter, Linkedin, Instagram, Youtube, Send } from "lucide-react";
+import { Mail, Phone, Twitter, Linkedin, Instagram, Youtube, Send } from "lucide-react"; // Removed MapPin
 import { cn } from "@/lib/utils";
 import { LocationMap } from "@/components/ui/expand-map";
 import { AmbientBackground } from "@/components/ui/ambient-background";
 
-// ⬇️ Existing Google Script URL
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxmCKtzq0paW6ovftholsG1MqTpYVngu6JE6n12HWYnysF78xpS/exec";
-// ⬇️ NEW n8n Webhook URL
 const N8N_WEBHOOK_URL = "https://n8n.srv1253159.hstgr.cloud/webhook/website-form";
+
+// Custom Icon: Material Symbols Rounded "location_on" (Outlined)
+const LocationOnIcon = ({ className }: { className?: string }) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="24px"
+        viewBox="0 -960 960 960"
+        width="24px"
+        fill="currentColor"
+        className={className}
+    >
+        <path d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89t96.5 239q0 119-79.5 236.5T480-80Zm0-480Z" />
+    </svg>
+);
 
 export const ContactSection = () => {
     const [formState, setFormState] = useState({
@@ -27,7 +39,6 @@ export const ContactSection = () => {
         setIsSubmitting(true);
 
         try {
-            // --- 1. Prepare Data for Google Script (FormData) ---
             const formData = new FormData();
             formData.append("Name", formState.name);
             formData.append("Email", formState.email);
@@ -35,21 +46,19 @@ export const ContactSection = () => {
             formData.append("Message", formState.message);
             formData.append("Date", new Date().toISOString().substring(0, 10));
 
-            // --- 2. Prepare Data for n8n (JSON) ---
             const n8nPayload = {
                 name: formState.name,
                 email: formState.email,
                 phone: `${formState.phoneCode} ${formState.phoneNumber}`,
                 message: formState.message,
-                source: "spotmies-website" // Tracking source
+                source: "spotmies-website"
             };
 
-            // --- 3. Execute Both Requests in Parallel ---
             await Promise.all([
                 fetch(GOOGLE_SCRIPT_URL, {
                     method: "POST",
                     body: formData,
-                }).catch(err => console.error("Google Script Error:", err)), // Catch individual errors so one failure doesn't stop the other
+                }).catch(err => console.error("Google Script Error:", err)),
 
                 fetch(N8N_WEBHOOK_URL, {
                     method: "POST",
@@ -58,7 +67,6 @@ export const ContactSection = () => {
                 }).catch(err => console.error("n8n Webhook Error:", err))
             ]);
 
-            // --- 4. Success Handling ---
             alert("Thank you! We have received your message and will contact you shortly.");
             setFormState({
                 name: "",
@@ -114,9 +122,13 @@ export const ContactSection = () => {
                         </div>
                         <div className="flex flex-col h-full pt-1">
                             <LocationMap location="Visakhapatnam, India" coordinates="17.7292° N, 83.3213° E" className="w-full" />
-                            <p className="mt-4 text-sm text-zinc-500 pl-2 max-w-xs leading-relaxed">
-                                AU incubation centre, Andhra university,<br />Visakhapatnam - 530003
-                            </p>
+                            <div className="flex items-start gap-3 mt-4 pl-1">
+                                {/* UPDATED: Using custom Material Symbol LocationOnIcon */}
+                                <LocationOnIcon className="w-6 h-6 text-brand-cyan shrink-0 mt-0.5" />
+                                <p className="text-sm text-zinc-500 leading-relaxed">
+                                    AU incubation centre, Andhra university,<br />Visakhapatnam - 530003
+                                </p>
+                            </div>
                         </div>
                     </div>
 
