@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback, useRef, useMemo } from "react";
 import { motion, useAnimation, PanInfo, useInView } from "framer-motion";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { CaseStudyModal } from "@/components/ui/case-study-modal";
@@ -81,7 +81,8 @@ export function ProjectsSection({ data }: { data: Project[] }) {
             <section
                 ref={sectionRef}
                 id="portfolio"
-                className="w-full bg-[#050505] text-white py-16 md:py-24 border-t border-white/10 overflow-hidden relative"
+                // UPDATED: Removed 'border-t border-white/10'
+                className="w-full bg-[#050505] text-white py-16 md:py-24 overflow-hidden relative"
                 style={{
                     "--card-width": "85%",
                     "--card-gap": "20px",
@@ -173,8 +174,8 @@ export function ProjectsSection({ data }: { data: Project[] }) {
                                                 <h3 className="text-xl md:text-3xl font-bold text-white group-hover:text-[#00eef9] transition-colors truncate">
                                                     {project.title}
                                                 </h3>
-                                                <p className="text-neutral-500 text-xs md:text-base font-medium tracking-wide">
-                                                    {project.category}
+                                                <p className="text-neutral-500 text-xs md:text-base font-medium tracking-wide line-clamp-2">
+                                                    {project.description || project.category}
                                                 </p>
                                             </div>
                                         </div>
@@ -184,11 +185,9 @@ export function ProjectsSection({ data }: { data: Project[] }) {
                         </motion.div>
                     </motion.div>
 
-                    {/* PAGINATION DOTS: Single Line Fix */}
+                    {/* PAGINATION DOTS */}
                     <motion.div
                         variants={itemVariants}
-                        // FIX: flex-nowrap to prevent line break.
-                        // FIX: gap-1 on mobile to fit more items.
                         className="flex items-center justify-center gap-1 md:gap-2 mt-8 md:mt-12 px-1 flex-nowrap w-full overflow-hidden"
                     >
                         {validData.map((_, idx) => {
@@ -201,7 +200,6 @@ export function ProjectsSection({ data }: { data: Project[] }) {
                                 >
                                     <div className={cn(
                                         "relative h-1.5 rounded-full overflow-hidden transition-all duration-500 ease-out bg-white/20 hover:bg-white/40",
-                                        // FIX: Reduced widths on mobile (w-1.5 inactive, w-10 active) so 25+ items fit on one line
                                         isActive ? "w-10 md:w-20" : "w-1.5 md:w-3"
                                     )}>
                                         {isActive && (

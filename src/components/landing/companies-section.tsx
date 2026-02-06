@@ -6,14 +6,14 @@ import { motion } from "framer-motion";
 import { AmbientBackground } from "@/components/ui/ambient-background";
 
 const ALL_COMPANIES = [
-    { name: "Netflix", desc: "Streaming", src: "https://spotmiesstorage.blob.core.windows.net/media/comp1.png" },
-    { name: "CBRE", desc: "Real Estate", src: "https://spotmiesstorage.blob.core.windows.net/media/comp2.png" },
-    { name: "Stripe", desc: "Payments", src: "https://spotmiesstorage.blob.core.windows.net/media/comp3.png" },
-    { name: "NBC", desc: "Media", src: "https://spotmiesstorage.blob.core.windows.net/media/comp4.png" },
-    { name: "Mozilla", desc: "Internet", src: "https://spotmiesstorage.blob.core.windows.net/media/comp5.png" },
-    { name: "Universal", desc: "Music", src: "https://spotmiesstorage.blob.core.windows.net/media/comp6.png" },
-    { name: "Adobe", desc: "Creativity", src: "https://spotmiesstorage.blob.core.windows.net/media/comp7.png" },
-    { name: "Crunchbase", desc: "Insights", src: "https://spotmiesstorage.blob.core.windows.net/media/comp8.png" },
+    { name: "Zin in Thuiswerken", desc: "Professional Services", src: "https://spotmiesstorage.blob.core.windows.net/media/comp1.png" },
+    { name: "A Square GoKarting", desc: "Entertainment", src: "https://spotmiesstorage.blob.core.windows.net/media/comp2.png" },
+    { name: "SMARTFALCON", desc: "Blockchain", src: "https://spotmiesstorage.blob.core.windows.net/media/comp3.png" },
+    { name: "Credit Report", desc: "Financial Services", src: "https://spotmiesstorage.blob.core.windows.net/media/comp4.png" },
+    { name: "Andhra University Incubation Center", desc: "Incubation Center", src: "https://spotmiesstorage.blob.core.windows.net/media/comp5.png" },
+    { name: "Schemax Tech", desc: "Software Development", src: "https://spotmiesstorage.blob.core.windows.net/media/comp6.png" },
+    { name: "Sweken IT Solutions", desc: "Software Development", src: "https://spotmiesstorage.blob.core.windows.net/media/comp7.png" },
+    { name: "Vihaan Electrix", desc: "Insights", src: "https://spotmiesstorage.blob.core.windows.net/media/comp8.png" },
     { name: "Opera", desc: "Browsing", src: "https://spotmiesstorage.blob.core.windows.net/media/comp9.png" },
     { name: "Redis", desc: "Data", src: "https://spotmiesstorage.blob.core.windows.net/media/comp10.png" },
     { name: "Okta", desc: "Identity", src: "https://spotmiesstorage.blob.core.windows.net/media/comp11.png" },
@@ -30,7 +30,7 @@ const ALL_COMPANIES = [
     { name: "Filecoin", desc: "Storage", src: "https://spotmiesstorage.blob.core.windows.net/media/comp22.png" },
     { name: "Xero", desc: "Accounting", src: "https://spotmiesstorage.blob.core.windows.net/media/comp23.png" },
     { name: "HealthTap", desc: "Virtual Care", src: "https://spotmiesstorage.blob.core.windows.net/media/comp24.png" },
-    { name: "WhiteLogoCorp", desc: "Special Client", src: "https://spotmiesstorage.blob.core.windows.net/media/comp25.png" },
+    { name: "WhiteLogoCorp", desc: "Special Client", src: "https://www.reaidy.io/assets/logo_dark-DMRlJ8_-.png" },
 ];
 
 const TOTAL_CELLS = 15;
@@ -108,7 +108,8 @@ export default function ClientsSectionDark() {
 
             <AmbientBackground intensity="subtle" />
 
-            <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
+            {/* UPDATED: max-w-[1320px] to match your requested width */}
+            <div className="relative z-10 max-w-[1320px] mx-auto px-6 md:px-10">
                 <div className="flex flex-col lg:flex-row justify-between items-start mb-16 gap-10 lg:gap-0">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -117,8 +118,10 @@ export default function ClientsSectionDark() {
                         transition={{ duration: 0.6 }}
                         className="max-w-md"
                     >
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold leading-[1.1] tracking-tight mb-8 bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
-                            For companies with <br className="hidden md:block" />
+                        {/* UPDATED: Reduced font size to match Brand Mastery (text-3xl to text-5xl) */}
+                        {/* UPDATED: Forced 2 lines with a simple <br> */}
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-bold leading-[1.2] tracking-tight mb-8 bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
+                            For companies with <br />
                             tech leverage
                         </h2>
                         <a href="#" className="inline-flex items-center text-sm font-semibold uppercase tracking-wider text-white hover:text-neutral-400 transition-colors group">
@@ -133,7 +136,8 @@ export default function ClientsSectionDark() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="max-w-xl lg:pt-2"
                     >
-                        <p className="text-lg md:text-xl text-neutral-400 font-light leading-relaxed">
+                        {/* Adjusted text size slightly to balance the smaller header */}
+                        <p className="text-base md:text-lg text-neutral-400 font-light leading-relaxed">
                             We specialize in working with digital products and brands,
                             regardless of the size and lifecycle stage, from startups
                             to established businesses striving to achieve significant
@@ -148,8 +152,8 @@ export default function ClientsSectionDark() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     ref={containerRef}
-                    // GAP FIX: gap-2 on mobile, gap-x-10/gap-y-6 on desktop.
-                    className="group/grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-x-10 md:gap-y-6 lg:gap-x-14 lg:gap-y-8 w-full min-h-[400px]"
+                    // UPDATED: Adjusted gaps for the 1320px width (gap-x-12 to fill space evenly)
+                    className="group/grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-x-10 md:gap-y-6 lg:gap-x-12 lg:gap-y-8 w-full min-h-[400px]"
                     onMouseEnter={() => (isPausedRef.current = true)}
                     onMouseLeave={() => (isPausedRef.current = false)}
                 >

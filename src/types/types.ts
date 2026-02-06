@@ -5,8 +5,9 @@ export interface Project {
     id: number;
     title: string;
     category: string;
+    description?: string; // <--- ADDED THIS FIELD
     image: string;
-    link: string;
+    link?: string;
     client: string;
     timeline: string;
     role: string;

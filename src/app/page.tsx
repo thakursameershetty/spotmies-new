@@ -26,33 +26,36 @@ export default async function Home() {
       {/* Pass projects to HeroSection */}
       <HeroSection projects={projects} />
 
-      <div className="my-8 md:my-16"><GlowDivider /></div>
+      {/* Reduced dividers: Removed after Hero */}
 
       <TechStack />
 
-      <div className="my-8 md:my-16"><GlowDivider /></div>
+      {/* Reduced dividers: Removed after TechStack */}
 
       <CompaniesSection />
 
-      <div className="my-8 md:my-16"><GlowDivider /></div>
+      {/* Reduced dividers: Removed after Companies */}
 
       <BrandMastery />
 
+      {/* DIVIDER 1: Separates the "Mastery/Intro" from the "Work" */}
       <div className="my-8 md:my-16"><GlowDivider /></div>
 
       <ProjectsSection data={projects} />
 
-      <div className="my-8 md:my-16"><GlowDivider /></div>
+      {/* Reduced dividers: Removed after Projects */}
 
       <ProcessSection />
 
-      <div className="my-8 md:my-16"><GlowDivider /></div>
+      {/* Reduced dividers: Removed after Process */}
+
       <FoundersSection />
 
-      <div className="my-8 md:my-16"><GlowDivider /></div>
+      {/* Reduced dividers: Removed after Founders */}
 
       <TestimonialsSplit />
 
+      {/* DIVIDER 2: Separates content from final FAQ/Contact/Footer block */}
       <div className="my-8 md:my-16"><GlowDivider /></div>
 
       <FaqSection />

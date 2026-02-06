@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useMotionValueEvent, useScroll, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Menu, X, ArrowRight } from "lucide-react"; // Added ArrowRight import
+import { Menu, X, ArrowRight } from "lucide-react";
 
 export default function Navbar() {
     const { scrollY } = useScroll();
@@ -52,7 +52,7 @@ export default function Navbar() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className={cn(
-                    "relative flex items-center justify-between w-full max-w-[1440px] rounded-full px-6 py-3 transition-all duration-300 z-[101] pointer-events-auto",
+                    "relative flex items-center justify-between w-full max-w-[1320px] rounded-full px-6 py-3 transition-all duration-300 z-[101] pointer-events-auto",
                     scrolled || mobileMenuOpen
                         ? "bg-black/80 backdrop-blur-md border border-white/10 shadow-lg"
                         : "bg-black/50 backdrop-blur-sm border border-white/5"

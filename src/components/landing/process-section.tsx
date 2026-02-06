@@ -10,7 +10,7 @@ import {
     HeartPulse,
     Landmark,
     Clapperboard,
-    Wifi,
+    Truck,        // NEW: For Logistics
     Sprout,       // For AgriTech
     Blocks,       // For Web3 & Blockchain
     Plane,        // For Travel & Tourism
@@ -93,15 +93,33 @@ export function ProcessSection() {
 
                 {/* STEPS GRID */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-                    <ProcessStep index={0} number="01" title="Analyze" desc="We dive deep into your requirements, stripping away complexity to find the core solution." icon={Search} />
-                    <ProcessStep index={1} number="02" title="Design" desc="Architecture meets aesthetics. We craft pixel-perfect interfaces designed for human interaction." icon={PenTool} />
-                    <ProcessStep index={2} number="03" title="Deliver" desc="Robust development using the latest tech stack to ensure outstanding performance." icon={Rocket} />
+                    <ProcessStep
+                        index={0}
+                        number="01"
+                        title="Analyze"
+                        desc="We dive deep into your requirements, stripping away complexity to find the core solution."
+                        icon={Search}
+                    />
+                    <ProcessStep
+                        index={1}
+                        number="02"
+                        title="Design & Development"
+                        desc="Where architecture meets aesthetics. We craft pixel-perfect interfaces backed by robust, scalable code for a seamless user experience."
+                        icon={PenTool}
+                    />
+                    <ProcessStep
+                        index={2}
+                        number="03"
+                        title="Deliver"
+                        desc="Rigorous testing and smooth deployment to ensure your product launches flawlessly and performs at scale."
+                        icon={Rocket}
+                    />
                 </div>
             </section>
 
             {/* 2. PARALLAX BANNER */}
             <section
-                className="w-full h-[60vh] relative border-y border-white/10 overflow-hidden flex items-center justify-center bg-fixed bg-cover bg-center z-10"
+                className="w-full h-[100vh] relative border-y border-white/10 overflow-hidden flex items-center justify-center bg-fixed bg-cover bg-center z-10"
                 style={{ backgroundImage: 'url(https://spotmiesstorage.blob.core.windows.net/old-data/spotmies_site_SixthFolder_OurDesginsPic.png)' }}
             >
                 <div className="absolute inset-0 bg-[#050505]/60 backdrop-blur-[0px]"></div>
@@ -143,9 +161,6 @@ export function ProcessSection() {
                     </motion.h2>
                 </div>
 
-                {/* UPDATED: Full Industry List from Data
-                   Layout: 5 Columns on Desktop for better density with 10 items
-                */}
                 <div className="grid grid-cols-2 md:grid-cols-5 border-l border-t border-white/10 bg-black/40 backdrop-blur-sm">
                     <TechItem name="Healthcare" icon={HeartPulse} index={0} />
                     <TechItem name="Fintech" icon={Landmark} index={1} />
@@ -154,7 +169,10 @@ export function ProcessSection() {
                     <TechItem name="Travel" icon={Plane} index={4} />
 
                     <TechItem name="Entertainment" icon={Clapperboard} index={5} />
-                    <TechItem name="IoT & Smart Devices" icon={Wifi} index={6} />
+
+                    {/* REPLACED: IoT with Logistics */}
+                    <TechItem name="Logistics & Supply Chain" icon={Truck} index={6} />
+
                     <TechItem name="HRTech" icon={Users} index={7} />
                     <TechItem name="EdTech" icon={GraduationCap} index={8} />
                     <TechItem name="Retail" icon={ShoppingBag} index={9} />
