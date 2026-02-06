@@ -9,11 +9,30 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'spotmiesstorage.blob.core.windows.net',
         port: '',
-        pathname: '/media/**',
+        pathname: '/**',
+      },
+      // --- FIX: Added the new storage domain here ---
+      {
+        protocol: 'https',
+        hostname: 'reaidystorage.blob.core.windows.net',
+        port: '',
+        pathname: '/**',
       },
       {
         protocol: 'https',
         hostname: 'placehold.co',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.thiings.co',
         port: '',
         pathname: '/**',
       },

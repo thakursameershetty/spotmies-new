@@ -1,22 +1,43 @@
-// lib/api.ts
-import { Project } from "@/types/types"; // Make sure your Project type is defined
+// src/lib/api.ts
+import { Project, Job } from "@/types/types";
 
-// 🔴 YOUR SPECIFIC API URL
 const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyXROJrPM-Wd1Orae-417sW-4hTF4sMmd-knAPmDAWaVk7YyYQVu8kQATmauaspe7B8OA/exec";
+const CAREERS_API_URL = "https://api.reaidy.io/public/job-post/search-jobs";
 
 export async function getProjects(): Promise<Project[]> {
     try {
-        const res = await fetch(SHEET_API_URL, {
-            // revalidate: 3600 // Optional: Cache for 1 hour to speed up the site
-            cache: 'no-store' // Useful for development so you see changes immediately
+        const res = await fetch(SHEET_API_URL, { cache: 'no-store' });
+        if (!res.ok) throw new Error("Failed to fetch projects");
+        return await res.json();
+    } catch (error) {
+        console.error("Project API Error:", error);
+        return [];
+    }
+}
+
+// Updated getJobs to support Pagination
+export async function getJobs(page: number = 1, limit: number = 6): Promise<{ jobs: Job[], total: number }> {
+    try {
+        const skip = (page - 1) * limit;
+        const res = await fetch(`${CAREERS_API_URL}?skip=${skip}&limit=${limit}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                recruiterId: ["67d1aba6681a45400442f68c", "658bd65337b2a440f7f467df"]
+            }),
+            cache: 'no-store'
         });
 
-        if (!res.ok) throw new Error("Failed to fetch projects");
+        if (!res.ok) throw new Error("Failed to fetch jobs");
 
-        const data = await res.json();
-        return data;
+        const responseData = await res.json();
+
+        return {
+            jobs: responseData.data || [],
+            total: responseData.count || 0
+        };
     } catch (error) {
-        console.error("API Error:", error);
-        return [];
+        console.error("Careers API Error:", error);
+        return { jobs: [], total: 0 };
     }
 }

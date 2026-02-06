@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useMotionValueEvent, useScroll, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react"; // Added ArrowRight import
 
 export default function Navbar() {
     const { scrollY } = useScroll();
@@ -37,20 +37,22 @@ export default function Navbar() {
     };
 
     const navItems = [
-        { name: "Services", href: "#services" },
-        { name: "Portfolio", href: "#portfolio" },
-        { name: "About Us", href: "#about" },
+        { name: "Services", href: "/#services" },
+        { name: "Portfolio", href: "/#portfolio" },
+        { name: "Process", href: "#process" },
+        { name: "Careers", href: "/careers" },
+        { name: "About Us", href: "/about" },
         { name: "Blogs", href: "/blogs" },
     ];
 
     return (
-        <div className="fixed top-0 w-full flex justify-center z-[100] p-4 md:p-6">
+        <div className="fixed top-0 w-full flex justify-center z-[100] p-4 md:p-6 pointer-events-none">
             <motion.nav
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className={cn(
-                    "relative flex items-center justify-between w-full max-w-5xl rounded-full px-6 py-3 transition-all duration-300 z-[101]",
+                    "relative flex items-center justify-between w-full max-w-[1440px] rounded-full px-6 py-3 transition-all duration-300 z-[101] pointer-events-auto",
                     scrolled || mobileMenuOpen
                         ? "bg-black/80 backdrop-blur-md border border-white/10 shadow-lg"
                         : "bg-black/50 backdrop-blur-sm border border-white/5"
@@ -82,11 +84,11 @@ export default function Navbar() {
                         <Link
                             key={item.name}
                             href={item.href}
-                            onClick={(e) => handleScroll(e, item.href)}
+                            onClick={(e) => item.href.startsWith("#") ? handleScroll(e, item.href) : null}
                             className="text-sm font-medium text-gray-300 hover:text-white transition-colors relative group"
                         >
                             {item.name}
-                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-cyan transition-all duration-300 group-hover:w-full" />
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#00d3f3] transition-all duration-300 group-hover:w-full" />
                         </Link>
                     ))}
                 </div>
@@ -124,44 +126,59 @@ export default function Navbar() {
                         animate={{ opacity: 1, clipPath: "circle(150% at 100% 0%)" }}
                         exit={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
                         transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-                        className="fixed inset-0 bg-[#050505] z-[90] flex flex-col items-center justify-center p-6 md:hidden"
+                        className="fixed inset-0 bg-[#050505] z-[90] flex flex-col pt-32 px-6 pb-6 md:hidden pointer-events-auto"
                     >
                         {/* Background Ambient Effect */}
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-brand-cyan/20 rounded-full blur-[100px] pointer-events-none" />
-                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-blue/20 rounded-full blur-[100px] pointer-events-none" />
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#00d3f3]/10 rounded-full blur-[100px] pointer-events-none" />
+                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
 
-                        <div className="flex flex-col gap-6 w-full max-w-sm text-center">
-                            {navItems.map((item, i) => (
-                                <motion.div
-                                    key={item.name}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.1 + i * 0.1, duration: 0.4 }}
-                                >
-                                    <Link
-                                        href={item.href}
-                                        onClick={(e) => handleScroll(e, item.href)}
-                                        className="block text-3xl font-bold text-white/80 hover:text-white transition-colors"
+                        {/* NAV ITEMS CONTAINER (Left Aligned) */}
+                        <div className="flex flex-col w-full max-w-lg mx-auto h-full justify-between">
+
+                            {/* Menu Links */}
+                            <div className="flex flex-col gap-2">
+                                {navItems.map((item, i) => (
+                                    <motion.div
+                                        key={item.name}
+                                        initial={{ opacity: 0, x: -30 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.1 + i * 0.1, duration: 0.4 }}
+                                        className="border-b border-white/5 last:border-none"
                                     >
-                                        {item.name}
-                                    </Link>
-                                </motion.div>
-                            ))}
-                        </div>
+                                        <Link
+                                            href={item.href}
+                                            onClick={(e) => item.href.startsWith("#") ? handleScroll(e, item.href) : setMobileMenuOpen(false)}
+                                            className="group flex items-center justify-between py-5 w-full active:opacity-70"
+                                        >
+                                            <span className="text-3xl font-outfit font-bold text-white/90 group-hover:text-[#00d3f3] group-active:text-[#00d3f3] transition-colors">
+                                                {item.name}
+                                            </span>
 
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.5, duration: 0.4 }}
-                            className="mt-12 w-full max-w-sm"
-                        >
-                            <button
-                                onClick={scheduleMeeting}
-                                className="w-full py-4 bg-brand-cyan/10 border border-brand-cyan/30 rounded-full text-brand-cyan font-bold text-lg hover:bg-brand-cyan/20 transition-all"
+                                            {/* Interaction Arrow */}
+                                            <ArrowRight
+                                                className="w-6 h-6 text-white/30 group-hover:text-[#00d3f3] group-active:text-[#00d3f3] transform group-hover:translate-x-2 group-active:translate-x-2 transition-all duration-300"
+                                            />
+                                        </Link>
+                                    </motion.div>
+                                ))}
+                            </div>
+
+                            {/* Schedule Call Button (Filled White) */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.5, duration: 0.4 }}
+                                className="w-full pb-8"
                             >
-                                Schedule a Call
-                            </button>
-                        </motion.div>
+                                <button
+                                    onClick={scheduleMeeting}
+                                    className="w-full py-4 rounded-full bg-white text-black font-bold text-lg hover:bg-neutral-200 active:scale-95 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] flex items-center justify-center gap-2"
+                                >
+                                    Schedule a Call
+                                    <ArrowRight className="w-5 h-5" />
+                                </button>
+                            </motion.div>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>

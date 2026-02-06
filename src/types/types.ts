@@ -1,5 +1,6 @@
-// File: src/types.ts
+// src/types/types.ts
 
+// Existing Project Interface
 export interface Project {
     id: number;
     title: string;
@@ -20,4 +21,19 @@ export interface Project {
         position: string;
     };
     gallery: string[];
+}
+
+// NEW: Job Interface for Reaidy API
+export interface Job {
+    _id: string;
+    jobTitle: string;
+    jobDescription: string; // This contains HTML
+    jobMode: string; // e.g., "internship", "full-time"
+    locations: string[];
+    requiredSkills: string[];
+    recruiterId?: {
+        industry?: string;
+        companyName?: string;
+    };
+    createdAt: number;
 }
