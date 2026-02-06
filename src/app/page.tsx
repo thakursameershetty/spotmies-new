@@ -38,8 +38,6 @@ export default async function Home() {
 
       <BrandMastery />
 
-      {/* DIVIDER 1: Separates the "Mastery/Intro" from the "Work" */}
-      <div className="my-8 md:my-16"><GlowDivider /></div>
 
       <ProjectsSection data={projects} />
 
@@ -55,11 +53,10 @@ export default async function Home() {
 
       <TestimonialsSplit />
 
-      {/* DIVIDER 2: Separates content from final FAQ/Contact/Footer block */}
-      <div className="my-8 md:my-16"><GlowDivider /></div>
 
       <FaqSection />
       <ContactSection />
+      <div className="my-8 md:my-16"><GlowDivider /></div>
       <Footer />
     </main>
   );

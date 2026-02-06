@@ -1,21 +1,14 @@
-// src/lib/api.ts
 import { Project, Job } from "@/types/types";
+import { PROJECT_DATA } from "@/data/projects"; // Import the local data
 
-const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyXROJrPM-Wd1Orae-417sW-4hTF4sMmd-knAPmDAWaVk7YyYQVu8kQATmauaspe7B8OA/exec";
 const CAREERS_API_URL = "https://api.reaidy.io/public/job-post/search-jobs";
 
+// CHANGED: Now simply returns local data immediately
 export async function getProjects(): Promise<Project[]> {
-    try {
-        const res = await fetch(SHEET_API_URL, { cache: 'no-store' });
-        if (!res.ok) throw new Error("Failed to fetch projects");
-        return await res.json();
-    } catch (error) {
-        console.error("Project API Error:", error);
-        return [];
-    }
+    return PROJECT_DATA;
 }
 
-// Updated getJobs to support Pagination
+// Keep the Jobs API as is (it's fast enough and external)
 export async function getJobs(page: number = 1, limit: number = 6): Promise<{ jobs: Job[], total: number }> {
     try {
         const skip = (page - 1) * limit;
@@ -25,7 +18,7 @@ export async function getJobs(page: number = 1, limit: number = 6): Promise<{ jo
             body: JSON.stringify({
                 recruiterId: ["67d1aba6681a45400442f68c", "658bd65337b2a440f7f467df"]
             }),
-            cache: 'no-store'
+            next: { revalidate: 60 }
         });
 
         if (!res.ok) throw new Error("Failed to fetch jobs");

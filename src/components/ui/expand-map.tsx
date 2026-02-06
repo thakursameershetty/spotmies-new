@@ -60,6 +60,9 @@ export function LocationMap({
             onMouseLeave={handleMouseLeave}
             onClick={handleClick}
         >
+            {/* Inject the Google Font Link Here */}
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=location_on" />
+
             <motion.div
                 className="relative overflow-hidden rounded-2xl bg-zinc-900 border border-white/10"
                 style={{
@@ -215,17 +218,10 @@ export function LocationMap({
                                 animate={{ scale: 1, y: 0 }}
                                 transition={{ type: "spring", stiffness: 400, damping: 20, delay: 0.3 }}
                             >
-                                <svg
-                                    width="32"
-                                    height="32"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    className="drop-shadow-lg"
-                                    style={{ filter: "drop-shadow(0 0 10px rgba(1, 234, 245, 0.5))" }}
-                                >
-                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#01eaf5" />
-                                    <circle cx="12" cy="9" r="2.5" className="fill-white" />
-                                </svg>
+                                {/* Center Pin when expanded */}
+                                <span className="material-symbols-rounded text-4xl text-[#01eaf5] drop-shadow-[0_0_10px_rgba(1,234,245,0.5)]">
+                                    location_on
+                                </span>
                             </motion.div>
 
                             <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-60" />
@@ -255,34 +251,23 @@ export function LocationMap({
                     <div className="flex items-start justify-between">
                         <div className="relative">
                             <motion.div
-                                className="relative"
+                                className="relative flex items-center justify-center"
                                 animate={{
                                     opacity: isExpanded ? 0 : 1,
                                 }}
                                 transition={{ duration: 0.3 }}
                             >
-                                {/* Map Icon SVG */}
-                                <motion.svg
-                                    width="18"
-                                    height="18"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="text-[#01eaf5]"
-                                    animate={{
+                                {/* REPLACED: New Material Symbol Icon */}
+                                <span
+                                    className="material-symbols-rounded text-[#01eaf5] text-2xl"
+                                    style={{
                                         filter: isHovered
                                             ? "drop-shadow(0 0 8px rgba(1, 234, 245, 0.6))"
                                             : "drop-shadow(0 0 4px rgba(1, 234, 245, 0.3))",
                                     }}
-                                    transition={{ duration: 0.3 }}
                                 >
-                                    <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21" />
-                                    <line x1="9" x2="9" y1="3" y2="18" />
-                                    <line x1="15" x2="15" y1="6" y2="21" />
-                                </motion.svg>
+                                    location_on
+                                </span>
                             </motion.div>
                         </div>
 

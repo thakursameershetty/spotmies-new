@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useRef } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MessageSquareQuote } from "lucide-react"; // Imported new icon for Quote
 import { motion, useSpring, useMotionTemplate, useMotionValue } from "framer-motion";
 import HeroCarousel from "@/components/ui/hero-carousel";
 import { PointerHighlight } from "@/components/ui/pointer-highlight";
 import { GooeyText } from "@/components/ui/gooey-text-morphing";
 import { cn } from "@/lib/utils";
-import { Project } from "@/types/types"; // Import Project type
+import { Project } from "@/types/types";
 
 const MagneticButton = ({ children, className, onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) => {
     const ref = useRef<HTMLButtonElement>(null);
@@ -43,7 +43,6 @@ const MagneticButton = ({ children, className, onClick }: { children: React.Reac
     );
 };
 
-// Accept projects prop
 export function HeroSection({ projects }: { projects: Project[] }) {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
@@ -57,6 +56,14 @@ export function HeroSection({ projects }: { projects: Project[] }) {
     const scheduleMeeting = () => {
         const calendlyLink = "https://calendly.com/spotmies/30min";
         window.open(calendlyLink, "_blank");
+    };
+
+    // New handler for Get Quote
+    const handleGetQuote = () => {
+        const contactSection = document.getElementById("contact");
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: "smooth" });
+        }
     };
 
     return (
@@ -119,7 +126,6 @@ export function HeroSection({ projects }: { projects: Project[] }) {
                         transition={{ duration: 0.7, delay: 0.2 }}
                         className="flex flex-col items-center md:flex-row md:items-baseline md:justify-center gap-x-2 gap-y-1 md:gap-x-3 max-w-5xl mx-auto px-2"
                     >
-                        {/* Wrapper for static text */}
                         <div className="flex items-baseline gap-2">
                             <span className="relative inline-block">
                                 <PointerHighlight
@@ -140,7 +146,6 @@ export function HeroSection({ projects }: { projects: Project[] }) {
                             </span>
                         </div>
 
-                        {/* Morphing Text */}
                         <div className="flex items-center justify-center md:justify-start min-w-[140px] md:min-w-auto">
                             <GooeyText
                                 texts={["Intelligent", "Scalable", "Immersive", "Secure", "Future-Proof"]}
@@ -153,7 +158,6 @@ export function HeroSection({ projects }: { projects: Project[] }) {
                     </motion.div>
                 </h1>
 
-                {/* Subtext */}
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -180,10 +184,14 @@ export function HeroSection({ projects }: { projects: Project[] }) {
                         <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/80 to-transparent z-0" />
                     </MagneticButton>
 
-                    <MagneticButton className="flex-1 sm:flex-none w-full sm:w-auto px-4 py-3 sm:px-6 sm:py-2.5 text-white/90 rounded-full font-medium text-xs sm:text-sm tracking-wide border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/30 backdrop-blur-sm transition-all flex items-center justify-center gap-2 sm:gap-3">
-                        <span className="whitespace-nowrap">View Works</span>
+                    {/* REPLACED: "View Works" -> "Get Quote" */}
+                    <MagneticButton
+                        onClick={handleGetQuote}
+                        className="flex-1 sm:flex-none w-full sm:w-auto px-4 py-3 sm:px-6 sm:py-2.5 text-white/90 rounded-full font-medium text-xs sm:text-sm tracking-wide border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/30 backdrop-blur-sm transition-all flex items-center justify-center gap-2 sm:gap-3"
+                    >
+                        <span className="whitespace-nowrap">Get Quote</span>
                         <div className="flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/10 group-hover:bg-white group-hover:text-black transition-colors">
-                            <ArrowRight className="w-3 h-3" />
+                            <MessageSquareQuote className="w-3 h-3" />
                         </div>
                     </MagneticButton>
                 </motion.div>
@@ -198,11 +206,10 @@ export function HeroSection({ projects }: { projects: Project[] }) {
             >
                 <div className="w-full h-full flex items-center justify-center mask-image:linear-gradient(to bottom, black 80%, transparent 100%)">
                     <div className="relative w-full h-full flex items-center justify-center scale-90 md:scale-100 origin-center">
-                        {/* Pass projects data to Carousel */}
                         <HeroCarousel projects={projects} />
                     </div>
                 </div>
-                <div className="absolute bottom-0 left-0 w-full h-24 md:h-40 bg-gradient-to-t from-[#030014] via-[#030014]/80 to-transparent pointer-events-none" />
+                {/* REMOVED: The overlay div is deleted as requested */}
             </motion.div>
         </section>
     );

@@ -5,22 +5,22 @@ import { motion } from "framer-motion";
 import {
     Search,
     PenTool,
+    Code2,          // NEW: Icon for Develop
     Rocket,
     ArrowUpRight,
     HeartPulse,
     Landmark,
     Clapperboard,
-    Truck,        // NEW: For Logistics
-    Sprout,       // For AgriTech
-    Blocks,       // For Web3 & Blockchain
-    Plane,        // For Travel & Tourism
-    Users,        // For HRTech
-    GraduationCap,// For EdTech
-    ShoppingBag   // For Retail
+    Truck,
+    Sprout,
+    Blocks,
+    Plane,
+    Users,
+    GraduationCap,
+    ShoppingBag
 } from "lucide-react";
 import { AmbientBackground } from "@/components/ui/ambient-background";
 
-// --- ANIMATION VARIANTS ---
 const fadeUpVariant = {
     hidden: { opacity: 0, y: 30 },
     visible: (i: number = 0) => ({
@@ -44,8 +44,6 @@ export function ProcessSection() {
     return (
         <div className="relative bg-[#050505] text-white font-sans selection:bg-brand-cyan/30 overflow-hidden">
             <NoiseOverlay />
-
-            {/* --- AMBIENT BACKGROUND --- */}
             <AmbientBackground intensity="medium" className="z-0" />
 
             {/* 1. THE PROCESS */}
@@ -91,8 +89,8 @@ export function ProcessSection() {
                     </motion.p>
                 </div>
 
-                {/* STEPS GRID */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                {/* UPDATED: Grid to 4 columns for 4 steps */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
                     <ProcessStep
                         index={0}
                         number="01"
@@ -103,15 +101,23 @@ export function ProcessSection() {
                     <ProcessStep
                         index={1}
                         number="02"
-                        title="Design & Development"
-                        desc="Where architecture meets aesthetics. We craft pixel-perfect interfaces backed by robust, scalable code for a seamless user experience."
+                        title="Design"
+                        desc="Architecture meets aesthetics. We craft pixel-perfect interfaces designed for human interaction."
                         icon={PenTool}
                     />
+                    {/* NEW STEP: Develop */}
                     <ProcessStep
                         index={2}
                         number="03"
+                        title="Develop"
+                        desc="Writing clean, scalable code that turns concepts into high-performance realities."
+                        icon={Code2}
+                    />
+                    <ProcessStep
+                        index={3}
+                        number="04"
                         title="Deliver"
-                        desc="Rigorous testing and smooth deployment to ensure your product launches flawlessly and performs at scale."
+                        desc="Rigorous testing and smooth deployment to ensure your product launches flawlessly."
                         icon={Rocket}
                     />
                 </div>
@@ -167,12 +173,8 @@ export function ProcessSection() {
                     <TechItem name="AgriTech" icon={Sprout} index={2} />
                     <TechItem name="Web3 & Crypto" icon={Blocks} index={3} />
                     <TechItem name="Travel" icon={Plane} index={4} />
-
                     <TechItem name="Entertainment" icon={Clapperboard} index={5} />
-
-                    {/* REPLACED: IoT with Logistics */}
                     <TechItem name="Logistics & Supply Chain" icon={Truck} index={6} />
-
                     <TechItem name="HRTech" icon={Users} index={7} />
                     <TechItem name="EdTech" icon={GraduationCap} index={8} />
                     <TechItem name="Retail" icon={ShoppingBag} index={9} />
@@ -182,7 +184,6 @@ export function ProcessSection() {
     );
 }
 
-// --- SUB-COMPONENTS ---
 const ProcessStep = ({ number, title, desc, icon: Icon, index }: any) => (
     <motion.div
         custom={index + 3}
