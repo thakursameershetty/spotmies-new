@@ -2,10 +2,15 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Phone, ArrowRight, Send, Twitter, Linkedin, Instagram, Youtube } from "lucide-react";
+import { Mail, MapPin, Phone, Twitter, Linkedin, Instagram, Youtube, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LocationMap } from "@/components/ui/expand-map";
-import { AmbientBackground } from "@/components/ui/ambient-background"; // NEW IMPORT
+import { AmbientBackground } from "@/components/ui/ambient-background";
+
+// ⬇️ Existing Google Script URL
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxmCKtzq0paW6ovftholsG1MqTpYVngu6JE6n12HWYnysF78xpS/exec";
+// ⬇️ NEW n8n Webhook URL
+const N8N_WEBHOOK_URL = "https://n8n.srv1253159.hstgr.cloud/webhook/website-form";
 
 export const ContactSection = () => {
     const [formState, setFormState] = useState({
@@ -20,15 +25,60 @@ export const ContactSection = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        setIsSubmitting(false);
-        console.log("Form submitted:", formState);
+
+        try {
+            // --- 1. Prepare Data for Google Script (FormData) ---
+            const formData = new FormData();
+            formData.append("Name", formState.name);
+            formData.append("Email", formState.email);
+            formData.append("Phone", `${formState.phoneCode} ${formState.phoneNumber}`);
+            formData.append("Message", formState.message);
+            formData.append("Date", new Date().toISOString().substring(0, 10));
+
+            // --- 2. Prepare Data for n8n (JSON) ---
+            const n8nPayload = {
+                name: formState.name,
+                email: formState.email,
+                phone: `${formState.phoneCode} ${formState.phoneNumber}`,
+                message: formState.message,
+                source: "spotmies-website" // Tracking source
+            };
+
+            // --- 3. Execute Both Requests in Parallel ---
+            await Promise.all([
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: "POST",
+                    body: formData,
+                }).catch(err => console.error("Google Script Error:", err)), // Catch individual errors so one failure doesn't stop the other
+
+                fetch(N8N_WEBHOOK_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(n8nPayload)
+                }).catch(err => console.error("n8n Webhook Error:", err))
+            ]);
+
+            // --- 4. Success Handling ---
+            alert("Thank you! We have received your message and will contact you shortly.");
+            setFormState({
+                name: "",
+                email: "",
+                phoneCode: "+91",
+                phoneNumber: "",
+                message: "",
+            });
+
+        } catch (error) {
+            console.error("Error sending message:", error);
+            alert("Something went wrong. Please try again or email us directly.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
         <section className="relative w-full py-24 px-4 md:px-6 overflow-hidden bg-[#0a0a0a]" id="contact">
 
-            {/* --- ADDED AMBIENT BACKGROUND --- */}
             <AmbientBackground intensity="subtle" />
 
             <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
