@@ -13,7 +13,7 @@ const ALL_COMPANIES = [
     { name: "Andhra University Incubation Center", desc: "Incubation Center", src: "https://spotmiesstorage.blob.core.windows.net/media/comp5.png" },
     { name: "Schemax Tech", desc: "Software Development", src: "https://spotmiesstorage.blob.core.windows.net/media/comp6.png" },
     { name: "Sweken IT Solutions", desc: "Software Development", src: "https://spotmiesstorage.blob.core.windows.net/media/comp7.png" },
-    { name: "Vihaan Electrix", desc: "EV Vehicle", src: "https://spotmiesstorage.blob.core.windows.net/media/comp8.png" },
+    { name: "Vihaan Electrix", desc: "Travel", src: "https://spotmiesstorage.blob.core.windows.net/media/comp8.png" },
     { name: "DecenTrialz", desc: "Healthcare", src: "https://spotmiesstorage.blob.core.windows.net/media/comp9.png" },
     { name: "ADVAIT LABS", desc: "Healthcare", src: "https://spotmiesstorage.blob.core.windows.net/media/comp10.png" },
     { name: "Chalo Ride", desc: "Travel", src: "https://spotmiesstorage.blob.core.windows.net/media/comp11.png" },

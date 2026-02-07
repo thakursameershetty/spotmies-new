@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
-import { BrainCircuit, Boxes, Smartphone, Cloud, Layers, X, ChevronRight } from "lucide-react";
+import { BrainCircuit, Boxes, Smartphone, Cloud, Layers, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AmbientBackground } from "@/components/ui/ambient-background";
 
@@ -125,39 +125,53 @@ export const TechStack = () => {
                     </motion.p>
                 </div>
 
-                {/* --- MOBILE VIEW: PILL LIST --- */}
-                <div className="flex flex-col gap-4 md:hidden">
+                {/* --- MOBILE VIEW: VERTICAL BENTO GRID --- */}
+                {/* FIX: Removed the previous "flex-col list" and replaced it with a GRID.
+                    Since it's mobile-only, we use 'grid-cols-1'.
+                    We removed the 'md:hidden' simple list items and are now mapping the same 
+                    CardSpotlight components used in the desktop view, but with simplified props for mobile.
+                */}
+                <div className="grid grid-cols-1 gap-6 md:hidden">
                     {steps.map((step, idx) => (
                         <motion.div
-                            key={`mobile-${idx}`}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.1 }}
+                            key={`mobile-grid-${idx}`}
+                            className="col-span-1 cursor-pointer group/card h-full"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.5, delay: idx * 0.1 }}
                             onClick={() => setSelectedStep(step)}
-                            className="group flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/10 active:scale-98 transition-all active:bg-white/10"
                         >
-                            <div className="flex items-center gap-4">
-                                {/* Small Icon Box */}
-                                <div className="p-2.5 bg-black/40 rounded-xl border border-white/5 text-white/80">
-                                    {/* FIX: Explicitly cast to ReactElement<{ className?: string }> */}
-                                    {React.cloneElement(step.icon as React.ReactElement<{ className?: string }>, { className: "w-6 h-6" })}
+                            {/* Reusing CardSpotlight for consistent Bento Grid look */}
+                            <CardSpotlight
+                                className="flex flex-col justify-between min-h-[18rem] rounded-[2rem] relative bg-neutral-900/50 border-white/5 overflow-hidden"
+                                color={undefined}
+                                canvasColors={step.colors}
+                                canvasDotSize={step.dotSize}
+                                canvasAnimationSpeed={step.speed}
+                            >
+                                <div className="absolute inset-0 rounded-[2rem] overflow-hidden">
+                                    <div className="relative z-10 p-8 flex flex-col justify-between h-full">
+                                        <div>
+                                            <div className="mb-4 p-3 bg-white/5 rounded-xl w-fit backdrop-blur-sm border border-white/10">
+                                                {step.icon}
+                                            </div>
+                                            <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
+                                            <p className="text-sm text-neutral-300 line-clamp-3">{step.description}</p>
+                                        </div>
+                                    </div>
+                                    {/* Background Image Effect (Subtler on Mobile) */}
+                                    <div className="absolute -bottom-6 -right-6 z-0 pointer-events-none opacity-20">
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img src={step.image} alt={step.title} className="w-40 h-auto object-contain grayscale brightness-75 contrast-125" />
+                                    </div>
                                 </div>
-                                <div className="flex flex-col">
-                                    <h3 className="text-lg font-bold text-white group-active:text-brand-cyan transition-colors">
-                                        {step.title}
-                                    </h3>
-                                    <p className="text-xs text-neutral-500 line-clamp-1">
-                                        {step.description}
-                                    </p>
-                                </div>
-                            </div>
-                            <ChevronRight className="w-5 h-5 text-neutral-600 group-active:text-white transition-colors" />
+                            </CardSpotlight>
                         </motion.div>
                     ))}
                 </div>
 
-                {/* --- DESKTOP VIEW: GRID CARDS --- */}
+                {/* --- DESKTOP VIEW: GRID CARDS (Unchanged) --- */}
                 <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
                     {steps.map((step, idx) => (
                         <motion.div

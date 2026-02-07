@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { ArrowRight, MessageSquareQuote } from "lucide-react"; // Imported new icon for Quote
+import { ArrowRight, MessageSquareQuote, ChevronDown, Mouse } from "lucide-react";
 import { motion, useSpring, useMotionTemplate, useMotionValue } from "framer-motion";
 import HeroCarousel from "@/components/ui/hero-carousel";
 import { PointerHighlight } from "@/components/ui/pointer-highlight";
@@ -58,7 +58,6 @@ export function HeroSection({ projects }: { projects: Project[] }) {
         window.open(calendlyLink, "_blank");
     };
 
-    // New handler for Get Quote
     const handleGetQuote = () => {
         const contactSection = document.getElementById("contact");
         if (contactSection) {
@@ -67,10 +66,7 @@ export function HeroSection({ projects }: { projects: Project[] }) {
     };
 
     return (
-        <section
-            onMouseMove={handleMouseMove}
-            className="relative w-full min-h-[100vh] flex flex-col justify-start items-center overflow-hidden bg-[#030014] text-white selection:bg-cyan-500/30 pt-40 md:pt-52"
-        >
+        <section id="hero" onMouseMove={handleMouseMove} className="relative w-full min-h-[100vh] flex flex-col justify-start items-center overflow-hidden bg-[#030014] text-white selection:bg-cyan-500/30 pt-32 md:pt-52 pb-20 md:pb-0">
             {/* LAYER 0: Ambient Color Blobs */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-[-10%] left-[-10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-brand-cyan/20 rounded-full blur-[80px] md:blur-[100px] animate-blob-bounce mix-blend-screen" />
@@ -94,7 +90,6 @@ export function HeroSection({ projects }: { projects: Project[] }) {
 
             {/* LAYER 2: Text Content */}
             <div className="relative z-30 w-full max-w-7xl mx-auto px-4 md:px-6 flex flex-col items-center justify-center text-center mb-8">
-
                 {/* Badge */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -110,12 +105,12 @@ export function HeroSection({ projects }: { projects: Project[] }) {
                 </motion.div>
 
                 {/* Headline Group */}
-                <h1 className="text-3xl sm:text-4xl lg:text-6xl font-outfit font-medium tracking-tight flex flex-col items-center justify-center">
+                <h1 className="text-2xl sm:text-4xl lg:text-6xl font-outfit font-medium tracking-tight flex flex-col items-center justify-center">
                     <motion.span
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.1 }}
-                        className="block bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 font-light text-xl sm:text-3xl lg:text-4xl mb-3 md:mb-5"
+                        className="block bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 font-light text-lg sm:text-3xl lg:text-4xl mb-3 md:mb-5"
                     >
                         We architect
                     </motion.span>
@@ -123,7 +118,8 @@ export function HeroSection({ projects }: { projects: Project[] }) {
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.2 }}
+                        // FIX: Reduced delay from 0.2 to 0 for instant loading
+                        transition={{ duration: 0.5, delay: 0 }}
                         className="flex flex-col items-center md:flex-row md:items-baseline md:justify-center gap-x-2 gap-y-1 md:gap-x-3 max-w-5xl mx-auto px-2"
                     >
                         <div className="flex items-baseline gap-2">
@@ -135,13 +131,12 @@ export function HeroSection({ projects }: { projects: Project[] }) {
                                     highlightColor="#22d3ee"
                                     containerClassName="pt-1"
                                 >
-                                    <span className="relative z-10 italic px-2 bg-clip-text text-transparent bg-gradient-to-b from-cyan-200 to-cyan-500 text-3xl sm:text-4xl lg:text-6xl">
+                                    <span className="relative z-10 italic px-2 bg-clip-text text-transparent bg-gradient-to-b from-cyan-200 to-cyan-500 text-2xl sm:text-4xl lg:text-6xl">
                                         digital solutions
                                     </span>
                                 </PointerHighlight>
                             </span>
-
-                            <span className="bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 text-3xl sm:text-4xl lg:text-6xl">
+                            <span className="bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 text-2xl sm:text-4xl lg:text-6xl">
                                 that are
                             </span>
                         </div>
@@ -149,10 +144,11 @@ export function HeroSection({ projects }: { projects: Project[] }) {
                         <div className="flex items-center justify-center md:justify-start min-w-[140px] md:min-w-auto">
                             <GooeyText
                                 texts={["Intelligent", "Scalable", "Immersive", "Secure", "Future-Proof"]}
-                                morphTime={1}
-                                cooldownTime={1.5}
+                                // FIX: Reduced times for faster animation
+                                morphTime={0.7}
+                                cooldownTime={0.7}
                                 className="font-bold"
-                                textClassName="text-3xl sm:text-4xl lg:text-6xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400"
+                                textClassName="text-2xl sm:text-4xl lg:text-6xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400"
                             />
                         </div>
                     </motion.div>
@@ -184,7 +180,6 @@ export function HeroSection({ projects }: { projects: Project[] }) {
                         <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/80 to-transparent z-0" />
                     </MagneticButton>
 
-                    {/* REPLACED: "View Works" -> "Get Quote" */}
                     <MagneticButton
                         onClick={handleGetQuote}
                         className="flex-1 sm:flex-none w-full sm:w-auto px-4 py-3 sm:px-6 sm:py-2.5 text-white/90 rounded-full font-medium text-xs sm:text-sm tracking-wide border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/30 backdrop-blur-sm transition-all flex items-center justify-center gap-2 sm:gap-3"
@@ -204,12 +199,28 @@ export function HeroSection({ projects }: { projects: Project[] }) {
                 transition={{ duration: 1, delay: 0.6 }}
                 className="relative z-20 w-full h-[280px] md:h-[450px] overflow-visible mt-6 md:mt-8"
             >
-                <div className="w-full h-full flex items-center justify-center mask-image:linear-gradient(to bottom, black 80%, transparent 100%)">
-                    <div className="relative w-full h-full flex items-center justify-center scale-90 md:scale-100 origin-center">
+                <div className="w-full h-full flex flex-col items-center justify-center">
+                    <div className="relative w-full h-full flex items-center justify-center scale-[0.6] min-[380px]:scale-[0.75] sm:scale-90 md:scale-100 origin-center">
                         <HeroCarousel projects={projects} />
                     </div>
                 </div>
-                {/* REMOVED: The overlay div is deleted as requested */}
+            </motion.div>
+
+            {/* LAYER 4: Scroll Indicator (Hidden on Desktop) */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2, duration: 1 }}
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 pointer-events-none md:hidden"
+            >
+                <span className="text-[10px] uppercase tracking-widest text-neutral-500 font-medium">Scroll</span>
+                <div className="w-5 h-8 border border-neutral-600 rounded-full flex justify-center p-1">
+                    <motion.div
+                        animate={{ y: [0, 6, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        className="w-1 h-1.5 bg-cyan-400 rounded-full"
+                    />
+                </div>
             </motion.div>
         </section>
     );

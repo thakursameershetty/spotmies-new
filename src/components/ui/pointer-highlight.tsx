@@ -1,131 +1,140 @@
 "use client";
-import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
 
-export function PointerHighlight({
-    children,
-    rectangleClassName,
-    pointerClassName,
-    containerClassName,
-    initialColor,
-    highlightColor,
-}: {
+import React, { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+
+interface PointerHighlightProps {
     children: React.ReactNode;
+    containerClassName?: string;
     rectangleClassName?: string;
     pointerClassName?: string;
-    containerClassName?: string;
     initialColor?: string;
     highlightColor?: string;
-}) {
-    const containerRef = useRef<HTMLDivElement>(null);
+}
+
+export const PointerHighlight = ({
+    children,
+    containerClassName,
+    rectangleClassName,
+    pointerClassName,
+    initialColor = "#ffffff",
+    highlightColor = "#22d3ee",
+}: PointerHighlightProps) => {
+    const containerRef = useRef<HTMLSpanElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
-        if (containerRef.current) {
-            const { width, height } = containerRef.current.getBoundingClientRect();
-            setDimensions({ width, height });
-        }
+        if (!containerRef.current) return;
 
-        const resizeObserver = new ResizeObserver((entries) => {
-            for (const entry of entries) {
-                const { width, height } = entry.contentRect;
-                setDimensions({ width, height });
+        const updateDimensions = () => {
+            if (containerRef.current) {
+                const { offsetWidth, offsetHeight } = containerRef.current;
+                setDimensions({ width: offsetWidth, height: offsetHeight });
+
+                // Only show if we have valid dimensions
+                if (offsetWidth > 0 && offsetHeight > 0) {
+                    setIsVisible(true);
+                }
             }
-        });
+            // Check for mobile width
+            setIsMobile(window.innerWidth < 768);
+        };
 
-        if (containerRef.current) {
-            resizeObserver.observe(containerRef.current);
+        // 1. Initial Check
+        updateDimensions();
+
+        // 2. Wait for fonts (Crucial for mobile load)
+        if (document.fonts) {
+            document.fonts.ready.then(updateDimensions);
         }
+
+        // 3. Resize Observer for responsive shifts
+        const resizeObserver = new ResizeObserver(() => {
+            updateDimensions();
+        });
+        resizeObserver.observe(containerRef.current);
+
+        // 4. Fallback timeout
+        const timer = setTimeout(updateDimensions, 500);
 
         return () => {
-            if (containerRef.current) {
-                resizeObserver.unobserve(containerRef.current);
-            }
+            resizeObserver.disconnect();
+            clearTimeout(timer);
         };
     }, []);
 
     return (
-        <div
-            className={cn("relative w-fit", containerClassName)}
+        <span
             ref={containerRef}
+            className={cn("relative inline-block", containerClassName)}
         >
-            <motion.span
-                initial={{ color: initialColor }}
-                whileInView={{ color: highlightColor }}
-                transition={{ duration: 1, ease: "easeInOut" }}
-                className="relative z-10"
-            >
-                {children}
-            </motion.span>
-
-            {dimensions.width > 0 && dimensions.height > 0 && (
-                <motion.div
-                    className="pointer-events-none absolute inset-0 z-0"
-                    initial={{ opacity: 0, scale: 0.95, originX: 0, originY: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
-                >
-                    <motion.div
-                        className={cn(
-                            "absolute inset-0 rounded-lg", // rounded-lg for smoother corners
-                            rectangleClassName,
-                        )}
-                        initial={{
-                            width: 0,
-                            height: 0,
-                        }}
-                        whileInView={{
-                            width: dimensions.width,
-                            height: dimensions.height,
-                        }}
-                        transition={{
-                            duration: 1,
-                            ease: "easeInOut",
-                        }}
-                    />
-                    <motion.div
-                        className="pointer-events-none absolute"
-                        initial={{ opacity: 0 }}
-                        whileInView={{
+            <AnimatePresence>
+                {isVisible && (
+                    <motion.span
+                        initial={{ width: 0, opacity: 0 }}
+                        animate={{
+                            width: "100%",
                             opacity: 1,
-                            x: dimensions.width + 4,
-                            y: dimensions.height + 4,
+                            transition: {
+                                duration: 0.8,
+                                ease: [0.16, 1, 0.3, 1], // Smooth easeOutExpo
+                                delay: 0.2
+                            }
                         }}
-                        style={{
-                            rotate: -90,
-                        }}
-                        transition={{
-                            opacity: { duration: 0.1, ease: "easeInOut" },
-                            duration: 1,
-                            ease: "easeInOut",
-                        }}
-                    >
-                        <Pointer
-                            className={cn("h-5 w-5 text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]", pointerClassName)}
-                        />
-                    </motion.div>
-                </motion.div>
-            )}
-        </div>
-    );
-}
+                        className={cn(
+                            "absolute left-0 top-0 h-full rounded-lg border border-cyan-500/30 bg-cyan-500/10 -z-10 box-border",
+                            rectangleClassName
+                        )}
+                    />
+                )}
+            </AnimatePresence>
 
-const Pointer = ({ ...props }: React.SVGProps<SVGSVGElement>) => {
-    return (
-        <svg
-            stroke="currentColor"
-            fill="currentColor"
-            strokeWidth="1"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            viewBox="0 0 16 16"
-            height="1em"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-            {...props}
-        >
-            <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"></path>
-        </svg>
+            <span className="relative z-10">{children}</span>
+
+            {/* Floating Pointer Icon */}
+            <AnimatePresence>
+                {isVisible && (
+                    <motion.div
+                        initial={{ opacity: 0, x: -20, y: 10 }}
+                        animate={{
+                            opacity: 1,
+                            x: dimensions.width, // Move to end of text
+                            // Responsive Y positioning: +10 on Mobile, +30 on Desktop
+                            y: dimensions.height / 2 + (isMobile ? 10 : 30),
+                            transition: {
+                                duration: 0.8,
+                                ease: [0.16, 1, 0.3, 1],
+                                delay: 0.2
+                            }
+                        }}
+                        className={cn(
+                            "absolute left-0 top-0 pointer-events-none z-20",
+                            pointerClassName
+                        )}
+                    >
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="text-cyan-400 drop-shadow-lg"
+                        >
+                            <path
+                                d="M3 3L10.07 19.97L12.58 12.58L19.97 10.07L3 3Z"
+                                fill="currentColor"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </span>
     );
 };

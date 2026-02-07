@@ -1,193 +1,212 @@
 "use client";
 
-import React, { useRef, useMemo } from 'react';
-import { Canvas, useFrame, useThree, extend } from '@react-three/fiber';
-import { Float, Environment, Sparkles, shaderMaterial } from '@react-three/drei';
-import * as THREE from 'three';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { motion, useMotionValueEvent, useScroll, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Menu, X, ArrowRight } from "lucide-react";
 
-/**
- * UPDATED SHADER: "Shiny LED" Look
- * - Renders a bright WHITE center that fades to the UColor.
- * - Blinking is sharper and faster.
- */
-const NodeShaderMaterial = shaderMaterial(
-    {
-        uTime: 0,
-        uColor: new THREE.Color("#4488ff"),
-        uPixelRatio: 1,
-    },
-    // Vertex Shader
-    `
-    uniform float uTime;
-    uniform float uPixelRatio;
-    varying float vAlpha;
-    varying vec2 vUv;
-    
-    // Random function
-    float random(vec2 st) {
-        return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
-    }
+export default function Navbar() {
+    const pathname = usePathname();
+    const { scrollY } = useScroll();
+    const [scrolled, setScrolled] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState<string>("");
 
-    void main() {
-        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-        gl_Position = projectionMatrix * mvPosition;
-        
-        // SIZE: Even bigger for that "Bloom" look
-        gl_PointSize = 80.0 * uPixelRatio * (1.0 / -mvPosition.z);
-        
-        // BLINKING: Sharper, strobe-like effect
-        float offset = random(position.xy); 
-        // Speed = 4.0 (Fast). 
-        float blink = sin(uTime * 4.0 + offset * 15.0);
-        
-        // Map sine wave to 0.2 -> 1.0 range (never fully invisible)
-        vAlpha = 0.2 + 0.8 * (0.5 + 0.5 * blink);
-    }
-    `,
-    // Fragment Shader
-    `
-    uniform vec3 uColor;
-    varying float vAlpha;
-    
-    void main() {
-        // Calculate distance from center of the point
-        float d = distance(gl_PointCoord, vec2(0.5));
-        
-        // Discard corners to make a circle
-        if (d > 0.5) discard;
-        
-        // GLOW GRADIENT:
-        // 1. Core (Bright White) - inner 10%
-        // 2. Halo (Color) - middle 40%
-        // 3. Fade (Transparent) - outer 50%
-        
-        float intensity = 1.0 - (d * 2.0); // 0 at edge, 1 at center
-        intensity = pow(intensity, 2.0);   // Sharpen the falloff
-        
-        // Color Mix: Mix White (at center) to Blue (at edge)
-        vec3 finalColor = mix(uColor, vec3(1.0), smoothstep(0.8, 1.0, intensity));
-        
-        gl_FragColor = vec4(finalColor, vAlpha * intensity * 2.5); // * 2.5 for over-brightness
-    }
-    `
-);
+    useMotionValueEvent(scrollY, "change", (latest) => {
+        setScrolled(latest > 20);
+    });
 
-extend({ NodeShaderMaterial });
+    useEffect(() => {
+        if (pathname !== "/") {
+            setActiveSection("");
+            return;
+        }
 
-declare module '@react-three/fiber' {
-    interface ThreeElements {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        nodeShaderMaterial: any;
-    }
+        const sectionIds = ["hero", "services", "portfolio", "process", "contact"];
+        const observerOptions = {
+            root: null,
+            rootMargin: "-40% 0px -40% 0px",
+            threshold: 0,
+        };
+
+        const observerCallback = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    if (id === "hero") {
+                        setActiveSection("");
+                    } else {
+                        setActiveSection(id);
+                    }
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        sectionIds.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el);
+        });
+
+        return () => observer.disconnect();
+    }, [pathname]);
+
+    const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
+        if (href.startsWith("#") || (pathname === "/" && href.startsWith("/#"))) {
+            const targetId = href.includes("#") ? href.split("#")[1] : "";
+            const elem = document.getElementById(targetId);
+            if (elem) {
+                e.preventDefault();
+                elem.scrollIntoView({ behavior: "smooth", block: "start" });
+                window.history.pushState(null, "", href);
+                setMobileMenuOpen(false);
+            }
+        }
+    };
+
+    const scheduleMeeting = (e: React.MouseEvent) => {
+        e.preventDefault();
+        window.open("https://calendly.com/spotmies/30min", "_blank");
+        setMobileMenuOpen(false);
+    };
+
+    const navItems = [
+        { name: "Services", href: "/#services", id: "services" },
+        { name: "Portfolio", href: "/#portfolio", id: "portfolio" },
+        { name: "Process", href: "/#process", id: "process" },
+        { name: "Careers", href: "/careers", id: "careers" },
+        { name: "About Us", href: "/about", id: "about" },
+        { name: "Blogs", href: "/blogs", id: "blogs" },
+        { name: "Contact Us", href: "/#contact", id: "contact" },
+    ];
+
+    return (
+        <div className="fixed top-0 w-full flex justify-center z-[100] p-4 md:p-6 pointer-events-none">
+            <motion.nav
+                initial={{ y: -100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className={cn(
+                    "relative flex items-center justify-between w-full max-w-[1320px] rounded-full px-6 py-3 transition-all duration-300 z-[101] pointer-events-auto",
+                    scrolled || mobileMenuOpen
+                        ? "bg-black/80 backdrop-blur-md border border-white/10 shadow-lg"
+                        : "bg-black/50 backdrop-blur-sm border border-white/5"
+                )}
+            >
+                <Link
+                    href="/"
+                    className="flex items-center gap-2 cursor-pointer z-[102]"
+                    onClick={() => {
+                        if (pathname === "/") {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                        setMobileMenuOpen(false);
+                    }}
+                >
+                    <div className="relative w-32 h-8 md:w-40 md:h-8">
+                        <Image src="/spotmies_banner.png" alt="Spotmies" fill className="object-contain" priority />
+                    </div>
+                </Link>
+
+                <div className="hidden md:flex items-center gap-5 lg:gap-8">
+                    {navItems.map((item) => {
+                        const isActive =
+                            (pathname === "/" && activeSection === item.id) ||
+                            (pathname === item.href);
+
+                        return (
+                            <Link
+                                key={item.name}
+                                href={item.href}
+                                onClick={(e) => item.href.includes("#") ? handleScroll(e, item.href) : null}
+                                className={cn(
+                                    "text-sm font-medium transition-colors relative group",
+                                    isActive ? "text-[#00d3f3]" : "text-gray-300 hover:text-white"
+                                )}
+                            >
+                                {item.name}
+                                <span className={cn(
+                                    "absolute -bottom-1 left-0 h-0.5 bg-[#00d3f3] transition-all duration-300",
+                                    isActive ? "w-full" : "w-0 group-hover:w-full"
+                                )} />
+                            </Link>
+                        );
+                    })}
+                </div>
+
+                <button
+                    onClick={scheduleMeeting}
+                    className="hidden md:flex group relative items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 rounded-full text-white text-xs md:text-sm font-medium transition-all cursor-pointer"
+                >
+                    <span>Schedule a Call</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </button>
+
+                <button
+                    className="md:hidden text-white p-2 z-[102] relative outline-none"
+                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                >
+                    {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+            </motion.nav>
+
+            <AnimatePresence>
+                {mobileMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
+                        animate={{ opacity: 1, clipPath: "circle(150% at 100% 0%)" }}
+                        exit={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
+                        transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+                        // Responsive Fixes: h-dvh, overflow-y-auto, reduced top padding
+                        className="fixed inset-0 bg-[#050505] z-[90] flex flex-col pt-24 px-6 pb-6 md:hidden pointer-events-auto h-dvh overflow-y-auto"
+                    >
+                        <div className="flex flex-col w-full max-w-lg mx-auto min-h-full justify-between gap-8">
+                            <div className="flex flex-col gap-1">
+                                {navItems.map((item, i) => {
+                                    const isActive = (pathname === "/" && activeSection === item.id) || (pathname === item.href);
+                                    return (
+                                        <motion.div
+                                            key={item.name}
+                                            initial={{ opacity: 0, x: -30 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0.1 + i * 0.05, duration: 0.4 }}
+                                            className="border-b border-white/5 last:border-none"
+                                        >
+                                            <Link
+                                                href={item.href}
+                                                onClick={(e) => item.href.includes("#") ? handleScroll(e, item.href) : setMobileMenuOpen(false)}
+                                                className="group flex items-center justify-between py-4 w-full active:opacity-70"
+                                            >
+                                                <span className={cn(
+                                                    "text-xl font-bold transition-colors", // Reduced font size slightly for mobile
+                                                    isActive ? "text-[#00d3f3]" : "text-white/90 group-hover:text-[#00d3f3]"
+                                                )}>
+                                                    {item.name}
+                                                </span>
+                                                <ArrowRight className={cn(
+                                                    "w-5 h-5 transition-all duration-300",
+                                                    isActive ? "text-[#00d3f3] translate-x-2" : "text-white/30 group-hover:text-[#00d3f3]"
+                                                )} />
+                                            </Link>
+                                        </motion.div>
+                                    );
+                                })}
+                            </div>
+                            <button
+                                onClick={scheduleMeeting}
+                                className="w-full py-4 rounded-full bg-white text-black font-bold text-lg hover:bg-neutral-200 active:scale-95 transition-all flex items-center justify-center gap-2 mt-auto"
+                            >
+                                Schedule a Call
+                                <ArrowRight className="w-5 h-5" />
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
 }
-
-/**
- * Responsive Group with "Magnetic" Hover Effect
- */
-const ResponsiveGroup = ({ children }: { children: React.ReactNode }) => {
-    const { viewport } = useThree();
-    const groupRef = useRef<THREE.Group>(null);
-
-    const targetPosition = useMemo(() => {
-        return viewport.width > 10 ? new THREE.Vector3(0, -5.5, 0) : new THREE.Vector3(0, 1.0, 0);
-    }, [viewport.width]);
-    const targetScale = viewport.width > 10 ? 1.3 : 0.6;
-
-    React.useEffect(() => {
-        if (groupRef.current) {
-            // Start from bottom for entrance animation
-            groupRef.current.position.y = -20;
-        }
-    }, []);
-
-    useFrame((state, delta) => {
-        if (groupRef.current) {
-            // 1. "Magnetic" Rotation: Tilt towards the mouse
-            // Multiplied by 0.3 for stronger effect
-            const targetRotX = state.mouse.y * 0.3;
-            const targetRotY = state.mouse.x * 0.3;
-
-            // Smoothly interpolate current rotation to target mouse rotation
-            groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetRotX, delta * 2);
-            groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetRotY, delta * 2);
-
-            // 2. Position & Scale (Responsive)
-            groupRef.current.position.lerp(targetPosition, delta * 2);
-            const s = THREE.MathUtils.lerp(groupRef.current.scale.x, targetScale, delta * 2);
-            groupRef.current.scale.set(s, s, s);
-        }
-    });
-
-    return <group ref={groupRef}>{children}</group>;
-};
-
-export const NetworkGlobe = () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const materialRef = useRef<any>(null);
-    const globeGroupRef = useRef<THREE.Group>(null);
-    const glowColor = useMemo(() => new THREE.Color("#00aaff"), []); // Vivid Cyan-Blue
-
-    useFrame((state) => {
-        // Pass time to shader
-        if (materialRef.current) materialRef.current.uTime = state.clock.getElapsedTime();
-
-        // Continuous Rotation
-        // Spin faster if mouse is far from center (Interaction)
-        if (globeGroupRef.current) {
-            const speed = 0.05 + Math.abs(state.mouse.x) * 0.1; // Base 0.05 + Mouse influence
-            globeGroupRef.current.rotation.y += speed * 0.05;
-        }
-    });
-
-    return (
-        <group ref={globeGroupRef} scale={4.5}>
-            {/* Core */}
-            <mesh>
-                <sphereGeometry args={[0.98, 32, 32]} />
-                <meshBasicMaterial color="#000000" />
-            </mesh>
-
-            {/* Wireframe Connections */}
-            <mesh>
-                <icosahedronGeometry args={[1, 5]} />
-                <meshBasicMaterial color="#2266aa" wireframe={true} transparent opacity={0.4} blending={THREE.AdditiveBlending} />
-            </mesh>
-
-            {/* SHINY NODES */}
-            <points>
-                <icosahedronGeometry args={[1, 20]} />
-                <nodeShaderMaterial
-                    ref={materialRef}
-                    transparent={true}
-                    depthWrite={false}
-                    blending={THREE.AdditiveBlending} // CRITICAL: Makes overlapping lights super bright
-                    uColor={glowColor}
-                    uPixelRatio={Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, 2)}
-                />
-            </points>
-        </group>
-    );
-};
-
-export const Scene = () => {
-    return (
-        <Canvas camera={{ position: [0, 0, 16], fov: 30 }} gl={{ antialias: true, alpha: true }}>
-            <ambientLight intensity={0.2} />
-
-            {/* Colorful accent lights */}
-            <pointLight position={[10, 10, 10]} intensity={2} color="#44aaff" />
-            <pointLight position={[-10, -10, -5]} intensity={1} color="#aa44ff" />
-
-            <ResponsiveGroup>
-                <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
-                    <NetworkGlobe />
-                </Float>
-            </ResponsiveGroup>
-
-            <Sparkles count={150} scale={25} size={4} speed={0.4} opacity={0.6} color="#44aaff" />
-            <Sparkles count={80} scale={15} size={3} speed={0.2} opacity={0.4} color="#ff44aa" />
-
-            <Environment preset="city" />
-        </Canvas>
-    );
-};

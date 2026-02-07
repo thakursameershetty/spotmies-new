@@ -119,9 +119,11 @@ function FlipCard({ project, index, rotation, dimensions, totalCount }: FlipCard
                             e.currentTarget.src = "https://placehold.co/600x400/1a1a1a/FFF?text=Error";
                         }}
                         alt={project.title}
-                        className="h-full w-full object-cover opacity-90 transition-opacity duration-300"
+                        // FIX: Changed opacity-90 to opacity-100 for true vibrant colors
+                        className="h-full w-full object-cover opacity-100 transition-opacity duration-300"
                     />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300" />
+                    {/* FIX: Changed bg-black/20 to bg-black/[0.02] (2% opacity) */}
+                    <div className="absolute inset-0 bg-black/[0.02] group-hover:bg-transparent transition-colors duration-300" />
                 </div>
             </div>
         </motion.div>

@@ -113,14 +113,12 @@ export const CustomerStories = () => {
             </div>
 
             {/* --- CARDS GRID --- */}
-            <div className="w-full max-w-[80rem] px-4 md:px-6">
-                {/* layout prop on container helps smooth height changes */}
+            <div className="w-full max-w-[1362px] px-4 md:px-6">
                 <motion.div layout className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    {/* mode='popLayout' is CRITICAL for grid filtering. It lets exiting items pop out of the flow immediately. */}
                     <AnimatePresence mode="popLayout">
                         {filteredStories.map((story) => (
                             <motion.div
-                                key={`${story.company}-${story.filter}`} // Unique key ensures proper exit animation
+                                key={`${story.company}-${story.filter}`}
                                 layout="position"
                                 initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
                                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
