@@ -13,6 +13,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { blogApi, BlogPost } from "@/lib/blogApi";
 import { createExcerpt } from "@/lib/contentSanitizer";
+import BackButton from "@/components/ui/back-button";
 
 export default function BlogPage() {
     const router = useRouter();
@@ -78,15 +79,9 @@ export default function BlogPage() {
 
                 {/* --- HEADER --- */}
                 <div className="relative z-10 mb-10">
-                    <button
-                        onClick={() => router.back()}
-                        className="mb-8 flex items-center gap-2 text-neutral-400 hover:text-white transition-colors group text-sm font-medium"
-                    >
-                        <div className="p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 group-hover:-translate-x-1 transition-all">
-                            <ChevronLeft className="w-4 h-4" />
-                        </div>
-                        Back
-                    </button>
+                    <div className="mb-8">
+                        <BackButton />
+                    </div>
 
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 mb-6 tracking-tight">
                         Insights & News
