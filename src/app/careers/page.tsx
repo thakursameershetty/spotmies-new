@@ -14,6 +14,7 @@ import Footer from "@/components/landing/footer";
 import { getJobs } from "@/lib/api";
 import { Job } from "@/types/types";
 import { cn } from "@/lib/utils";
+import BackButton from "@/components/ui/back-button";
 
 // ... (Keep existing TechLogos and TECH_STACK constants exactly as they were) ...
 const TechLogos = {
@@ -119,15 +120,9 @@ export default function CareersPage() {
                 <section className="relative px-6 z-10 mb-20">
                     <div className="max-w-7xl mx-auto">
                         {/* BACK BUTTON ADDED HERE */}
-                        <button
-                            onClick={() => router.back()}
-                            className="mb-8 flex items-center gap-2 text-neutral-400 hover:text-white transition-colors group text-sm font-medium"
-                        >
-                            <div className="p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 group-hover:-translate-x-1 transition-all">
-                                <ChevronLeft className="w-4 h-4" />
-                            </div>
-                            Back
-                        </button>
+                        <div className="mb-8">
+                            <BackButton />
+                        </div>
 
                         <div className="text-center">
                             <motion.div

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import BackButton from "@/components/ui/back-button";
 
 export default function PrivacyPolicy() {
     const router = useRouter();
@@ -24,16 +25,9 @@ export default function PrivacyPolicy() {
             <main className="relative z-10 max-w-4xl mx-auto px-6 py-12 md:py-20">
 
                 {/* Top Go Back Button */}
-                <motion.button
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 }}
-                    onClick={goBack}
-                    className="group flex items-center gap-2 px-4 py-2 mb-12 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium text-white/80 hover:text-white"
-                >
-                    <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                    Go Back
-                </motion.button>
+                <div className="mb-12">
+                    <BackButton label="Go Back" />
+                </div>
 
                 {/* Content Container */}
                 <motion.div
@@ -131,13 +125,7 @@ export default function PrivacyPolicy() {
 
                 {/* Bottom Go Back Button */}
                 <div className="mt-20 pt-10 border-t border-white/10 flex justify-center">
-                    <button
-                        onClick={goBack}
-                        className="group flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-neutral-200 transition-all"
-                    >
-                        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                        Go Back
-                    </button>
+                    <BackButton label="Go Back" />
                 </div>
             </main>
         </div>

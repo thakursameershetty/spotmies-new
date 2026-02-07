@@ -55,7 +55,7 @@ export function FoundersSection() {
     ];
 
     return (
-        <section id="about" className="relative w-full bg-[#050505] py-24 px-6 md:px-6 overflow-visible">
+        <section id="founders" className="relative w-full bg-[#050505] py-24 px-6 md:px-6 overflow-visible">
             <AmbientBackground intensity="subtle" />
 
             <div className="relative z-10 max-w-[1320px] mx-auto">

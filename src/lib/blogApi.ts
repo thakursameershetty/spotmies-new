@@ -1,6 +1,6 @@
 import { STATIC_BLOG_DATA } from "@/data/blog-data";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.spotmies.com/api';
 
 export interface BlogPost {
     _id: string;

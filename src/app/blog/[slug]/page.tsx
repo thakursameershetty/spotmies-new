@@ -11,6 +11,7 @@ import Image from "next/image";
 import { AmbientBackground } from "@/components/ui/ambient-background";
 import { GlowDivider } from "@/components/ui/glow-divider";
 import { useRouter } from "next/navigation";
+import BackButton from "@/components/ui/back-button";
 
 export default function BlogDetailPage({ params }: { params: { slug: string } }) {
     const router = useRouter();
@@ -63,13 +64,7 @@ export default function BlogDetailPage({ params }: { params: { slug: string } })
 
                 {/* --- BACK BUTTON --- */}
                 <div className="max-w-4xl mx-auto px-6 mb-8 relative z-10">
-                    <button
-                        onClick={() => router.back()}
-                        className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors group"
-                    >
-                        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                        Back to Articles
-                    </button>
+                    <BackButton label="Back to Articles" />
                 </div>
 
                 {/* --- HERO HEADER --- */}

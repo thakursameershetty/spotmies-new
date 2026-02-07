@@ -114,7 +114,7 @@ export function TestimonialsSplit() {
         }, 5000); // Change every 5 seconds
 
         return () => clearInterval(interval);
-    }, [isHovering, nextTestimonial]);
+    }, [isHovering, nextTestimonial, activeIndex]); // Added activeIndex dependence to reset timer on manual click
 
     return (
         <section className="w-full bg-[#050505] text-white overflow-hidden">
@@ -174,8 +174,8 @@ export function TestimonialsSplit() {
                             </AnimatePresence>
                         </div>
 
-                        {/* Progress Dots - Moved to Left Column */}
-                        <div className="flex gap-2 pt-4">
+                        {/* Progress Navigation Dots */}
+                        <div className="flex gap-2 pt-4 items-center">
                             {testimonials.map((_, index) => (
                                 <button
                                     key={index}
@@ -183,23 +183,41 @@ export function TestimonialsSplit() {
                                         e.stopPropagation();
                                         setActiveIndex(index);
                                     }}
-                                    className="relative p-2 group/dot"
+                                    className="relative flex items-center justify-center w-8 h-8 group/dot"
                                 >
+                                    {/* The Inner Dot */}
                                     <span
-                                        className={`
-                                          block w-1.5 h-1.5 rounded-full transition-all duration-300
-                                          ${index === activeIndex
-                                                ? "bg-white scale-125"
-                                                : "bg-zinc-700 hover:bg-zinc-500"
-                                            }
-                                        `}
+                                        className={`relative z-10 block w-1.5 h-1.5 rounded-full transition-all duration-300 ${index === activeIndex
+                                            ? "bg-white scale-110"
+                                            : "bg-zinc-700 group-hover/dot:bg-zinc-500"
+                                            }`}
                                     />
+
+                                    {/* The Animated Progress Ring (Only for Active Index) */}
                                     {index === activeIndex && (
-                                        <motion.span
-                                            layoutId="activeDot"
-                                            className="absolute inset-0 border border-white/30 rounded-full"
-                                            transition={{ duration: 0.3 }}
-                                        />
+                                        <div className="absolute inset-0">
+                                            <svg className="w-full h-full -rotate-90" viewBox="0 0 32 32">
+                                                {/* Background Track */}
+                                                <circle
+                                                    cx="16"
+                                                    cy="16"
+                                                    r="14"
+                                                    className="stroke-white/10 fill-none"
+                                                    strokeWidth="1.5" />
+                                                {/* Filling Progress */}
+                                                {!isHovering && (
+                                                    <motion.circle
+                                                        cx="16"
+                                                        cy="16"
+                                                        r="14"
+                                                        className="stroke-[#00d3f3] fill-none"
+                                                        strokeWidth="1.5"
+                                                        initial={{ pathLength: 0 }}
+                                                        animate={{ pathLength: 1 }}
+                                                        transition={{ duration: 5, ease: "linear" }} />
+                                                )}
+                                            </svg>
+                                        </div>
                                     )}
                                 </button>
                             ))}
@@ -207,7 +225,6 @@ export function TestimonialsSplit() {
                     </div>
 
                     {/* Right: Visual Element & Author Info */}
-                    {/* UPDATED: Changed mobile layout to row, left aligned, fixed image size */}
                     <div className="flex flex-row md:flex-col items-center md:items-start gap-5 md:gap-6 mx-0 w-full md:w-auto">
 
                         {/* Image Container */}

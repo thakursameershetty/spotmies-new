@@ -118,10 +118,10 @@ export function ProjectsSection({ data }: { data: Project[] }) {
 
                         {/* UPDATED: See All Projects Button (Replaced Chevrons) */}
                         <div className="mb-2">
-                            <Link href="/work" className="group flex items-center gap-2 text-sm md:text-base font-medium text-white hover:text-[#00eef9] transition-colors">
-                                See All Works
-                                <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center group-hover:border-[#00eef9] group-hover:bg-[#00eef9]/10 transition-all">
-                                    <ArrowRight className="w-4 h-4" />
+                            <Link href="/work" className="group flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/10 bg-white/5 transition-all duration-300 hover:border-[#00d3f3] hover:bg-[#00d3f3]/5 hover:shadow-[0_0_20px_rgba(0,211,243,0.15)]">
+                                <span className="text-sm md:text-base font-medium text-neutral-300 group-hover:text-[#00d3f3] transition-colors duration-300">See All Works</span>
+                                <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#00d3f3]/20 transition-all duration-300">
+                                    <ArrowRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-[#00d3f3] group-hover:translate-x-0.5 transition-all duration-300" />
                                 </div>
                             </Link>
                         </div>

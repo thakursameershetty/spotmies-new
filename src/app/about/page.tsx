@@ -12,6 +12,7 @@ import { CheckCircle2, Heart, Lightbulb, Shield, Users, TrendingUp, ChevronLeft,
 import Image from "next/image";
 import CountUp from "@/components/ui/count-up";
 import { FoundersSection } from "@/components/landing/founders-section";
+import BackButton from "@/components/ui/back-button";
 
 // --- ANIMATION VARIANTS ---
 const fadeInUp = {
@@ -47,16 +48,8 @@ export default function AboutPage() {
                 <div className="max-w-[1320px] mx-auto text-center relative z-10">
 
                     {/* BACK BUTTON */}
-                    <div className="absolute left-0 top-[-60px] md:-top-10 flex w-full justify-start">
-                        <button
-                            onClick={() => router.back()}
-                            className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors group text-sm font-medium z-50 pointer-events-auto"
-                        >
-                            <div className="p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 group-hover:-translate-x-1 transition-all">
-                                <ChevronLeft className="w-4 h-4" />
-                            </div>
-                            Back
-                        </button>
+                    <div className="absolute left-0 top-[-60px] md:-top-10 flex w-full justify-start pointer-events-auto">
+                        <BackButton />
                     </div>
 
                     <motion.div
@@ -283,7 +276,7 @@ export default function AboutPage() {
                                         src={img.src}
                                         alt="Team Member"
                                         fill
-                                        className="object-cover grayscale hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
+                                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                 </motion.div>
