@@ -3,114 +3,110 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+// UPDATED: Imported useRouter
+import { useRouter } from "next/navigation";
 
 // --- CONFIGURATION ---
 const PILLS = {
     // WHITE PILLS (Primary) -> CENTER CLUSTER (Honeycomb Layout)
-    // Kept compact in the center to allow space for the outer arcs
     inner: [
         {
             label: "Design Systems", icon: "pentagon",
-            top: "32%", left: "52%",
-            mobileTop: "40%", mobileLeft: "30%", // Top-Left of Center
+            top: "32%", left: "51%",
+            mobileTop: "40%", mobileLeft: "30%",
             delay: 0.1, videoSrc: "/Art Galleries Web Design.mp4"
         },
         {
             label: "Product Branding", icon: "circle",
-            top: "43%", left: "45%",
-            mobileTop: "43%", mobileLeft: "70%", // Top-Right of Center
+            top: "43%", left: "44%",
+            mobileTop: "43%", mobileLeft: "70%",
             delay: 0.2, videoSrc: "/Art Galleries Web Design.mp4"
         },
         {
             label: "Mobile Apps", icon: "portrait",
-            top: "43%", left: "62%",
-            mobileTop: "52%", mobileLeft: "20%", // Far Left of Center
+            top: "43%", left: "61%",
+            mobileTop: "52%", mobileLeft: "20%",
             delay: 0.2, videoSrc: "/Art Galleries Web Design.mp4"
         },
         {
             label: "UI/UX Design", icon: "play",
-            top: "53%", left: "55%",
-            mobileTop: "55%", mobileLeft: "80%", // Far Right of Center
+            top: "53%", left: "54%",
+            mobileTop: "55%", mobileLeft: "80%",
             delay: 0.0, videoSrc: "/Art Galleries Web Design.mp4"
         },
         {
             label: "Web Platforms", icon: "globe",
-            top: "64%", left: "45%",
-            mobileTop: "65%", mobileLeft: "32%", // Bottom-Left of Center
+            top: "64%", left: "44%",
+            mobileTop: "65%", mobileLeft: "32%",
             delay: 0.3, videoSrc: "/Art Galleries Web Design.mp4"
         },
         {
             label: "SaaS Dev", icon: "landscape",
             top: "64%", left: "59%",
-            mobileTop: "66%", mobileLeft: "65%", // Bottom-Right of Center
+            mobileTop: "66%", mobileLeft: "65%",
             delay: 0.3, videoSrc: "/Art Galleries Web Design.mp4"
         },
         {
             label: "Brand Strategy", icon: "heart",
-            top: "54%", left: "37%",
-            mobileTop: "53%", mobileLeft: "50%", // DEAD CENTER
+            top: "53%", left: "38%",
+            mobileTop: "53%", mobileLeft: "50%",
             delay: 0.3, videoSrc: "/Art Galleries Web Design.mp4"
         },
     ],
-    // DARK PILLS (Secondary) -> ARRANGED IN "ARCS" (Top-Left & Bottom-Right)
+    // DARK PILLS (Secondary) -> ARRANGED IN "ARCS"
     outer: [
-        // --- TOP-LEFT ARC (Brand Space) ---
-        // Sweeps from top-center towards the left edge
         {
             label: "Smart Contracts",
             top: "31%", left: "29%",
-            mobileTop: "12%", mobileLeft: "50%", // Top point of arc
+            mobileTop: "12%", mobileLeft: "50%",
             delay: 0.4
         },
         {
             label: "Motion Design",
             top: "42%", left: "25%",
-            mobileTop: "16%", mobileLeft: "28%", // Mid-Top-Left
+            mobileTop: "16%", mobileLeft: "28%",
             delay: 0.5
         },
         {
             label: "Growth Hacking",
             top: "53%", left: "19%",
-            mobileTop: "26%", mobileLeft: "15%", // Far Left
+            mobileTop: "26%", mobileLeft: "15%",
             delay: 0.6
         },
         {
             label: "AI Integration",
             top: "64%", left: "25%",
-            mobileTop: "20%", mobileLeft: "77%", // Lower Left Edge
+            mobileTop: "20%", mobileLeft: "77%",
             delay: 0.5
         },
-
-        // --- BOTTOM-RIGHT ARC (Product Space) ---
-        // Sweeps from right edge down to bottom-center
         {
             label: "Data Science",
             top: "31%", left: "70%",
-            mobileTop: "75%", mobileLeft: "15%", // High Right Edge
+            mobileTop: "75%", mobileLeft: "15%",
             delay: 0.4
         },
         {
             label: "Product Strategy",
             top: "42%", left: "76%",
-            mobileTop: "76%", mobileLeft: "85%", // Mid-Right
+            mobileTop: "76%", mobileLeft: "85%",
             delay: 0.5
         },
         {
             label: "GTM Strategy",
             top: "53%", left: "68%",
-            mobileTop: "86%", mobileLeft: "75%", // Low-Right
+            mobileTop: "86%", mobileLeft: "75%",
             delay: 0.6
         },
         {
             label: "Community",
             top: "53%", left: "80%",
-            mobileTop: "90%", mobileLeft: "50%", // Bottom point of arc
+            mobileTop: "90%", mobileLeft: "50%",
             delay: 0.5
         },
         {
             label: "Tech Docs",
             top: "64%", left: "77%",
-            mobileTop: "85%", mobileLeft: "30%", // Tucked bottom-left-ish
+            mobileTop: "85%", mobileLeft: "30%",
             delay: 0.4
         },
     ],
@@ -144,19 +140,13 @@ export default function BrandMastery() {
     const springTransition = { type: "spring", stiffness: 200, damping: 20 };
 
     // --- DYNAMIC DISTANCES ---
-    // Desktop: Horizontal expansion (500px)
     const expandDist = 500;
-
-    // Mobile Physics: 
-    // Wide diagonal spread to keep dots in corners
     const mobileExpandDistX = 140;
     const mobileExpandDistY = 270;
 
-    // Text Offsets relative to the DOT position
-    const labelOffset = 60; // Desktop
-    const mobileTextYOffset = 30; // Mobile vertical gap between dot and text
+    const labelOffset = 60;
+    const mobileTextYOffset = 30;
 
-    // Initial Positions
     const blobInitialX = 50;
     const textInitialX = 90;
 
@@ -166,7 +156,7 @@ export default function BrandMastery() {
             className="relative w-full bg-black flex flex-col items-center justify-center overflow-hidden font-sans py-24"
         >
             {/* --- 1. HEADER SECTION --- */}
-            <div className="relative z-50 w-full max-w-[1200px] mx-auto px-6 mb-12 md:mb-24 flex flex-col md:flex-row justify-between items-end gap-8">
+            <div className="relative z-50 w-full max-w-[1200px] mx-auto px-6 mb-12 md:mb-24 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
                 <h2 className="text-4xl md:text-5xl font-bold leading-tight text-left bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
                     At the intersection of<br />
                     product and brand
@@ -206,19 +196,23 @@ export default function BrandMastery() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: isExpanded ? 1 : 0 }}
                     transition={{ duration: 1, delay: 1 }}
-                    className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
+                    className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center"
                 >
                     <div className="absolute w-[80vw] h-[80vw] md:w-[380px] md:h-[380px] border border-dashed border-[#00d3f3]/20 rounded-full" />
                     <div className="absolute w-[130vw] h-[130vw] md:w-[750px] md:h-[750px] border border-dashed border-[#00d3f3]/20 rounded-full" />
 
-                    {/* DIAGONAL LINE */}
+                    {/* DIAGONAL LINE (STATIC CONNECTOR) */}
                     <motion.div
                         animate={{
-                            rotate: isMobile ? 63 : 0,
-                            width: isMobile ? "900px" : "100%",
+                            opacity: isExpanded ? 1 : 0,
+                        }}
+                        transition={{ duration: 0.6, delay: 1.2 }}
+                        style={{
+                            width: isMobile ? "610px" : "1000px",
+                            rotate: isMobile ? "62.6deg" : "0deg",
                             maxWidth: isMobile ? "none" : "1000px"
                         }}
-                        className="absolute h-px border-t border-dashed border-[#00d3f3]/40 origin-center z-20"
+                        className="absolute h-px border-t border-dashed border-[#00d3f3]/20 opacity-30 origin-center z-20"
                     />
                 </motion.div>
 
@@ -397,7 +391,7 @@ export default function BrandMastery() {
         }
         .shape-globe {
           width: 12px; height: 12px; background: linear-gradient(135deg, #00b09b, #96c93d);
-          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M2 12h20'/%3E%3Cpath d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M2 12h20'/%3E%3Cpath d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z'/%3E%3C/svg%3E");
           -webkit-mask-size: cover; mask-size: cover;
         }
         @media (max-width: 768px) {
@@ -408,20 +402,27 @@ export default function BrandMastery() {
     );
 }
 
-// --- SUB-COMPONENT: PILL WITH CLEAN VIDEO POPUP ---
+// --- SUB-COMPONENT: PILL WITH CLICK NAVIGATION ---
 function Pill({ label, icon, top, left, mobileTop, mobileLeft, delay, isExpanded, isMobile, variant, transition, baseDelay, videoSrc }: any) {
-    const isPrimary = variant === "inverted-dark"; // White Pills
+    const router = useRouter(); // UPDATED: Router hook
+    const isPrimary = variant === "inverted-dark"; 
     const [isHovered, setIsHovered] = useState(false);
 
     // Dynamic Position Selection
     const finalTop = isMobile && mobileTop ? mobileTop : top;
     const finalLeft = isMobile && mobileLeft ? mobileLeft : left;
 
+    // UPDATED: Handle click to navigate to work page with filter
+    const handleClick = () => {
+        if (isPrimary) {
+            router.push(`/work?category=${encodeURIComponent(label)}`);
+        }
+    };
+
     return (
         <motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate={{
-                // SCALE ADJUSTMENT: 0.9 for better visibility
                 scale: isExpanded ? (isMobile ? 0.9 : 1) : 0,
                 opacity: isExpanded ? 1 : 0,
                 zIndex: isHovered ? 100 : 10,
@@ -437,9 +438,10 @@ function Pill({ label, icon, top, left, mobileTop, mobileLeft, delay, isExpanded
             }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            onClick={handleClick} // UPDATED: Added click handler
             className={`absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium whitespace-nowrap cursor-pointer pointer-events-auto transition-all duration-300
                 ${isPrimary
-                    ? "bg-white text-black shadow-lg shadow-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]"
+                    ? "bg-white text-black shadow-lg shadow-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] active:scale-95"
                     : "bg-neutral-900 border border-white/20 text-gray-400 hover:text-white hover:border-white/40 hover:scale-110"
                 }
             `}

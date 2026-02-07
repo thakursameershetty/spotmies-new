@@ -134,7 +134,8 @@ export function TestimonialsSplit() {
                 </div>
 
                 <div
-                    className="relative grid grid-cols-1 md:grid-cols-[1fr_auto] gap-12 lg:gap-24 items-start cursor-pointer group"
+                    /* CHANGED: Reduced gap from gap-12 lg:gap-24 to gap-6 lg:gap-10 */
+                    className="relative grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 lg:gap-10 items-start cursor-pointer group"
                     onClick={nextTestimonial}
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}
@@ -159,7 +160,8 @@ export function TestimonialsSplit() {
                         </AnimatePresence>
 
                         {/* Quote */}
-                        <div className="relative overflow-hidden min-h-[160px] md:min-h-[140px] max-w-3xl">
+                        {/* CHANGED: Changed max-w-3xl to w-full and added pr-10 to fill space better */}
+                        <div className="relative overflow-hidden min-h-[160px] md:min-h-[140px] w-full pr-0 md:pr-10">
                             <AnimatePresence mode="wait">
                                 <motion.blockquote
                                     key={active.id}
@@ -228,7 +230,8 @@ export function TestimonialsSplit() {
                     <div className="flex flex-row md:flex-col items-center md:items-start gap-5 md:gap-6 mx-0 w-full md:w-auto">
 
                         {/* Image Container */}
-                        <div className="relative w-[100px] h-[133px] md:w-64 md:h-auto md:aspect-[3/4] flex-shrink-0">
+                        {/* CHANGED: Reduced width from md:w-64 to md:w-48 */}
+                        <div className="relative w-[100px] h-[133px] md:w-48 md:h-auto md:aspect-[3/4] flex-shrink-0">
                             <AnimatePresence mode="wait">
                                 <motion.div
                                     key={active.id}

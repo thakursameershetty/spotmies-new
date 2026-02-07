@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { AmbientBackground } from "@/components/ui/ambient-background";
+import { cn } from "@/lib/utils";
 
 const ALL_COMPANIES = [
     { name: "Zin in Thuiswerken", desc: "Professional Services", src: "https://spotmiesstorage.blob.core.windows.net/media/comp1.png" },
@@ -31,6 +32,66 @@ const ALL_COMPANIES = [
     { name: "Vitals", desc: "Healthcare", src: "https://spotmiesstorage.blob.core.windows.net/media/comp23.png" },
     { name: "VarunMotors", desc: "Travel", src: "https://spotmiesstorage.blob.core.windows.net/media/comp24.png" },
     { name: "Reaidy", desc: "HRTech", src: "https://www.reaidy.io/assets/logo_dark-DMRlJ8_-.png" },
+    {
+        "name": "Awaken",
+        "desc": "Fintech",
+        "src": "/assets/compan/awaken.png"
+    },
+    {
+        "name": "BoomBoomTalk",
+        "desc": "Social",
+        "src": "/assets/compan/boomboomtalk.png"
+    },
+    {
+        "name": "Commuter",
+        "desc": "Travel",
+        "src": "/assets/compan/commuter.png"
+    },
+    {
+        "name": "EduMoon",
+        "desc": "EdTech",
+        "src": "/assets/compan/edumoon.png"
+    },
+    {
+        "name": "Farm Vaidya",
+        "desc": "AgriTech",
+        "src": "/assets/compan/farmvidya.png"
+    },
+    {
+        "name": "Mobile Masala",
+        "desc": "Entertainment",
+        "src": "/assets/compan/mobile-masala.png"
+    },
+    {
+        "name": "OROLEXA",
+        "desc": "Healthcare",
+        "src": "/assets/compan/orelexa.png"
+    },
+    {
+        "name": "TheReachX",
+        "desc": "Marketing",
+        "src": "/assets/compan/reachx.jpg"
+    },
+    {
+        "name": "Referral Bazaar",
+        "desc": "Retail",
+        "src": "/assets/compan/referalbazaar.png"
+    },
+    {
+        "name": "Stoory",
+        "desc": "Technology",
+        "src": "/assets/compan/stoory.png"
+    },
+    {
+        "name": "Teckybot",
+        "desc": "Technology",
+        "src": "/assets/compan/teckybot.png"
+    },
+    {
+        "name": "WingDent",
+        "desc": "Healthcare",
+        "src": "/assets/compan/wingdent.png"
+    }
 ];
 
 const TOTAL_CELLS = 15;
@@ -57,6 +118,8 @@ export default function ClientsSectionDark() {
                 if (!cell) return;
                 const img = cell.querySelector(".logo-img") as HTMLImageElement;
                 const text = cell.querySelector(".subtext") as HTMLDivElement;
+                const parent = cell;
+
                 const randomDuration = Math.random() * 0.3 + 0.4;
                 img.style.transitionDuration = `${randomDuration}s`;
                 img.classList.remove("opacity-100", "scale-100");
@@ -72,6 +135,32 @@ export default function ClientsSectionDark() {
                     const newData = ALL_COMPANIES[newIndex];
                     if (img) img.src = newData.src;
                     if (text) text.innerText = newData.desc;
+
+                    // FILTER LOGIC: WingDent, OROLEXA, Awaken get grayscale
+                    const isSpecial = ["WingDent", "OROLEXA", "Awaken"].includes(newData.name);
+
+                    // DARK BOX LOGIC: Teckybot AND EduMoon get a dark box around the logo
+                    const hasDarkLogoBox = ["Teckybot", "EduMoon"].includes(newData.name);
+
+                    // Update Image Classes
+                    img.className = "logo-img w-auto h-10 md:h-16 max-w-[80%] object-contain opacity-0 scale-50 transition-all ease-[cubic-bezier(0.34,1.56,0.64,1)]";
+
+                    if (isSpecial) {
+                        img.classList.add("grayscale", "brightness-200", "group-hover:grayscale-0", "group-hover:brightness-100");
+                    } else {
+                        img.classList.add("brightness-0", "invert", "group-hover:invert-0", "group-hover:brightness-100");
+                    }
+
+                    // Apply Dark Box if needed
+                    if (hasDarkLogoBox) {
+                        img.classList.add("group-hover:bg-neutral-950", "group-hover:p-2", "group-hover:rounded-lg", "group-hover:shadow-sm");
+                    }
+
+                    // Reset Parent Container (Always White on Hover)
+                    parent.className = "group relative flex flex-col justify-center items-center p-4 md:p-6 aspect-[4/3] rounded-xl md:rounded-2xl border border-transparent transition-all duration-300 cursor-pointer bg-transparent opacity-100 group-hover/grid:blur-[2px] group-hover/grid:opacity-40 hover:!blur-none hover:!opacity-100 hover:!scale-110 hover:bg-white hover:shadow-2xl hover:shadow-black/50 hover:z-10";
+
+                    // Reset Text (Always Black)
+                    text.className = "subtext absolute bottom-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 text-xs font-bold tracking-wide text-center w-full px-2 pointer-events-none text-black";
 
                     requestAnimationFrame(() => {
                         img.classList.remove("opacity-0", "scale-50");
@@ -108,7 +197,6 @@ export default function ClientsSectionDark() {
 
             <AmbientBackground intensity="subtle" />
 
-            {/* UPDATED: max-w-[1320px] to match your requested width */}
             <div className="relative z-10 max-w-[1320px] mx-auto px-6 md:px-10">
                 <div className="flex flex-col lg:flex-row justify-between items-start mb-16 gap-10 lg:gap-0">
                     <motion.div
@@ -118,8 +206,6 @@ export default function ClientsSectionDark() {
                         transition={{ duration: 0.6 }}
                         className="max-w-md"
                     >
-                        {/* UPDATED: Reduced font size to match Brand Mastery (text-3xl to text-5xl) */}
-                        {/* UPDATED: Forced 2 lines with a simple <br> */}
                         <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-bold leading-[1.2] tracking-tight mb-8 bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
                             For companies with <br />
                             tech leverage
@@ -136,7 +222,6 @@ export default function ClientsSectionDark() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="max-w-xl lg:pt-2"
                     >
-                        {/* Adjusted text size slightly to balance the smaller header */}
                         <p className="text-base md:text-lg text-neutral-400 font-light leading-relaxed">
                             We specialize in working with digital products and brands,
                             regardless of the size and lifecycle stage, from startups
@@ -152,24 +237,39 @@ export default function ClientsSectionDark() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     ref={containerRef}
-                    // UPDATED: Adjusted gaps for the 1320px width (gap-x-12 to fill space evenly)
                     className="group/grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-x-10 md:gap-y-6 lg:gap-x-12 lg:gap-y-8 w-full min-h-[400px]"
                     onMouseEnter={() => (isPausedRef.current = true)}
                     onMouseLeave={() => (isPausedRef.current = false)}
                 >
                     {Array.from({ length: TOTAL_CELLS }).map((_, index) => {
                         const initialData = ALL_COMPANIES[index];
+                        const isSpecial = ["WingDent", "OROLEXA", "Awaken"].includes(initialData.name);
+                        // UPDATED: Include EduMoon in the dark box logic
+                        const hasDarkLogoBox = ["Teckybot", "EduMoon"].includes(initialData.name);
+
                         return (
                             <div
                                 key={index}
                                 ref={(el) => { cellsRef.current[index] = el; }}
-                                className="group relative flex flex-col justify-center items-center p-4 md:p-6 aspect-[4/3] rounded-xl md:rounded-2xl border border-transparent transition-all duration-300 cursor-pointer bg-transparent opacity-100 group-hover/grid:blur-[2px] group-hover/grid:opacity-40 hover:!blur-none hover:!opacity-100 hover:!scale-110 hover:bg-white hover:shadow-2xl hover:shadow-black/50 hover:z-10"
+                                className={cn(
+                                    "group relative flex flex-col justify-center items-center p-4 md:p-6 aspect-[4/3] rounded-xl md:rounded-2xl border border-transparent transition-all duration-300 cursor-pointer bg-transparent opacity-100",
+                                    "group-hover/grid:blur-[2px] group-hover/grid:opacity-40",
+                                    "hover:!blur-none hover:!opacity-100 hover:!scale-110 hover:shadow-2xl hover:shadow-black/50 hover:z-10",
+                                    "hover:bg-white"
+                                )}
                             >
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
                                     src={initialData.src}
                                     alt={initialData.name}
-                                    className="logo-img w-auto h-10 md:h-16 max-w-[80%] object-contain opacity-100 scale-100 transition-all ease-[cubic-bezier(0.34,1.56,0.64,1)] brightness-0 invert group-hover:invert-0 group-hover:brightness-100"
+                                    className={cn(
+                                        "logo-img w-auto h-10 md:h-16 max-w-[80%] object-contain opacity-100 scale-100 transition-all ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+                                        isSpecial
+                                            ? "grayscale brightness-200 group-hover:grayscale-0 group-hover:brightness-100"
+                                            : "brightness-0 invert group-hover:invert-0 group-hover:brightness-100",
+                                        // UPDATED: Apply dark box if in the list
+                                        hasDarkLogoBox && "group-hover:bg-neutral-950 group-hover:p-2 group-hover:rounded-lg group-hover:shadow-sm"
+                                    )}
                                 />
                                 <span className="subtext absolute bottom-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 text-xs font-bold tracking-wide text-center w-full px-2 pointer-events-none text-black">
                                     {initialData.desc}

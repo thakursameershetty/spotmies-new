@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; // Import useRouter
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     ArrowRight, MapPin, Clock, Briefcase,
-    LayoutGrid, List as ListIcon, ChevronLeft, ChevronRight, ExternalLink,
+    LayoutGrid, List as ListIcon, ChevronLeft, ChevronRight,
     Zap, Globe, Target
 } from "lucide-react";
 import { AmbientBackground } from "@/components/ui/ambient-background";
@@ -16,7 +16,7 @@ import { Job } from "@/types/types";
 import { cn } from "@/lib/utils";
 import BackButton from "@/components/ui/back-button";
 
-// ... (Keep existing TechLogos and TECH_STACK constants exactly as they were) ...
+// --- TechLogos (unchanged) ---
 const TechLogos = {
     React: () => (
         <svg viewBox="-10.5 -9.45 21 18.9" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 md:w-16 md:h-16 text-[#61DAFB]"><circle cx="0" cy="0" r="2" fill="currentColor"></circle><g stroke="currentColor" strokeWidth="1" fill="none"><ellipse rx="10" ry="4.5"></ellipse><ellipse rx="10" ry="4.5" transform="rotate(60)"></ellipse><ellipse rx="10" ry="4.5" transform="rotate(120)"></ellipse></g></svg>
@@ -64,8 +64,7 @@ const TECH_STACK = [
 ];
 
 export default function CareersPage() {
-    const router = useRouter(); // Initialize router
-    // --- State Management ---
+    const router = useRouter(); 
     const [jobs, setJobs] = useState<Job[]>([]);
     const [loading, setLoading] = useState(true);
     const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -75,7 +74,6 @@ export default function CareersPage() {
     const [totalJobs, setTotalJobs] = useState(0);
     const JOBS_PER_PAGE = 6;
 
-    // --- Fetch Data Effect ---
     useEffect(() => {
         async function fetchData() {
             setLoading(true);
@@ -96,7 +94,6 @@ export default function CareersPage() {
         }
     }, [currentPage]);
 
-    // --- Helpers ---
     const totalPages = Math.ceil(totalJobs / JOBS_PER_PAGE);
 
     const handleApply = (jobId: string) => {
@@ -119,7 +116,6 @@ export default function CareersPage() {
                 {/* --- Hero Section --- */}
                 <section className="relative px-6 z-10 mb-20">
                     <div className="max-w-7xl mx-auto">
-                        {/* BACK BUTTON ADDED HERE */}
                         <div className="mb-8">
                             <BackButton />
                         </div>
@@ -176,20 +172,18 @@ export default function CareersPage() {
                     </div>
                 </section>
 
-                {/* --- 🚀 TECH STACK INFINITE SCROLL (REAL LOGOS, NO TEXT) --- */}
+                {/* --- 🚀 TECH STACK INFINITE SCROLL --- */}
                 <section className="py-16 relative z-10 overflow-hidden border-y border-white/5 bg-white/[0.01]">
                     <div className="max-w-7xl mx-auto px-6 mb-10 text-center">
                         <span className="text-sm font-medium text-zinc-500 uppercase tracking-widest">Our Technology Stack</span>
                     </div>
 
-                    {/* Marquee Container */}
                     <div className="flex w-full overflow-hidden mask-linear-fade">
                         <motion.div
                             className="flex gap-16 items-center shrink-0 pr-16"
                             animate={{ x: "-50%" }}
                             transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
                         >
-                            {/* Doubled list for seamless loop */}
                             {[...TECH_STACK, ...TECH_STACK].map((tech, i) => (
                                 <div key={i} className="flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity cursor-default group grayscale hover:grayscale-0 duration-300">
                                     {tech.icon}
@@ -201,40 +195,60 @@ export default function CareersPage() {
 
                 {/* --- Job Listings Section --- */}
                 <section className="py-32 px-6 relative z-10" id="openings">
-                    {/* ... (Rest of the component remains exactly the same as original) ... */}
                     <div className="max-w-7xl mx-auto">
 
                         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 border-b border-white/10 pb-6 gap-6">
-                            <div>
-                                <h2 className="text-4xl md:text-5xl font-bold text-white flex items-center gap-4 mb-3">
-                                    <Briefcase className="text-[#00d3f3] w-8 h-8 md:w-10 md:h-10" /> Open Positions
-                                </h2>
-                                <p className="text-zinc-400 text-lg">
-                                    Showing <span className="text-white font-bold">{jobs.length}</span> of <span className="text-white font-bold">{totalJobs}</span> available roles
-                                </p>
-                            </div>
+                            <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-6">
+                                <div>
+                                    <h2 className="text-4xl md:text-5xl font-bold text-white flex items-center gap-4 mb-3">
+                                        <Briefcase className="text-[#00d3f3] w-8 h-8 md:w-10 md:h-10" /> Open Positions
+                                    </h2>
+                                </div>
 
-                            <div className="flex items-center gap-2 bg-white/5 p-1.5 rounded-xl border border-white/10">
-                                <button
-                                    onClick={() => setViewMode("grid")}
-                                    className={cn(
-                                        "px-4 py-2.5 rounded-lg transition-all flex items-center gap-2 text-sm font-semibold",
-                                        viewMode === "grid" ? "bg-[#00d3f3] text-black shadow-lg shadow-[#00d3f3]/20" : "text-zinc-400 hover:text-white hover:bg-white/5"
-                                    )}
-                                >
-                                    <LayoutGrid className="w-4 h-4" />
-                                    <span className="hidden sm:inline">Grid</span>
-                                </button>
-                                <button
-                                    onClick={() => setViewMode("list")}
-                                    className={cn(
-                                        "px-4 py-2.5 rounded-lg transition-all flex items-center gap-2 text-sm font-semibold",
-                                        viewMode === "list" ? "bg-[#00d3f3] text-black shadow-lg shadow-[#00d3f3]/20" : "text-zinc-400 hover:text-white hover:bg-white/5"
-                                    )}
-                                >
-                                    <ListIcon className="w-4 h-4" />
-                                    <span className="hidden sm:inline">List</span>
-                                </button>
+                                {/* ALIGNED CONTAINER: Showing X of Y roles + Switcher */}
+                                <div className="flex items-center gap-6">
+                                    <p className="text-zinc-400 text-lg whitespace-nowrap">
+                                        Showing <span className="text-white font-bold">{jobs.length}</span> of <span className="text-white font-bold">{totalJobs}</span> roles
+                                    </p>
+
+                                    {/* PILL SWITCHER - Hidden on Mobile */}
+                                    <div className="relative hidden md:flex items-center bg-white/5 p-1 rounded-full border border-white/10">
+                                        {/* Animated Background Pill */}
+                                        <motion.div
+                                            className="absolute top-1 bottom-1 bg-[#00d3f3] rounded-full shadow-lg shadow-[#00d3f3]/20"
+                                            initial={false}
+                                            animate={{
+                                                x: viewMode === "grid" ? 0 : "100%",
+                                                width: "50%"
+                                            }}
+                                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                        />
+
+                                        {/* Grid Button */}
+                                        <button
+                                            onClick={() => setViewMode("grid")}
+                                            className={cn(
+                                                "relative z-10 px-4 py-2 rounded-full flex items-center gap-2 text-sm font-semibold transition-colors duration-300",
+                                                viewMode === "grid" ? "text-black" : "text-zinc-400 hover:text-white"
+                                            )}
+                                        >
+                                            <LayoutGrid className="w-4 h-4" />
+                                            <span className="hidden sm:inline">Grid</span>
+                                        </button>
+
+                                        {/* List Button */}
+                                        <button
+                                            onClick={() => setViewMode("list")}
+                                            className={cn(
+                                                "relative z-10 px-4 py-2 rounded-full flex items-center gap-2 text-sm font-semibold transition-colors duration-300",
+                                                viewMode === "list" ? "text-black" : "text-zinc-400 hover:text-white"
+                                            )}
+                                        >
+                                            <ListIcon className="w-4 h-4" />
+                                            <span className="hidden sm:inline">List</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -275,11 +289,7 @@ export default function CareersPage() {
                                                         <h3 className="text-2xl md:text-3xl font-bold text-white group-hover:text-[#00d3f3] transition-colors leading-tight">
                                                             {job.jobTitle}
                                                         </h3>
-                                                        {viewMode === "grid" && (
-                                                            <div className="p-3 rounded-full bg-white/5 group-hover:bg-[#00d3f3] group-hover:text-black transition-colors shrink-0">
-                                                                <ExternalLink className="w-5 h-5" />
-                                                            </div>
-                                                        )}
+                                                        {/* REMOVED: External Link Icon Button */}
                                                     </div>
 
                                                     <div className="flex flex-wrap gap-3 mt-4 text-sm text-zinc-400">

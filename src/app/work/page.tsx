@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+// UPDATED: Added useSearchParams import
+import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "@/components/landing/navbar";
 import Footer from "@/components/landing/footer";
 import { PROJECT_DATA } from "@/data/projects";
 import { AmbientBackground } from "@/components/ui/ambient-background";
 import Image from "next/image";
-import { ArrowUpRight, ChevronLeft, Search, X, SlidersHorizontal, ChevronDown } from "lucide-react";
+import { ArrowUpRight, Search, X, SlidersHorizontal, ChevronDown } from "lucide-react";
 import { GlowDivider } from "@/components/ui/glow-divider";
-import { useRouter } from "next/navigation";
 import { CaseStudyModal } from "@/components/ui/case-study-modal";
 import { Project } from "@/types/types";
 import { motion, AnimatePresence } from "framer-motion";
@@ -16,21 +17,16 @@ import { cn } from "@/lib/utils";
 import BackButton from "@/components/ui/back-button";
 
 // --- HELPER: Extract Categories (Smart Detection) ---
-// Scans project data to find implicit categories like AI or Blockchain
 const getProjectCategories = (project: Project): string[] => {
     const categories = new Set<string>();
-
-    // 1. Base Category (e.g., "Web App")
     const baseCat = project.category.split(",")[0].trim();
     categories.add(baseCat);
 
-    // 2. Smart Detection for AI
     const textToScan = (project.description + " " + project.introduction + " " + project.title).toLowerCase();
     if (textToScan.includes("ai ") || textToScan.includes("artificial intelligence") || textToScan.includes("chatbot") || textToScan.includes("machine learning")) {
         categories.add("AI");
     }
 
-    // 3. Smart Detection for Blockchain
     if (textToScan.includes("blockchain") || textToScan.includes("web3") || textToScan.includes("nft") || textToScan.includes("crypto") || project.category.includes("NFT")) {
         categories.add("Blockchain");
     }
@@ -40,7 +36,6 @@ const getProjectCategories = (project: Project): string[] => {
 
 // --- HELPER: Extract Tech Stack ---
 const getProjectTech = (project: Project): string[] => {
-    // Assumes format "Type, Tech1, Tech2" -> returns ["Tech1", "Tech2"]
     const parts = project.category.split(",");
     if (parts.length > 1) {
         return parts.slice(1).map(t => t.trim());
@@ -50,6 +45,8 @@ const getProjectTech = (project: Project): string[] => {
 
 export default function WorkPage() {
     const router = useRouter();
+    const searchParams = useSearchParams(); // UPDATED: Get params
+    
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -57,8 +54,6 @@ export default function WorkPage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [activeCategory, setActiveCategory] = useState("All");
     const [activeTech, setActiveTech] = useState("All");
-
-    // FIX: Filters hidden by default as requested
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
 
     // --- DYNAMIC DATA EXTRACTION ---
@@ -78,21 +73,37 @@ export default function WorkPage() {
         return Array.from(techs).sort();
     }, []);
 
+    // UPDATED: Effect to handle incoming URL parameters from Brand Mastery
+    useEffect(() => {
+        const categoryParam = searchParams.get("category");
+        if (categoryParam) {
+            // Check if exact match exists, otherwise try partial match logic
+            if (allCategories.includes(categoryParam)) {
+                setActiveCategory(categoryParam);
+                setIsFiltersVisible(true); // Open filters to show the selection
+            } else {
+                // If the parameter is "Mobile Apps" but category is "Mobile App", try to find a match
+                const match = allCategories.find(c => c.toLowerCase().includes(categoryParam.toLowerCase()) || categoryParam.toLowerCase().includes(c.toLowerCase()));
+                if (match) {
+                    setActiveCategory(match);
+                    setIsFiltersVisible(true);
+                }
+            }
+        }
+    }, [searchParams, allCategories]);
+
     // --- FILTERING LOGIC ---
     const filteredProjects = useMemo(() => {
         return PROJECT_DATA.filter((project) => {
-            // 1. Search Filter
             const searchLower = searchQuery.toLowerCase();
             const matchesSearch =
                 project.title.toLowerCase().includes(searchLower) ||
                 project.client.toLowerCase().includes(searchLower) ||
                 (project.description && project.description.toLowerCase().includes(searchLower));
 
-            // 2. Category Filter
             const projectCats = getProjectCategories(project);
             const matchesCategory = activeCategory === "All" || projectCats.includes(activeCategory);
 
-            // 3. Tech Filter
             const projectTechs = getProjectTech(project);
             const matchesTech = activeTech === "All" || projectTechs.includes(activeTech);
 
@@ -109,6 +120,8 @@ export default function WorkPage() {
         setSearchQuery("");
         setActiveCategory("All");
         setActiveTech("All");
+        // UPDATED: Clear URL param as well
+        router.push("/work", { scroll: false });
     };
 
     return (
@@ -133,18 +146,18 @@ export default function WorkPage() {
                 <div className="relative z-20 mb-12 space-y-6">
 
                     {/* Top Row: Search + Filter Toggle */}
-                    <div className="flex flex-col md:flex-row gap-4 justify-between md:items-center">
+                    <div className="flex items-center gap-3 w-full">
                         {/* Search Input */}
-                        <div className="relative w-full md:max-w-md group">
+                        <div className="relative flex-1 group">
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <Search className="w-5 h-5 text-neutral-500 group-focus-within:text-[#00eef9] transition-colors" />
                             </div>
                             <input
                                 type="text"
-                                placeholder="Search projects, AI, Blockchain..."
+                                placeholder="Search projects..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full pl-11 pr-10 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-neutral-500 focus:outline-none focus:border-[#00eef9]/50 focus:bg-white/10 transition-all shadow-lg"
+                                className="w-full h-14 pl-11 pr-10 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-neutral-500 focus:outline-none focus:border-[#00eef9]/50 focus:bg-white/10 transition-all shadow-lg"
                             />
                             {searchQuery && (
                                 <button
@@ -160,14 +173,14 @@ export default function WorkPage() {
                         <button
                             onClick={() => setIsFiltersVisible(!isFiltersVisible)}
                             className={cn(
-                                "flex items-center gap-2 px-5 py-3.5 rounded-2xl border transition-all font-medium text-sm whitespace-nowrap",
+                                "h-14 flex items-center gap-2 px-5 rounded-2xl border transition-all font-medium text-sm whitespace-nowrap shrink-0",
                                 isFiltersVisible
                                     ? "bg-[#00eef9]/10 border-[#00eef9]/30 text-[#00eef9]"
                                     : "bg-white/5 border-white/10 text-neutral-400 hover:text-white"
                             )}
                         >
                             <SlidersHorizontal className="w-4 h-4" />
-                            Filters
+                            <span className="hidden sm:inline">Filters</span>
                             <ChevronDown className={cn("w-4 h-4 transition-transform", isFiltersVisible ? "rotate-180" : "")} />
                         </button>
                     </div>
@@ -183,7 +196,7 @@ export default function WorkPage() {
                             >
                                 <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 space-y-6 mt-2">
 
-                                    {/* Categories Filter (Includes Smart AI/Blockchain tags) */}
+                                    {/* Categories Filter */}
                                     <div>
                                         <div className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3 ml-1">
                                             Categories & Industries
@@ -220,7 +233,7 @@ export default function WorkPage() {
                                                     key={tech}
                                                     onClick={() => setActiveTech(tech)}
                                                     className={cn(
-                                                        "px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 border",
+                                                        "px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 border",
                                                         activeTech === tech
                                                             ? "bg-[#00eef9]/10 text-[#00eef9] border-[#00eef9]/30"
                                                             : "bg-white/5 text-neutral-500 border-white/5 hover:bg-white/10 hover:text-neutral-300"

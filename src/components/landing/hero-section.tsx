@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { ArrowRight, MessageSquareQuote, ChevronDown, Mouse } from "lucide-react";
+import { MessageSquareQuote } from "lucide-react";
 import { motion, useSpring, useMotionTemplate, useMotionValue } from "framer-motion";
 import HeroCarousel from "@/components/ui/hero-carousel";
 import { PointerHighlight } from "@/components/ui/pointer-highlight";
@@ -118,7 +118,6 @@ export function HeroSection({ projects }: { projects: Project[] }) {
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        // FIX: Reduced delay from 0.2 to 0 for instant loading
                         transition={{ duration: 0.5, delay: 0 }}
                         className="flex flex-col items-center md:flex-row md:items-baseline md:justify-center gap-x-2 gap-y-1 md:gap-x-3 max-w-5xl mx-auto px-2"
                     >
@@ -144,7 +143,6 @@ export function HeroSection({ projects }: { projects: Project[] }) {
                         <div className="flex items-center justify-center md:justify-start min-w-[140px] md:min-w-auto">
                             <GooeyText
                                 texts={["Intelligent", "Scalable", "Immersive", "Secure", "Future-Proof"]}
-                                // FIX: Reduced times for faster animation
                                 morphTime={0.7}
                                 cooldownTime={0.7}
                                 className="font-bold"
@@ -197,29 +195,14 @@ export function HeroSection({ projects }: { projects: Project[] }) {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.6 }}
-                className="relative z-20 w-full h-[280px] md:h-[450px] overflow-visible mt-6 md:mt-8"
+                // UPDATED: Removed hardcoded height [280px] to allow responsive sizing
+                className="relative z-20 w-full h-[320px] md:h-[450px] overflow-visible mt-6 md:mt-8"
             >
                 <div className="w-full h-full flex flex-col items-center justify-center">
-                    <div className="relative w-full h-full flex items-center justify-center scale-[0.6] min-[380px]:scale-[0.75] sm:scale-90 md:scale-100 origin-center">
+                    {/* UPDATED: Removed scale-[0.6] hacks. The carousel now sizes itself correctly on mobile. */}
+                    <div className="relative w-full h-full flex items-center justify-center origin-center">
                         <HeroCarousel projects={projects} />
                     </div>
-                </div>
-            </motion.div>
-
-            {/* LAYER 4: Scroll Indicator (Hidden on Desktop) */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 2, duration: 1 }}
-                className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 pointer-events-none md:hidden"
-            >
-                <span className="text-[10px] uppercase tracking-widest text-neutral-500 font-medium">Scroll</span>
-                <div className="w-5 h-8 border border-neutral-600 rounded-full flex justify-center p-1">
-                    <motion.div
-                        animate={{ y: [0, 6, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-1 h-1.5 bg-cyan-400 rounded-full"
-                    />
                 </div>
             </motion.div>
         </section>
