@@ -35,6 +35,14 @@ const faqs = [
 export const FaqSection = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
+    // Function to handle smooth scrolling
+    const scrollToContact = () => {
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
     return (
         <section className="relative w-full py-24 lg:py-32 bg-black text-white overflow-hidden" id="faq">
             <div className="absolute inset-0 pointer-events-none">
@@ -42,7 +50,7 @@ export const FaqSection = () => {
                 <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-900/10 blur-[120px] rounded-full mix-blend-screen opacity-30" />
             </div>
 
-            <div className="relative z-10 max-w-7xl mx-auto px-6">
+            <div className="relative z-10 max-w-[1362px] mx-auto px-6">
                 <div className="grid lg:grid-cols-12 gap-12 lg:gap-24">
 
                     {/* LEFT COLUMN: Sticky Header */}
@@ -76,11 +84,13 @@ export const FaqSection = () => {
                                 Everything you need to know about our product and billing. Can’t find the answer you’re looking for?
                             </motion.p>
 
+                            {/* Button with Scroll Handler */}
                             <motion.button
+                                onClick={scrollToContact}
                                 initial={{ opacity: 0, y: 10 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.3 }}
-                                className="flex items-center gap-3 px-6 py-3 rounded-full bg-white text-black font-medium hover:bg-neutral-200 transition-colors group"
+                                className="flex items-center gap-3 px-6 py-3 rounded-full bg-white text-black font-medium hover:bg-neutral-200 transition-colors group cursor-pointer"
                             >
                                 <Mail className="w-4 h-4" />
                                 <span>Contact our team</span>

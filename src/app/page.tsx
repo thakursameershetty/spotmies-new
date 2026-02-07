@@ -39,7 +39,8 @@ export default async function Home() {
       <BrandMastery />
 
 
-      <ProjectsSection data={projects} />
+      {/* Filter only selected projects (Ids: 3, 4, 5, 13, 14) */}
+      <ProjectsSection data={projects.filter(p => [3, 4, 5, 13, 14].includes(p.id))} />
 
       {/* Reduced dividers: Removed after Projects */}
 

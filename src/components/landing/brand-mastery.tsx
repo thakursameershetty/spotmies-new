@@ -215,10 +215,10 @@ export default function BrandMastery() {
                     <motion.div
                         animate={{
                             rotate: isMobile ? 63 : 0,
-                            width: isMobile ? "620px" : "100%", // Long enough to reach corners
+                            width: isMobile ? "900px" : "100%",
                             maxWidth: isMobile ? "none" : "1000px"
                         }}
-                        className="absolute h-px border-t border-dashed border-[#00d3f3]/70 origin-center z-20"
+                        className="absolute h-px border-t border-dashed border-[#00d3f3]/40 origin-center z-20"
                     />
                 </motion.div>
 

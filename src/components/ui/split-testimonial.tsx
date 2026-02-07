@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
@@ -77,7 +77,7 @@ const testimonials = [
             "Spotmies has been a reliable partner for our business, delivering high-quality services and products that have exceeded our expectations.",
         name: "Dileep",
         role: "Founder",
-        company: "chaloride",
+        company: "Chaloride",
         time: "2 years ago",
         image:
             "https://spotmiesstorage.blob.core.windows.net/old-data/spotmies_site_OurClients_Dileep.jpeg",
@@ -88,7 +88,7 @@ const testimonials = [
             "Spotmies is not just a service provider; they are visionaries who understand the pulse of our industry. With their cutting-edge product designing, they have given us a competitive edge and positioned us as leaders in the market.",
         name: "Venkat",
         role: "Founder",
-        company: "Mr bikes",
+        company: "Mr Bikes",
         time: "2 years ago",
         image:
             "https://spotmiesstorage.blob.core.windows.net/old-data/spotmies_site_OurClients_Venkat.jpeg",
@@ -101,15 +101,26 @@ export function TestimonialsSplit() {
 
     const active = testimonials[activeIndex];
 
-    const nextTestimonial = () => {
+    const nextTestimonial = useCallback(() => {
         setActiveIndex((prev) => (prev + 1) % testimonials.length);
-    };
+    }, []);
+
+    // Auto-play functionality
+    useEffect(() => {
+        if (isHovering) return; // Pause on hover
+
+        const interval = setInterval(() => {
+            nextTestimonial();
+        }, 5000); // Change every 5 seconds
+
+        return () => clearInterval(interval);
+    }, [isHovering, nextTestimonial]);
 
     return (
-        <section className="w-full bg-[#050505] text-white">
-            <div className="w-full max-w-5xl mx-auto px-6 py-24">
+        <section className="w-full bg-[#050505] text-white overflow-hidden">
+            <div className="w-full max-w-[1362px] mx-auto px-4 md:px-6 py-24">
 
-                {/* --- ADDED HEADER SECTION --- */}
+                {/* Header Section */}
                 <div className="mb-16 md:mb-24">
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
@@ -123,13 +134,13 @@ export function TestimonialsSplit() {
                 </div>
 
                 <div
-                    className="relative grid grid-cols-1 md:grid-cols-[1fr_auto] gap-12 items-center cursor-pointer group"
+                    className="relative grid grid-cols-1 md:grid-cols-[1fr_auto] gap-12 lg:gap-24 items-start cursor-pointer group"
                     onClick={nextTestimonial}
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}
                 >
                     {/* Left: Quote Content */}
-                    <div className="space-y-8">
+                    <div className="space-y-8 relative z-10 pt-4">
                         {/* Company Tag */}
                         <AnimatePresence mode="wait">
                             <motion.div
@@ -138,115 +149,114 @@ export function TestimonialsSplit() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.3 }}
-                                className="inline-flex items-center gap-2 text-xs tracking-[0.2em] uppercase text-zinc-400"
+                                className="inline-flex items-center gap-3 text-xs md:text-sm tracking-[0.2em] uppercase text-zinc-400"
                             >
                                 <span className="w-8 h-px bg-zinc-600" />
                                 {active.company}
-                                <span className="w-1 h-1 rounded-full bg-zinc-600" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-zinc-600" />
                                 <span className="text-zinc-500">{active.time}</span>
                             </motion.div>
                         </AnimatePresence>
 
                         {/* Quote */}
-                        <div className="relative overflow-hidden min-h-[180px] md:min-h-[140px]">
+                        <div className="relative overflow-hidden min-h-[160px] md:min-h-[140px] max-w-3xl">
                             <AnimatePresence mode="wait">
                                 <motion.blockquote
                                     key={active.id}
-                                    initial={{ opacity: 0, y: 40 }}
+                                    initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -40 }}
+                                    exit={{ opacity: 0, y: -30 }}
                                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                                    className="text-2xl md:text-3xl lg:text-3xl font-light leading-[1.4] tracking-tight text-white"
+                                    className="text-xl md:text-2xl lg:text-3xl font-light leading-relaxed text-white/90"
                                 >
                                     &quot;{active.quote}&quot;
                                 </motion.blockquote>
                             </AnimatePresence>
                         </div>
 
+                        {/* Progress Dots - Moved to Left Column */}
+                        <div className="flex gap-2 pt-4">
+                            {testimonials.map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setActiveIndex(index);
+                                    }}
+                                    className="relative p-2 group/dot"
+                                >
+                                    <span
+                                        className={`
+                                          block w-1.5 h-1.5 rounded-full transition-all duration-300
+                                          ${index === activeIndex
+                                                ? "bg-white scale-125"
+                                                : "bg-zinc-700 hover:bg-zinc-500"
+                                            }
+                                        `}
+                                    />
+                                    {index === activeIndex && (
+                                        <motion.span
+                                            layoutId="activeDot"
+                                            className="absolute inset-0 border border-white/30 rounded-full"
+                                            transition={{ duration: 0.3 }}
+                                        />
+                                    )}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Right: Visual Element & Author Info */}
+                    {/* UPDATED: Changed mobile layout to row, left aligned, fixed image size */}
+                    <div className="flex flex-row md:flex-col items-center md:items-start gap-5 md:gap-6 mx-0 w-full md:w-auto">
+
+                        {/* Image Container */}
+                        <div className="relative w-[100px] h-[133px] md:w-64 md:h-auto md:aspect-[3/4] flex-shrink-0">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={active.id}
+                                    initial={{ opacity: 0, filter: "blur(10px)", scale: 1.05 }}
+                                    animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+                                    exit={{ opacity: 0, filter: "blur(10px)", scale: 0.95 }}
+                                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                                    className="absolute inset-0"
+                                >
+                                    <div className="w-full h-full rounded-2xl overflow-hidden border border-white/10 bg-zinc-900 shadow-2xl">
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img
+                                            src={active.image}
+                                            alt={active.name}
+                                            className="w-full h-full object-cover transition-all duration-500"
+                                        />
+                                    </div>
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
+
                         {/* Author Info */}
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={active.name}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.3, delay: 0.2 }}
-                                className="flex items-center gap-4"
-                            >
-                                <div className="w-10 h-px bg-white/20" />
-                                <div>
-                                    <p className="text-sm font-medium text-white">{active.name}</p>
-                                    <p className="text-xs text-zinc-500">{active.role}</p>
-                                </div>
-                            </motion.div>
-                        </AnimatePresence>
-                    </div>
-
-                    {/* Right: Visual Element */}
-                    <div className="relative w-full md:w-48 aspect-[3/4] md:h-64 mx-auto md:mx-0">
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={active.id}
-                                initial={{ opacity: 0, filter: "blur(20px)", scale: 1.05 }}
-                                animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
-                                exit={{ opacity: 0, filter: "blur(20px)", scale: 0.95 }}
-                                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                                className="absolute inset-0"
-                            >
-                                <div className="w-full h-full rounded-2xl overflow-hidden border border-white/10 bg-zinc-900">
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img
-                                        src={active.image}
-                                        alt={active.name}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            </motion.div>
-                        </AnimatePresence>
-
-                        {/* Click indicator */}
-                        <motion.div
-                            animate={{
-                                opacity: isHovering ? 1 : 0,
-                                scale: isHovering ? 1 : 0.8,
-                            }}
-                            transition={{ duration: 0.2 }}
-                            className="absolute -bottom-12 left-1/2 -translate-x-1/2 hidden md:flex items-center gap-2 text-xs text-zinc-500"
-                        >
-                            <span>Next</span>
-                            <ArrowUpRight className="w-3 h-3" />
-                        </motion.div>
-                    </div>
-
-                    {/* Progress Dots */}
-                    <div className="absolute -bottom-12 md:-bottom-16 left-0 md:left-0 flex items-center gap-3">
-                        {testimonials.map((_, index) => (
-                            <button
-                                key={index}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setActiveIndex(index);
-                                }}
-                                className="relative p-1 group/dot"
-                            >
-                                <span
-                                    className={`
-                  block w-2 h-2 rounded-full transition-all duration-300
-                  ${index === activeIndex
-                                            ? "bg-white scale-100"
-                                            : "bg-zinc-600 scale-75 hover:bg-zinc-500 hover:scale-100"
-                                        }
-                `}
-                                />
-                                {index === activeIndex && (
-                                    <motion.span
-                                        layoutId="activeDot"
-                                        className="absolute inset-0 border border-white/30 rounded-full"
-                                        transition={{ duration: 0.3 }}
-                                    />
-                                )}
-                            </button>
-                        ))}
+                        <div className="w-full pl-0 md:pl-2">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={active.name}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.3, delay: 0.1 }}
+                                    className="text-left"
+                                >
+                                    <p className="text-lg md:text-base font-medium text-white">{active.name}</p>
+                                    <p className="text-sm text-zinc-500">
+                                        {active.role}
+                                        {active.company && active.company !== "Content Creator" && (
+                                            <>
+                                                <span className="mx-1.5 opacity-50">|</span>
+                                                {active.company}
+                                            </>
+                                        )}
+                                    </p>
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
                     </div>
                 </div>
             </div>

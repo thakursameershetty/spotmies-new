@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, Twitter, Linkedin, Instagram, Youtube, Send } from "lucide-react"; // Removed MapPin
+import { Mail, Phone, Linkedin, Instagram, Youtube, Send } from "lucide-react"; // Removed MapPin and Twitter
 import { cn } from "@/lib/utils";
 import { LocationMap } from "@/components/ui/expand-map";
 import { AmbientBackground } from "@/components/ui/ambient-background";
@@ -23,6 +23,18 @@ const LocationOnIcon = ({ className }: { className?: string }) => (
         <path d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89t96.5 239q0 119-79.5 236.5T480-80Zm0-480Z" />
     </svg>
 );
+
+const XIcon = ({ className }: { className?: string }) => (
+    <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className={className}
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+);
+
 
 export const ContactSection = () => {
     const [formState, setFormState] = useState({
@@ -89,7 +101,7 @@ export const ContactSection = () => {
 
             <AmbientBackground intensity="subtle" />
 
-            <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+            <div className="relative z-10 max-w-[1320px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
 
                 {/* Left Column: Info & Text */}
                 <motion.div
@@ -100,8 +112,11 @@ export const ContactSection = () => {
                     className="flex flex-col space-y-8"
                 >
                     <div>
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm text-neutral-300 mb-6">
-                            <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse" />
+                        <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm text-neutral-300 mb-6 transition-all hover:bg-white/10 cursor-default">
+                            <span className="relative flex h-2.5 w-2.5 shrink-0">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00d3f3] opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#00d3f3]"></span>
+                            </span>
                             Available for new projects
                         </div>
                         <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 tracking-tight leading-tight pb-2">
@@ -132,8 +147,9 @@ export const ContactSection = () => {
                         </div>
                     </div>
 
+
                     <div className="flex items-center gap-6 pt-4">
-                        <SocialLink href="https://twitter.com/spotmies" icon={<Twitter className="w-5 h-5" />} />
+                        <SocialLink href="https://twitter.com/spotmies" icon={<XIcon className="w-5 h-5" />} />
                         <SocialLink href="https://linkedin.com/company/spotmies" icon={<Linkedin className="w-5 h-5" />} />
                         <SocialLink href="https://instagram.com/spotmies" icon={<Instagram className="w-5 h-5" />} />
                         <SocialLink href="https://youtube.com/@spotmies" icon={<Youtube className="w-5 h-5" />} />

@@ -141,10 +141,10 @@ export function ProcessSection() {
                         Our designs
                     </h2>
 
+                    {/* UPDATED: Link changed to /work as requested */}
+                    {/* Previous Link: https://www.behance.net/spotmiesllp */}
                     <a
-                        href="https://www.behance.net/spotmiesllp"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href="/work"
                         className="group inline-flex items-center gap-3 px-8 py-4 border border-white/20 bg-white/5 hover:bg-white hover:text-black backdrop-blur-md transition-all uppercase tracking-widest text-xs font-bold rounded-full"
                     >
                         Show More
