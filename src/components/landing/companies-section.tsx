@@ -38,6 +38,11 @@ const ALL_COMPANIES = [
         "src": "/assets/compan/awaken.png"
     },
     {
+        "name": "Amero X",
+        "desc": "Blockchain & Fintech",
+        "src": "/assets/compan/amerox.png"
+    },
+    {
         "name": "BoomBoomTalk",
         "desc": "Social",
         "src": "/assets/compan/boomboomtalk.png"
@@ -79,12 +84,12 @@ const ALL_COMPANIES = [
     },
     {
         "name": "Stoory",
-        "desc": "Technology",
+        "desc": "Marketing",
         "src": "/assets/compan/stoory.png"
     },
     {
         "name": "Teckybot",
-        "desc": "Technology",
+        "desc": "EdTech",
         "src": "/assets/compan/teckybot.png"
     },
     {
