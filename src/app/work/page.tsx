@@ -73,6 +73,11 @@ export default function WorkPage() {
         return Array.from(techs).sort();
     }, []);
 
+    // --- UPDATED: Force Scroll to Top on Mount ---
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     // UPDATED: Effect to handle incoming URL parameters from Brand Mastery
     useEffect(() => {
         const categoryParam = searchParams.get("category");

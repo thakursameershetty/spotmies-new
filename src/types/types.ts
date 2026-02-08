@@ -5,7 +5,7 @@ export interface Project {
     id: number;
     title: string;
     category: string;
-    description?: string; // <--- ADDED THIS FIELD
+    description?: string;
     image: string;
     link?: string;
     client: string;
@@ -22,6 +22,7 @@ export interface Project {
         position: string;
     };
     gallery: string[];
+    priority?: boolean;
 }
 
 // NEW: Job Interface for Reaidy API

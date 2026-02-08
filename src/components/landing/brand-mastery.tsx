@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-// UPDATED: Imported useRouter
 import { useRouter } from "next/navigation";
 
 // --- CONFIGURATION ---
@@ -140,7 +139,8 @@ export default function BrandMastery() {
     const springTransition = { type: "spring", stiffness: 200, damping: 20 };
 
     // --- DYNAMIC DISTANCES ---
-    const expandDist = 500;
+    // UPDATED: Set to 570 as requested
+    const expandDist = 565; 
     const mobileExpandDistX = 140;
     const mobileExpandDistY = 270;
 
@@ -153,10 +153,10 @@ export default function BrandMastery() {
     return (
         <section
             ref={containerRef}
-            className="relative w-full bg-black flex flex-col items-center justify-center overflow-hidden font-sans py-24"
+            className="relative w-full bg-black flex flex-col items-center justify-center overflow-hidden font-sans pt-16 pb-24 md:pt-24 md:pb-32"
         >
             {/* --- 1. HEADER SECTION --- */}
-            <div className="relative z-50 w-full max-w-[1200px] mx-auto px-6 mb-12 md:mb-24 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+            <div className="relative z-50 w-full max-w-[1362px] mx-auto px-6 mb-12 md:mb-24 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
                 <h2 className="text-4xl md:text-5xl font-bold leading-tight text-left bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
                     At the intersection of<br />
                     product and brand
@@ -189,7 +189,7 @@ export default function BrandMastery() {
             </svg>
 
             {/* --- 2. ANIMATION CANVAS --- */}
-            <div className="relative w-full max-w-[1200px] h-[600px] md:h-[600px] flex items-center justify-center">
+            <div className="relative w-full max-w-[1362px] h-[600px] md:h-[600px] flex items-center justify-center">
 
                 {/* STRUCTURE LAYER (Orbits & Lines) */}
                 <motion.div
@@ -198,8 +198,11 @@ export default function BrandMastery() {
                     transition={{ duration: 1, delay: 1 }}
                     className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center"
                 >
+                    {/* Inner Orbit */}
                     <div className="absolute w-[80vw] h-[80vw] md:w-[380px] md:h-[380px] border border-dashed border-[#00d3f3]/20 rounded-full" />
-                    <div className="absolute w-[130vw] h-[130vw] md:w-[750px] md:h-[750px] border border-dashed border-[#00d3f3]/20 rounded-full" />
+                    
+                    {/* Outer Orbit - UPDATED: Size set to 1140px (570 * 2) */}
+                    <div className="absolute w-[130vw] h-[130vw] md:w-[800px] md:h-[800px] border border-dashed border-[#00d3f3]/20 rounded-full" />
 
                     {/* DIAGONAL LINE (STATIC CONNECTOR) */}
                     <motion.div
@@ -208,9 +211,9 @@ export default function BrandMastery() {
                         }}
                         transition={{ duration: 0.6, delay: 1.2 }}
                         style={{
-                            width: isMobile ? "610px" : "1000px",
+                            width: isMobile ? "610px" : "1140px",
                             rotate: isMobile ? "62.6deg" : "0deg",
-                            maxWidth: isMobile ? "none" : "1000px"
+                            maxWidth: isMobile ? "none" : "1200px"
                         }}
                         className="absolute h-px border-t border-dashed border-[#00d3f3]/20 opacity-30 origin-center z-20"
                     />
@@ -224,6 +227,7 @@ export default function BrandMastery() {
                     <motion.div
                         initial={{ width: 80, height: 90, opacity: 1 }}
                         animate={{
+                            // UPDATED: Uses expandDist (570)
                             width: isExpanded ? (isMobile ? 500 : expandDist * 2) : 80,
                             height: isExpanded ? 0 : 90,
                             opacity: isExpanded ? 0 : 1,
@@ -415,7 +419,7 @@ function Pill({ label, icon, top, left, mobileTop, mobileLeft, delay, isExpanded
     // UPDATED: Handle click to navigate to work page with filter
     const handleClick = () => {
         if (isPrimary) {
-            router.push(`/work?category=${encodeURIComponent(label)}`);
+            router.push(`/work?category=${encodeURIComponent(label)}`, { scroll: true });
         }
     };
 
