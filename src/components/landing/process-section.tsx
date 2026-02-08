@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import {
     Search,
     PenTool,
-    Code2,          // NEW: Icon for Develop
+    Code2,
     Rocket,
     ArrowUpRight,
     HeartPulse,
@@ -89,7 +89,6 @@ export function ProcessSection() {
                     </motion.p>
                 </div>
 
-                {/* UPDATED: Grid to 4 columns for 4 steps */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
                     <ProcessStep
                         index={0}
@@ -105,7 +104,6 @@ export function ProcessSection() {
                         desc="Architecture meets aesthetics. We craft pixel-perfect interfaces designed for human interaction."
                         icon={PenTool}
                     />
-                    {/* NEW STEP: Develop */}
                     <ProcessStep
                         index={2}
                         number="03"
@@ -141,8 +139,6 @@ export function ProcessSection() {
                         Our designs
                     </h2>
 
-                    {/* UPDATED: Link changed to /work as requested */}
-                    {/* Previous Link: https://www.behance.net/spotmiesllp */}
                     <a
                         href="/work"
                         className="group inline-flex items-center gap-3 px-8 py-4 border border-white/20 bg-white/5 hover:bg-white hover:text-black backdrop-blur-md transition-all uppercase tracking-widest text-xs font-bold rounded-full"
@@ -167,6 +163,7 @@ export function ProcessSection() {
                     </motion.h2>
                 </div>
 
+                {/* The Grid Container */}
                 <div className="grid grid-cols-2 md:grid-cols-5 border-l border-t border-white/10 bg-black/40 backdrop-blur-sm">
                     <TechItem name="Healthcare" icon={HeartPulse} index={0} />
                     <TechItem name="Fintech" icon={Landmark} index={1} />
@@ -212,11 +209,19 @@ const TechItem = ({ name, icon: Icon, index }: { name: string, icon: any, index:
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: index * 0.05 }}
-        className="aspect-[4/3] md:aspect-square border-r border-b border-white/10 flex flex-col items-center justify-center p-6 group hover:bg-white/5 transition-all cursor-crosshair relative"
+        // UPDATED:
+        // 1. Used 'aspect-square' uniformly on all screens to guarantee a perfect grid.
+        // 2. Adjusted padding to 'p-3 md:p-6' to prevent content from touching edges on small screens.
+        className="aspect-square border-r border-b border-white/10 flex flex-col items-center justify-center p-3 md:p-6 group hover:bg-white/5 transition-all cursor-crosshair relative"
     >
-        <div className="w-16 h-16 bg-white/5 rounded-full mb-6 flex items-center justify-center text-neutral-400 group-hover:scale-110 group-hover:text-[#00eef9] group-hover:bg-[#00eef9]/10 transition-all duration-300">
-            <Icon className="w-8 h-8" />
+        {/* UPDATED: Slightly smaller icon container on mobile (w-12 h-12) to save vertical space */}
+        <div className="w-12 h-12 md:w-16 md:h-16 bg-white/5 rounded-full mb-3 md:mb-6 flex items-center justify-center text-neutral-400 group-hover:scale-110 group-hover:text-[#00eef9] group-hover:bg-[#00eef9]/10 transition-all duration-300">
+            <Icon className="w-6 h-6 md:w-8 md:h-8" />
         </div>
-        <span className="text-sm font-bold uppercase tracking-widest text-neutral-500 group-hover:text-white transition-colors text-center">{name}</span>
+        
+        {/* UPDATED: text-xs on mobile to handle long words like 'Supply Chain' gracefully */}
+        <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-neutral-500 group-hover:text-white transition-colors text-center">
+            {name}
+        </span>
     </motion.div>
 );

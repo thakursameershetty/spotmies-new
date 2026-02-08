@@ -41,10 +41,10 @@ export const AnimatedTooltip = ({
     };
 
     return (
-        <>
+        <div className="flex flex-row items-center justify-center w-full"> {/* Container to manage flex */}
             {items.map((item, idx) => (
                 <div
-                    className="group relative -mr-4 md:-mr-8 last:mr-0 transition-all duration-300 ease-in-out"
+                    className="group relative -mr-4 md:-mr-8 last:mr-0 transition-all duration-300 ease-in-out shrink-0" // Added shrink-0
                     style={{ zIndex: hoveredIndex === item.id ? 100 : items.length - idx }}
                     key={item.name}
                     onMouseEnter={() => setHoveredIndex(item.id)}
@@ -70,7 +70,7 @@ export const AnimatedTooltip = ({
                                     rotate: rotate,
                                     whiteSpace: "nowrap",
                                 }}
-                                className="absolute -top-24 md:-top-32 left-1/2 flex -translate-x-1/2 flex-col items-center justify-center rounded-xl bg-black px-6 py-3 text-sm shadow-2xl border border-white/10"
+                                className="absolute -top-24 md:-top-32 left-1/2 flex -translate-x-1/2 flex-col items-center justify-center rounded-xl bg-black px-6 py-3 text-sm shadow-2xl border border-white/10 z-50"
                             >
                                 <div className="absolute inset-x-10 -bottom-px z-30 h-px w-[20%] bg-gradient-to-r from-transparent via-[#00eef9] to-transparent" />
                                 <div className="absolute -bottom-px left-10 z-30 h-px w-[40%] bg-gradient-to-r from-transparent via-sky-500 to-transparent" />
@@ -86,19 +86,18 @@ export const AnimatedTooltip = ({
                         href={item.link || "#"}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block relative cursor-pointer group"
+                        className="block relative cursor-pointer group shrink-0" // Added shrink-0
                     >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                             onMouseMove={handleMouseMove}
                             src={item.image}
                             alt={item.name}
-                            className="relative !m-0 w-28 h-28 md:w-40 md:h-40 rounded-full border-[6px] border-[#050505] object-cover object-top !p-0 transition duration-500 group-hover:scale-105 group-hover:border-[#00eef9] shadow-[0_15px_35px_rgba(0,0,0,0.8)]"
+                            // UPDATED: Added aspect-square and shrink-0 to guarantee circle
+                            className="relative !m-0 w-27 h-27 md:w-40 md:h-40 rounded-full border-[6px] border-[#050505] object-cover object-top !p-0 transition duration-500 group-hover:scale-105 group-hover:border-[#00eef9] shadow-[0_15px_35px_rgba(0,0,0,0.8)] shrink-0 aspect-square"
                         />
 
                         {/* --- LINKEDIN ICON OVERLAY (ANIMATED) --- */}
-                        {/* Default: Opacity 0, Scaled down, Pushed down */}
-                        {/* Hover: Opacity 1, Scale 1, Normal position */}
                         <div className="absolute bottom-1 right-1 md:bottom-2 md:right-2 p-2.5 rounded-full bg-[#00eef9] border border-white/20 shadow-lg z-20 
               opacity-0 scale-75 translate-y-2 
               group-hover:opacity-100 group-hover:scale-100 group-hover:translate-y-0 
@@ -108,6 +107,6 @@ export const AnimatedTooltip = ({
                     </Link>
                 </div>
             ))}
-        </>
+        </div>
     );
 };

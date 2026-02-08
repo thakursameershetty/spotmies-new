@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, Linkedin, Instagram, Youtube, Send } from "lucide-react"; // Removed MapPin and Twitter
+import { Mail, Phone, Linkedin, Instagram, Youtube, Send } from "lucide-react"; 
 import { cn } from "@/lib/utils";
 import { LocationMap } from "@/components/ui/expand-map";
 import { AmbientBackground } from "@/components/ui/ambient-background";
@@ -138,7 +138,6 @@ export const ContactSection = () => {
                         <div className="flex flex-col h-full pt-1">
                             <LocationMap location="Visakhapatnam, India" coordinates="17.7292° N, 83.3213° E" className="w-full" />
                             <div className="flex items-start gap-3 mt-4 pl-1">
-                                {/* UPDATED: Using custom Material Symbol LocationOnIcon */}
                                 <LocationOnIcon className="w-6 h-6 text-brand-cyan shrink-0 mt-0.5" />
                                 <p className="text-sm text-zinc-500 leading-relaxed">
                                     AU incubation centre, Andhra university,<br />Visakhapatnam - 530003
@@ -164,7 +163,8 @@ export const ContactSection = () => {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="relative"
                 >
-                    <div className="relative rounded-3xl border border-white/10 bg-zinc-900/50 backdrop-blur-xl p-10 md:p-14 shadow-xl">
+                    {/* UPDATED: Reduced padding on mobile (p-6) to prevent overflow on iPhone SE, kept larger padding for md/lg */}
+                    <div className="relative rounded-3xl border border-white/10 bg-zinc-900/50 backdrop-blur-xl p-6 md:p-10 lg:p-14 shadow-xl">
                         <form onSubmit={handleSubmit} className="space-y-8">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
@@ -187,7 +187,8 @@ export const ContactSection = () => {
                                         <option value="+61">+61</option>
                                         <option value="+971">+971</option>
                                     </select>
-                                    <input type="tel" id="phone" value={formState.phoneNumber} onChange={(e) => setFormState({ ...formState, phoneNumber: e.target.value })} className="flex-1 bg-zinc-800/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-brand-cyan/50 focus:border-brand-cyan/50 transition-all duration-300" placeholder="Phone number" />
+                                    {/* UPDATED: Added min-w-0 to allow input to shrink properly in flex container */}
+                                    <input type="tel" id="phone" value={formState.phoneNumber} onChange={(e) => setFormState({ ...formState, phoneNumber: e.target.value })} className="flex-1 min-w-0 bg-zinc-800/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-brand-cyan/50 focus:border-brand-cyan/50 transition-all duration-300" placeholder="Phone number" />
                                 </div>
                             </div>
 

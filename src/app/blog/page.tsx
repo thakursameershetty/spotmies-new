@@ -6,7 +6,7 @@ import Footer from "@/components/landing/footer";
 import { AmbientBackground } from "@/components/ui/ambient-background";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, ChevronLeft, Search, X, SlidersHorizontal, ChevronDown, Calendar, User } from "lucide-react";
+import { ArrowUpRight, Search, X, SlidersHorizontal, ChevronDown, Calendar, User } from "lucide-react";
 import { GlowDivider } from "@/components/ui/glow-divider";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -94,9 +94,10 @@ export default function BlogPage() {
 
                 {/* --- SEARCH & FILTER BAR --- */}
                 <div className="relative z-20 mb-12 space-y-6">
-                    <div className="flex flex-col md:flex-row gap-4 justify-between md:items-center">
+                    {/* Top Row: Search + Filter Toggle */}
+                    <div className="flex items-center gap-3 w-full">
                         {/* Search Input */}
-                        <div className="relative w-full md:max-w-md group">
+                        <div className="relative flex-1 group">
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <Search className="w-5 h-5 text-neutral-500 group-focus-within:text-[#00eef9] transition-colors" />
                             </div>
@@ -105,7 +106,8 @@ export default function BlogPage() {
                                 placeholder="Search articles..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full pl-11 pr-10 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-neutral-500 focus:outline-none focus:border-[#00eef9]/50 focus:bg-white/10 transition-all shadow-lg"
+                                // UPDATED: Changed height to h-14 to match Works page
+                                className="w-full h-14 pl-11 pr-10 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-neutral-500 focus:outline-none focus:border-[#00eef9]/50 focus:bg-white/10 transition-all shadow-lg"
                             />
                             {searchQuery && (
                                 <button
@@ -120,15 +122,16 @@ export default function BlogPage() {
                         {/* Filter Visibility Toggle */}
                         <button
                             onClick={() => setIsFiltersVisible(!isFiltersVisible)}
+                            // UPDATED: Changed height to h-14, flex layout for consistent alignment
                             className={cn(
-                                "flex items-center gap-2 px-5 py-3.5 rounded-2xl border transition-all font-medium text-sm whitespace-nowrap",
+                                "h-14 flex items-center gap-2 px-5 rounded-2xl border transition-all font-medium text-sm whitespace-nowrap shrink-0",
                                 isFiltersVisible
                                     ? "bg-[#00eef9]/10 border-[#00eef9]/30 text-[#00eef9]"
                                     : "bg-white/5 border-white/10 text-neutral-400 hover:text-white"
                             )}
                         >
                             <SlidersHorizontal className="w-4 h-4" />
-                            Filters
+                            <span className="hidden sm:inline">Filters</span>
                             <ChevronDown className={cn("w-4 h-4 transition-transform", isFiltersVisible ? "rotate-180" : "")} />
                         </button>
                     </div>
@@ -213,7 +216,7 @@ export default function BlogPage() {
                                                 </span>
                                                 <span className="flex items-center gap-1">
                                                     <User className="w-3 h-3" />
-                                                    {typeof blog.author === 'string' ? blog.author : blog.author?.name || 'Spotmies'}
+                                                    {typeof blog.author === 'string' ? blog.author : blog.author?.name || 'Spotmies Team'}
                                                 </span>
                                             </div>
 

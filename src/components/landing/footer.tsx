@@ -24,7 +24,6 @@ export default function Footer() {
 
     return (
         <footer className="w-full bg-[#050505] text-gray-400 pt-16 pb-8 border-t border-white/5 font-sans">
-            {/* UPDATED: max-w-[1320px] to match your navbar width */}
             <div className="max-w-[1320px] mx-auto px-6 md:px-10">
 
                 {/* --- MAIN CONTENT GRID --- */}
@@ -32,7 +31,8 @@ export default function Footer() {
 
                     {/* 1. Company Info */}
                     <div className="w-full md:w-5/12 lg:w-4/12">
-                        <div className="relative w-44 h-11 mb-6">
+                        {/* UPDATED: Matches Navbar logo size (w-32 on mobile, w-40 on desktop) */}
+                        <div className="relative w-32 h-8 md:w-40 md:h-8 mb-6">
                             <Image
                                 src="/spotmies_banner.png"
                                 alt="Spotmies Logo"
@@ -46,7 +46,7 @@ export default function Footer() {
                     </div>
 
                     {/* 2. Useful Links */}
-                    <div className="w-1/2 md:w-auto">
+                    <div className="w-full md:w-auto">
                         <h2 className="text-white text-base font-bold mb-5 uppercase tracking-wider">Useful Links</h2>
                         <ul className="space-y-3 text-sm">
                             {['Home', 'About Us', 'Services', 'Blog', 'Careers'].map((item) => {
@@ -73,7 +73,7 @@ export default function Footer() {
                     </div>
 
                     {/* 3. More Links */}
-                    <div className="w-1/2 md:w-auto">
+                    <div className="w-full md:w-auto">
                         <h2 className="text-white text-base font-bold mb-5 uppercase tracking-wider">More</h2>
                         <ul className="space-y-3 text-sm">
                             <li>
