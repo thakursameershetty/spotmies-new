@@ -32,71 +32,19 @@ const ALL_COMPANIES = [
     { name: "Vitals", desc: "Healthcare", src: "https://spotmiesstorage.blob.core.windows.net/media/comp23.png" },
     { name: "VarunMotors", desc: "Travel", src: "https://spotmiesstorage.blob.core.windows.net/media/comp24.png" },
     { name: "Reaidy", desc: "HRTech", src: "https://www.reaidy.io/assets/logo_dark-DMRlJ8_-.png" },
-    {
-        "name": "Awaken",
-        "desc": "Fintech",
-        "src": "/assets/compan/awaken.png"
-    },
-    {
-        "name": "Amero X",
-        "desc": "Blockchain & Fintech",
-        "src": "/assets/compan/amerox.png"
-    },
-    {
-        "name": "BoomBoomTalk",
-        "desc": "Social",
-        "src": "/assets/compan/boomboomtalk.png"
-    },
-    {
-        "name": "Commuter",
-        "desc": "Travel",
-        "src": "/assets/compan/commuter.png"
-    },
-    {
-        "name": "EduMoon",
-        "desc": "EdTech",
-        "src": "/assets/compan/edumoon.png"
-    },
-    {
-        "name": "Farm Vaidya",
-        "desc": "AgriTech",
-        "src": "/assets/compan/farmvidya.png"
-    },
-    {
-        "name": "Mobile Masala",
-        "desc": "Entertainment",
-        "src": "/assets/compan/mobile-masala.png"
-    },
-    {
-        "name": "OROLEXA",
-        "desc": "Healthcare",
-        "src": "/assets/compan/orelexa.png"
-    },
-    {
-        "name": "TheReachX",
-        "desc": "Marketing",
-        "src": "/assets/compan/reachx.jpg"
-    },
-    {
-        "name": "Referral Bazaar",
-        "desc": "Retail",
-        "src": "/assets/compan/referalbazaar.png"
-    },
-    {
-        "name": "Stoory",
-        "desc": "Marketing",
-        "src": "/assets/compan/stoory.png"
-    },
-    {
-        "name": "Teckybot",
-        "desc": "EdTech",
-        "src": "/assets/compan/teckybot.png"
-    },
-    {
-        "name": "WingDent",
-        "desc": "Healthcare",
-        "src": "/assets/compan/wingdent.png"
-    }
+    { "name": "Awaken", "desc": "Fintech", "src": "/assets/compan/awaken.png" },
+    { "name": "Amero X", "desc": "Blockchain & Fintech", "src": "/assets/compan/amerox.png" },
+    { "name": "BoomBoomTalk", "desc": "Social", "src": "/assets/compan/boomboomtalk.png" },
+    { "name": "Commuter", "desc": "Travel", "src": "/assets/compan/commuter.png" },
+    { "name": "EduMoon", "desc": "EdTech", "src": "/assets/compan/edumoon.png" },
+    { "name": "Farm Vaidya", "desc": "AgriTech", "src": "/assets/compan/farmvidya.png" },
+    { "name": "Mobile Masala", "desc": "Entertainment", "src": "/assets/compan/mobile-masala.png" },
+    { "name": "OROLEXA", "desc": "Healthcare", "src": "/assets/compan/orelexa.png" },
+    { "name": "TheReachX", "desc": "Marketing", "src": "/assets/compan/reachx.png" },
+    { "name": "Referral Bazaar", "desc": "Retail", "src": "/assets/compan/referalbazaar.png" },
+    { "name": "Stoory", "desc": "Marketing", "src": "/assets/compan/stoory.png" },
+    { "name": "Teckybot", "desc": "EdTech", "src": "/assets/compan/teckybot.png" },
+    { "name": "WingDent", "desc": "Healthcare", "src": "/assets/compan/wingdent.png" }
 ];
 
 const TOTAL_CELLS = 15;
@@ -141,13 +89,9 @@ export default function ClientsSectionDark() {
                     if (img) img.src = newData.src;
                     if (text) text.innerText = newData.desc;
 
-                    // FILTER LOGIC: WingDent, OROLEXA, Awaken get grayscale
                     const isSpecial = ["WingDent", "OROLEXA", "Awaken"].includes(newData.name);
-
-                    // DARK BOX LOGIC: Teckybot AND EduMoon get a dark box around the logo
                     const hasDarkLogoBox = ["Teckybot", "EduMoon"].includes(newData.name);
 
-                    // Update Image Classes
                     img.className = "logo-img w-auto h-10 md:h-16 max-w-[80%] object-contain opacity-0 scale-50 transition-all ease-[cubic-bezier(0.34,1.56,0.64,1)]";
 
                     if (isSpecial) {
@@ -156,15 +100,15 @@ export default function ClientsSectionDark() {
                         img.classList.add("brightness-0", "invert", "group-hover:invert-0", "group-hover:brightness-100");
                     }
 
-                    // Apply Dark Box if needed
                     if (hasDarkLogoBox) {
                         img.classList.add("group-hover:bg-neutral-950", "group-hover:p-2", "group-hover:rounded-lg", "group-hover:shadow-sm");
                     }
 
-                    // Reset Parent Container (Always White on Hover)
-                    parent.className = "group relative flex flex-col justify-center items-center p-4 md:p-6 aspect-[4/3] rounded-xl md:rounded-2xl border border-transparent transition-all duration-300 cursor-pointer bg-transparent opacity-100 group-hover/grid:blur-[2px] group-hover/grid:opacity-40 hover:!blur-none hover:!opacity-100 hover:!scale-110 hover:bg-white hover:shadow-2xl hover:shadow-black/50 hover:z-10";
+                    parent.className = cn(
+                        "group relative flex flex-col justify-center items-center p-4 md:p-6 aspect-[4/3] rounded-xl md:rounded-2xl border border-transparent transition-all duration-300 cursor-pointer bg-transparent opacity-100 group-hover/grid:blur-[2px] group-hover/grid:opacity-40 hover:!blur-none hover:!opacity-100 hover:!scale-110 hover:bg-white hover:shadow-2xl hover:shadow-black/50 hover:z-10",
+                        cellIndex === 14 ? "hidden md:flex" : "flex"
+                    );
 
-                    // Reset Text (Always Black)
                     text.className = "subtext absolute bottom-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 text-xs font-bold tracking-wide text-center w-full px-2 pointer-events-none text-black";
 
                     requestAnimationFrame(() => {
@@ -198,11 +142,12 @@ export default function ClientsSectionDark() {
     }, []);
 
     return (
-        <section className="relative w-full bg-[#050505] py-24 md:py-32 overflow-hidden text-white">
+        <section className="relative w-full bg-[#050505] pt-24 pb-16 md:pt-32 md:pb-20 overflow-hidden text-white">
 
             <AmbientBackground intensity="subtle" />
 
-            <div className="relative z-10 max-w-[1320px] mx-auto px-6 md:px-10">
+            {/* UPDATED: Changed padding to md:px-6 to align with other sections */}
+            <div className="relative z-10 max-w-[1362px] mx-auto px-6 md:px-6">
                 <div className="flex flex-col lg:flex-row justify-between items-start mb-16 gap-10 lg:gap-0">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -249,8 +194,9 @@ export default function ClientsSectionDark() {
                     {Array.from({ length: TOTAL_CELLS }).map((_, index) => {
                         const initialData = ALL_COMPANIES[index];
                         const isSpecial = ["WingDent", "OROLEXA", "Awaken"].includes(initialData.name);
-                        // UPDATED: Include EduMoon in the dark box logic
                         const hasDarkLogoBox = ["Teckybot", "EduMoon"].includes(initialData.name);
+                        
+                        const isLastItem = index === TOTAL_CELLS - 1;
 
                         return (
                             <div
@@ -260,7 +206,8 @@ export default function ClientsSectionDark() {
                                     "group relative flex flex-col justify-center items-center p-4 md:p-6 aspect-[4/3] rounded-xl md:rounded-2xl border border-transparent transition-all duration-300 cursor-pointer bg-transparent opacity-100",
                                     "group-hover/grid:blur-[2px] group-hover/grid:opacity-40",
                                     "hover:!blur-none hover:!opacity-100 hover:!scale-110 hover:shadow-2xl hover:shadow-black/50 hover:z-10",
-                                    "hover:bg-white"
+                                    "hover:bg-white",
+                                    isLastItem ? "hidden md:flex" : "flex"
                                 )}
                             >
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -272,7 +219,6 @@ export default function ClientsSectionDark() {
                                         isSpecial
                                             ? "grayscale brightness-200 group-hover:grayscale-0 group-hover:brightness-100"
                                             : "brightness-0 invert group-hover:invert-0 group-hover:brightness-100",
-                                        // UPDATED: Apply dark box if in the list
                                         hasDarkLogoBox && "group-hover:bg-neutral-950 group-hover:p-2 group-hover:rounded-lg group-hover:shadow-sm"
                                     )}
                                 />

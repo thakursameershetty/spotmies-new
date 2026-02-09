@@ -23,37 +23,23 @@ export default async function Home() {
     <main className="bg-[#050505] min-h-screen w-full selection:bg-brand-cyan/30">
       <Navbar />
 
-      {/* Pass projects to HeroSection */}
+      {/* UPDATED: Passing all 'projects' (irrespective of priority) to the Hero Carousel */}
       <HeroSection projects={projects} />
-
-      {/* Reduced dividers: Removed after Hero */}
 
       <TechStack />
 
-      {/* Reduced dividers: Removed after TechStack */}
-
       <CompaniesSection />
-
-      {/* Reduced dividers: Removed after Companies */}
 
       <BrandMastery />
 
-
-      {/* Filter only selected projects (Ids: 3, 4, 5, 13, 14) */}
-      <ProjectsSection data={projects.filter(p => [3, 4, 5, 13, 14].includes(p.id))} />
-
-      {/* Reduced dividers: Removed after Projects */}
+      {/* ProjectsSection will handle its own 'priority: true' filtering internally */}
+      <ProjectsSection data={projects} />
 
       <ProcessSection />
 
-      {/* Reduced dividers: Removed after Process */}
-
       <FoundersSection />
 
-      {/* Reduced dividers: Removed after Founders */}
-
       <TestimonialsSplit />
-
 
       <FaqSection />
       <ContactSection />

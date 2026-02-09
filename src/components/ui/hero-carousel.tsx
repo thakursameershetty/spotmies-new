@@ -41,7 +41,6 @@ function FlipCard({ project, index, rotation, dimensions, totalCount }: FlipCard
 
     // X Position (Orbital movement)
     const x = useTransform(rotation, (latestRot) => {
-        // Mobile radius tuned for new width (180), Desktop stays original (800)
         const carouselRadius = isMobile ? 180 : (isTablet ? 450 : 800);
         let effectiveAngle = (baseAngle + latestRot) % 360;
         if (effectiveAngle > 180) effectiveAngle -= 360;
@@ -79,14 +78,12 @@ function FlipCard({ project, index, rotation, dimensions, totalCount }: FlipCard
         if (effectiveAngle < -180) effectiveAngle += 360;
         
         const dist = Math.abs(effectiveAngle);
-        // Mobile needs a gentler drop-off (45) to prevent stutter
-        // Desktop keeps original drop-off (40)
         const scaleDropOff = isMobile ? 45 : 40;
         
         return Math.max(0.6, MAX_SCALE - (dist / scaleDropOff));
     });
 
-    // OPACITY LOGIC (Hybrid)
+    // OPACITY LOGIC
     const opacity = useTransform(rotation, (latestRot) => {
         const carouselRadius = isMobile ? 180 : (isTablet ? 450 : 800);
         let effectiveAngle = (baseAngle + latestRot) % 360;
@@ -97,17 +94,14 @@ function FlipCard({ project, index, rotation, dimensions, totalCount }: FlipCard
         const zPos = Math.cos(rad) * carouselRadius - carouselRadius;
 
         if (isMobile) {
-            // MOBILE: Use Smooth Fade (Fixes the stutter/pop)
             const normalizedDepth = (zPos + (2 * carouselRadius)) / (2 * carouselRadius);
             return Math.pow(normalizedDepth, 4); 
         } else {
-            // DESKTOP: Use Original Hard Cut-off (Preserves original feel)
             const fadeThreshold = -500;
             return zPos < fadeThreshold ? 0 : 1;
         }
     });
 
-    // Z-Index
     const zIndex = useTransform(rotation, (latestRot) => {
         let effectiveAngle = (baseAngle + latestRot) % 360;
         if (effectiveAngle > 180) effectiveAngle -= 360;
@@ -158,6 +152,7 @@ function FlipCard({ project, index, rotation, dimensions, totalCount }: FlipCard
 export default function ScrollMorphHero({ projects }: { projects: Project[] }) {
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [activeIndex, setActiveIndex] = useState(0);
+    const [isMounted, setIsMounted] = useState(false); // Fix for hydration mismatch
 
     const validProjects = useMemo(() => {
         const list = (projects && projects.length > 0) ? projects : [];
@@ -171,11 +166,11 @@ export default function ScrollMorphHero({ projects }: { projects: Project[] }) {
     const angleStep = 360 / count;
     const targetRotation = -activeIndex * angleStep;
     
-    // PHYSICS: Using original (stiffer) physics to match previous desktop feel
     const rotation = useSpring(targetRotation, { stiffness: 80, damping: 20 });
     const DURATION_MS = 3000;
 
     useEffect(() => {
+        setIsMounted(true); // Signal that client-side rendering is ready
         if (typeof window !== "undefined") {
             const handleResize = () => {
                 setDimensions({ width: window.innerWidth, height: window.innerHeight });
@@ -198,13 +193,13 @@ export default function ScrollMorphHero({ projects }: { projects: Project[] }) {
         return () => clearInterval(timer);
     }, [validProjects.length]);
 
-    if (validProjects.length === 0) return null;
+    // Return null on the server and during the first client pass to avoid mismatch
+    if (!isMounted || validProjects.length === 0) return null;
 
     return (
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            // Optimized perspective: Lower on mobile for better depth, High on Desktop
             className="relative w-full h-full flex items-center justify-center perspective-[600px] md:perspective-[1200px] overflow-visible"
         >
             <motion.div

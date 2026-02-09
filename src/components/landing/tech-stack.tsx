@@ -40,6 +40,16 @@ export const TechStack = () => {
         setMounted(true);
     }, []);
 
+    // Lock body scroll when modal is open
+    useEffect(() => {
+        if (selectedStep) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+        return () => { document.body.style.overflow = "auto"; };
+    }, [selectedStep]);
+
     const steps: Step[] = [
         {
             title: "AI & Machine Learning",
@@ -99,10 +109,11 @@ export const TechStack = () => {
     ];
 
     return (
-        <section id="services" className="relative z-20 py-24 bg-black overflow-hidden">
+        <section id="services" className="relative z-20 py-40 bg-black overflow-hidden">
             <AmbientBackground intensity="subtle" />
 
-            <div className="relative z-10 max-w-7xl mx-auto px-6">
+            {/* UPDATED: Changed max-w-7xl (1280px) to max-w-[1362px] and standardized padding */}
+            <div className="relative z-10 max-w-[1362px] mx-auto px-6">
                 <div className="mb-12 text-center">
                     <motion.h2
                         initial="hidden"
@@ -126,11 +137,6 @@ export const TechStack = () => {
                 </div>
 
                 {/* --- MOBILE VIEW: VERTICAL BENTO GRID --- */}
-                {/* FIX: Removed the previous "flex-col list" and replaced it with a GRID.
-                    Since it's mobile-only, we use 'grid-cols-1'.
-                    We removed the 'md:hidden' simple list items and are now mapping the same 
-                    CardSpotlight components used in the desktop view, but with simplified props for mobile.
-                */}
                 <div className="grid grid-cols-1 gap-6 md:hidden">
                     {steps.map((step, idx) => (
                         <motion.div
@@ -142,7 +148,6 @@ export const TechStack = () => {
                             transition={{ duration: 0.5, delay: idx * 0.1 }}
                             onClick={() => setSelectedStep(step)}
                         >
-                            {/* Reusing CardSpotlight for consistent Bento Grid look */}
                             <CardSpotlight
                                 className="flex flex-col justify-between min-h-[18rem] rounded-[2rem] relative bg-neutral-900/50 border-white/5 overflow-hidden"
                                 color={undefined}
@@ -160,7 +165,6 @@ export const TechStack = () => {
                                             <p className="text-sm text-neutral-300 line-clamp-3">{step.description}</p>
                                         </div>
                                     </div>
-                                    {/* Background Image Effect (Subtler on Mobile) */}
                                     <div className="absolute -bottom-6 -right-6 z-0 pointer-events-none opacity-20">
                                         {/* eslint-disable-next-line @next/next/no-img-element */}
                                         <img src={step.image} alt={step.title} className="w-40 h-auto object-contain grayscale brightness-75 contrast-125" />
@@ -171,7 +175,7 @@ export const TechStack = () => {
                     ))}
                 </div>
 
-                {/* --- DESKTOP VIEW: GRID CARDS (Unchanged) --- */}
+                {/* --- DESKTOP VIEW: GRID CARDS --- */}
                 <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
                     {steps.map((step, idx) => (
                         <motion.div
@@ -216,6 +220,7 @@ export const TechStack = () => {
                 </div>
             </div>
 
+            {/* --- UPDATED MODERN MODAL --- */}
             {mounted && createPortal(
                 <AnimatePresence>
                     {selectedStep && (
@@ -223,36 +228,64 @@ export const TechStack = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="fixed inset-0 z-[5000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+                            className="fixed inset-0 z-[5000] flex items-center justify-center bg-black/95 backdrop-blur-xl p-0 md:p-6"
                             onClick={() => setSelectedStep(null)}
                         >
                             <motion.div
-                                initial={{ scale: 0.9, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                exit={{ scale: 0.9, opacity: 0 }}
-                                className="bg-neutral-900 border border-neutral-800 rounded-3xl p-6 md:p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto relative shadow-2xl"
+                                initial={{ scale: 0.95, y: 20, opacity: 0 }}
+                                animate={{ scale: 1, y: 0, opacity: 1 }}
+                                exit={{ scale: 0.95, y: 20, opacity: 0 }}
+                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                className="relative w-full max-w-4xl h-full md:max-h-[85vh] flex flex-col bg-[#0a0a0a] border border-white/10 md:rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden"
                                 onClick={(e) => e.stopPropagation()}
                             >
-                                <button
-                                    onClick={() => setSelectedStep(null)}
-                                    className="absolute top-4 right-4 md:top-6 md:right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-white"
-                                >
-                                    <X size={20} />
-                                </button>
-
-                                <div className="flex items-center gap-4 mb-6 pr-8">
-                                    <div className="p-3 bg-white/5 rounded-xl border border-white/10 shrink-0">
-                                        {selectedStep.icon}
-                                    </div>
-                                    <h3 className="text-xl md:text-3xl font-bold text-white leading-tight">
-                                        {selectedStep.title}
-                                    </h3>
+                                {/* Floating Close Button */}
+                                <div className="absolute top-0 right-0 z-50 p-6 pointer-events-none">
+                                    <button
+                                        onClick={() => setSelectedStep(null)}
+                                        className="pointer-events-auto p-3 bg-black/50 hover:bg-white text-white hover:text-black rounded-full border border-white/10 transition-all duration-300 backdrop-blur-md group shadow-xl"
+                                    >
+                                        <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
+                                    </button>
                                 </div>
 
-                                <div className="space-y-4 text-neutral-300 leading-relaxed text-base md:text-lg">
-                                    {selectedStep.content ? selectedStep.content.split('\n\n').map((paragraph, index) => (
-                                        <p key={index}>{paragraph}</p>
-                                    )) : <p>Content coming soon...</p>}
+                                {/* Content Area */}
+                                <div className="flex-1 overflow-y-auto relative scrollbar-hide">
+                                    <div className="max-w-3xl mx-auto pt-16 md:pt-20 pb-20 px-6 md:px-12">
+                                        
+                                        {/* Header */}
+                                        <div className="flex items-center gap-6 mb-10 border-b border-white/10 pb-8">
+                                            <div className="p-4 bg-white/5 rounded-2xl border border-white/10 shrink-0 shadow-lg shadow-white/5">
+                                                <div className="scale-125 origin-center">
+                                                    {selectedStep.icon}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h3 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-2">
+                                                    {selectedStep.title}
+                                                </h3>
+                                                <p className="text-neutral-400 text-lg font-light">
+                                                    Expertise Overview
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        {/* Body Text */}
+                                        <div className="space-y-6">
+                                            {selectedStep.content ? selectedStep.content.split('\n\n').map((paragraph, index) => (
+                                                <p key={index} className="text-lg md:text-xl text-neutral-300 leading-relaxed font-light text-justify">
+                                                    {paragraph}
+                                                </p>
+                                            )) : <p className="text-neutral-500 italic">Content coming soon...</p>}
+                                        </div>
+
+                                        {/* Footer / CTA (Optional) */}
+                                        <div className="mt-16 pt-10 border-t border-white/10 flex justify-center">
+                                            <p className="text-neutral-500 text-sm">
+                                                Want to build something like this? <a href="/contact" className="text-[#00eef9] hover:underline">Contact us</a>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </motion.div>
                         </motion.div>

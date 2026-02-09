@@ -31,9 +31,14 @@ const itemVariants = {
 };
 
 export function ProjectsSection({ data }: { data: Project[] }) {
+    // UPDATED: Filter projects to only include those with priority: true
     const validData = useMemo(() => {
         const raw = data || [];
-        return raw.filter(project => project && project.title);
+        return raw.filter(project => 
+            project && 
+            project.title && 
+            project.priority === true
+        );
     }, [data]);
 
     const START_INDEX = validData.length;
@@ -138,7 +143,7 @@ export function ProjectsSection({ data }: { data: Project[] }) {
                 <style jsx>{`
                     @media (min-width: 768px) {
                         section#portfolio {
-                            --card-width: 50vw !important;
+                            --card-width: 49vw !important;
                             --card-gap: 40px !important;
                         }
                     }
@@ -156,7 +161,6 @@ export function ProjectsSection({ data }: { data: Project[] }) {
                     viewport={{ once: true, margin: "-100px" }}
                 >
                     {/* Header */}
-                    {/* UPDATED: Changed items-end to items-center for better alignment */}
                     <motion.div variants={itemVariants} className="flex flex-row items-center justify-between mb-8 md:mb-12 gap-4 relative z-20">
                         <div>
                             <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
@@ -164,7 +168,6 @@ export function ProjectsSection({ data }: { data: Project[] }) {
                             </h2>
                         </div>
 
-                        {/* UPDATED: Removed mb-2 to align button perfectly with text center */}
                         <div>
                             <Link href="/work" className="group flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/10 bg-white/5 transition-all duration-300 hover:border-[#00d3f3] hover:bg-[#00d3f3]/5 hover:shadow-[0_0_20px_rgba(0,211,243,0.15)]">
                                 <span className="text-sm md:text-base font-medium text-neutral-300 group-hover:text-[#00d3f3] transition-colors duration-300">See All Works</span>
