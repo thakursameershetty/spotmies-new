@@ -6,24 +6,24 @@ export const PROJECT_DATA: Project[] = [
         title: "Reaidy.io",
         category: "Web App, AI/Recruitment",
         description: "Revolutionizing recruitment with precise AI job interviews and smart assessments.",
-        image: "/assets/company-mocks/reaidy.png",
+        image: "https://spotmiesstorage.blob.core.windows.net/media/reaidy.png",
         link: "https://reaidy.io/",
         client: "Reaidy.io",
         timeline: "Ongoing",
         role: "Design & Development",
         rating: 5,
-        priority: true, // FEATURED (1)
+        priority: true,
         introduction: "A next-generation AI recruitment platform designed to streamline the hiring process by automating interviews, assessments, and candidate matching.",
         challenge: "Recruiters spend too much time on manual screenings and repetitive interviews, often leading to bias, delays, and poor candidate experiences.",
         approach: "We implemented an advanced AI-driven interview system that automatically evaluates candidates' skills, communication, and cultural fit. The platform generates structured reports and actionable insights, empowering hiring teams to make faster, data-backed decisions while reducing manual workload.",
         result: "Companies achieve reduced time-to-hire, unbiased evaluations, and an improved candidate experience, enabling them to scale teams efficiently without compromising on quality.",
         testimonial: undefined,
         gallery: [
-            "/assets/company-mocks/reaidy.png",
-            "/assets/company-mocks/reaidy1.png",
-            "/assets/company-mocks/reaidy2.png",
-            "/assets/company-mocks/reaidy3.png",
-            "/assets/company-mocks/reaidy4.png"
+            "https://spotmiesstorage.blob.core.windows.net/media/reaidy.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/reaidy1.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/reaidy2.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/reaidy3.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/reaidy4.png"
         ]
     },
     {
@@ -31,13 +31,13 @@ export const PROJECT_DATA: Project[] = [
         title: "Amero X",
         category: "Web App, DEX",
         description: "A premium hybrid DEX featuring non-custodial swaps, copy trading, and institutional-grade tools.",
-        image: "/assets/company-mocks/amerox.png",
+        image: "https://spotmiesstorage.blob.core.windows.net/media/amerox.png",
         link: "https://amerox.io/",
         client: "Amero X",
         timeline: "Ongoing",
         role: "Design & Development",
         rating: 5,
-        priority: true, // FEATURED (2)
+        priority: true,
         introduction: "The next-generation hybrid DEX and trading platform for the Web3 era, combining institutional-grade tools with the security of on-chain settlement.",
         challenge: "Traders needed a seamless way to swap, stake, and grow portfolios without invasive registration or KYC hurdles while maintaining full control of their assets.",
         approach: "We developed a non-custodial ecosystem that supports major wallets like MetaMask, Phantom, and WalletConnect. The platform integrates premium features such as AMM Swap, Spot Trading, and Futures with up to 5x leverage, along with Copy Trading. Additionally, a P2P trading engine was built with secure smart contract escrow protection to ensure safe transactions.",
@@ -48,13 +48,13 @@ export const PROJECT_DATA: Project[] = [
             position: "Verified User"
         },
         gallery: [
-            "/assets/company-mocks/amerox.png",
-            "/assets/company-mocks/amerox1.png",
-            "/assets/company-mocks/amerox2.png",
-            "/assets/company-mocks/amerox3.png",
-            "/assets/company-mocks/amerox4.png",
-            "/assets/company-mocks/amerox5.png",
-            "/assets/company-mocks/amerox6.png"
+            "https://spotmiesstorage.blob.core.windows.net/media/amerox.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/amerox1.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/amerox2.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/amerox3.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/amerox4.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/amerox5.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/amerox6.png"
         ]
     },
     {
@@ -62,13 +62,13 @@ export const PROJECT_DATA: Project[] = [
         title: "OROLEXA",
         category: "IoT/Mobile App, Healthcare",
         description: "Smart dental health tracking with AI-powered instant analysis.",
-        image: "/assets/company-mocks/orelexa.png",
+        image: "https://spotmiesstorage.blob.core.windows.net/media/orelexa.png",
         link: "",
         client: "OROLEXA",
         timeline: "Ongoing",
         role: "Design & Development",
         rating: 5,
-        priority: true, // FEATURED (3)
+        priority: true,
         introduction: "A revolutionary smart toothbrush ecosystem featuring an integrated camera lens and a companion AI app that provides real-time oral health insights.",
         challenge: "Dental issues often go undetected until they become painful and expensive because patients lack the tools to monitor their oral health daily at home.",
         approach: "The team developed the digital interface for a lens-equipped toothbrush that captures high-resolution oral imagery. This hardware was paired with an AI-powered mobile app built to analyze images for early signs of cavities or gum disease, providing users with a personalized dashboard for tracking brushing habits and hygiene scores.",
@@ -79,12 +79,34 @@ export const PROJECT_DATA: Project[] = [
             position: "Founder at OROLEXA"
         },
         gallery: [
-            "/assets/company-mocks/orelexa.png",
-            "/assets/company-mocks/orelexa1.png",
-            "/assets/company-mocks/orelexa2.png",
-            "/assets/company-mocks/orelexa3.png",
-            "/assets/company-mocks/orelexa4.png",
-            "/assets/company-mocks/orelexa5.png"
+            "https://spotmiesstorage.blob.core.windows.net/media/orelexa.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/orelexa1.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/orelexa2.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/orelexa3.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/orelexa4.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/orelexa5.png"
+        ]
+    },
+    {
+        id: 25,
+        title: "Vitals Care Pro",
+        category: "IoT/Mobile App, Healthcare",
+        description: "Continuous remote health monitoring for chronic conditions and elderly care.",
+        image: "https://spotmiesstorage.blob.core.windows.net/media/vitals.png",
+        link: "",
+        client: "Vitals Care Pro",
+        timeline: "Ongoing",
+        role: "Design & Development",
+        rating: 5,
+        priority: true, // FEATURED
+        introduction: "A connected healthcare ecosystem designed to bridge the gap between patients and caregivers through continuous, real-time monitoring of critical health parameters.",
+        challenge: "Patients with chronic conditions and elderly individuals often struggle with timely health monitoring. Missing early signs of abnormal vitals can lead to delayed medical intervention and serious complications.",
+        approach: "We engineered a seamless IoT ecosystem centering on a wearable device that continuously tracks key vitals such as ECG, heart rate, respiration, SpO2, and blood pressure. This data is synced in real-time to a intuitive mobile application, enabling doctors and caregivers to receive instant alerts and monitor patient health proactively.",
+        result: "Improved patient safety through early detection, reduced hospitalizations, and provided peace of mind for both users and families by ensuring continuous, reliable, and connected healthcare monitoring.",
+        testimonial: undefined,
+        gallery: [
+            "https://spotmiesstorage.blob.core.windows.net/media/vitals.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/vitals1.png"
         ]
     },
     {
@@ -92,22 +114,22 @@ export const PROJECT_DATA: Project[] = [
         title: "EduMoon",
         category: "Mobile App, EdTech",
         description: "The largest engineering student community for learning, skill development, and growth.",
-        image: "/assets/company-mocks/edumoon.png",
+        image: "https://spotmiesstorage.blob.core.windows.net/media/edumoon.png",
         link: "",
         client: "EduMoon",
         timeline: "Ongoing",
         role: "Design & Development",
         rating: 5,
-        priority: true, // FEATURED (4)
+        priority: true,
         introduction: "A massive, all-in-one ed-tech ecosystem serving over 15,000 engineering students with resources ranging from academic courses and internships to student clubs and certifications.",
         challenge: "Engineering students struggled with a fragmented education landscape, lacking a single unified platform that bridged the gap between academic curriculum and industry-ready skills.",
         approach: "We developed a centralized Learning Management System (LMS) capable of hosting vast libraries of video courses and materials. To boost engagement, the learning experience was gamified with student clubs and activity-based certifications, all managed through a robust admin panel designed to handle content delivery at scale.",
         result: "Successfully bridged the academia-industry gap, empowering thousands of students to upskill, network, and advance their careers through a single integrated platform.",
         testimonial: undefined,
         gallery: [
-            "/assets/company-mocks/edumoon.png",
-            "/assets/company-mocks/edumoon1.png",
-            "/assets/company-mocks/edumoon2.png"
+            "https://spotmiesstorage.blob.core.windows.net/media/edumoon.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/edumoon1.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/edumoon2.png"
         ]
     },
     {
@@ -115,21 +137,21 @@ export const PROJECT_DATA: Project[] = [
         title: "Awaken",
         category: "Web App, Fintech",
         description: "Smart goal-based financial planning with professional expert guidance.",
-        image: "/assets/company-mocks/awaken.png",
+        image: "https://spotmiesstorage.blob.core.windows.net/media/awaken.png",
         link: "https://awaken.mainstream.co.in/",
         client: "Awaken",
         timeline: "Ongoing",
         role: "Design & Development",
         rating: 5,
-        priority: true, // FEATURED (5)
+        priority: true,
         introduction: "A comprehensive financial wellness platform that bridges the gap between aspirations and reality by providing smart calculators, personalized roadmaps, and expert guidance for major life milestones.",
         challenge: "Many individuals struggle to translate major life goals—like buying a home or funding education—into actionable daily savings plans due to a lack of financial literacy and complex investment options.",
         approach: "We engineered smart financial calculators that reverse-engineer complex life goals into manageable monthly savings targets. By integrating a professional advisory portal, users can access real-time expert consultation, while a custom-designed visual timeline helps them track their progress against major life milestones.",
         result: "Empowered users with clarity and confidence, enabling them to transition from vague aspirations to concrete, data-backed financial roadmaps.",
         testimonial: undefined,
         gallery: [
-            "/assets/company-mocks/awaken.png",
-            "/assets/company-mocks/awaken1.png"
+            "https://spotmiesstorage.blob.core.windows.net/media/awaken.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/awaken1.png"
         ]
     },
     {
@@ -143,7 +165,7 @@ export const PROJECT_DATA: Project[] = [
         timeline: "Ongoing",
         role: "Design & Development",
         rating: 5,
-        priority: true, // FEATURED (6)
+        priority: true,
         introduction: "Visakhapatnam's premier two-wheeler rental service, an initiative by Spotmies offering affordable and transparent bike rentals.",
         challenge: "Tourists and locals struggled to find affordable, reliable, and transparent two-wheeler rentals in Visakhapatnam.",
         approach: "We built a user-friendly and transparent booking website using ReactJS that displays all fleet options clearly. We established a policy of clear pricing with absolutely no hidden charges and streamlined the entire rental process to be quick and hassle-free.",
@@ -173,7 +195,7 @@ export const PROJECT_DATA: Project[] = [
         timeline: "Ongoing",
         role: "Design & Development",
         rating: 5,
-        priority: false,
+        priority: true,
         introduction: "No. 1 bike rental service provider in Andhra Pradesh offering flexible hourly and daily rental options with safety gear included.",
         challenge: "Customers found it difficult to find flexible rental options and prioritized safety.",
         approach: "We implemented a flexible booking system that allows users to choose between hourly and daily rental plans. We also highlighted safety by ensuring gear is included with every rental and showcased the wide range of fleet options online for easy browsing.",
@@ -196,7 +218,7 @@ export const PROJECT_DATA: Project[] = [
         title: "Commuter",
         category: "Mobile App, Travel",
         description: "A carpooling platform connecting people to share rides safely and efficiently.",
-        image: "/assets/company-mocks/commuter.png",
+        image: "https://spotmiesstorage.blob.core.windows.net/media/commuter.png",
         link: "",
         client: "Commuter",
         timeline: "Ongoing",
@@ -209,9 +231,9 @@ export const PROJECT_DATA: Project[] = [
         result: "Significantly reduced travel expenses and environmental impact for users while fostering a trusted community of reliable daily commuters.",
         testimonial: undefined,
         gallery: [
-            "/assets/company-mocks/commuter.png",
-            "/assets/company-mocks/commuter1.png",
-            "/assets/company-mocks/commuter2.png"
+            "https://spotmiesstorage.blob.core.windows.net/media/commuter.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/commuter1.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/commuter2.png"
         ]
     },
     {
@@ -219,7 +241,7 @@ export const PROJECT_DATA: Project[] = [
         title: "Mobile Masala",
         category: "Web App, Entertainment",
         description: "A dedicated celebrity news portal with streamlined editorial workflows.",
-        image: "/assets/company-mocks/mobilemasala.png",
+        image: "https://spotmiesstorage.blob.core.windows.net/media/mobilemasala.png",
         link: "https://www.mobilemasala.com/",
         client: "Mobile Masala",
         timeline: "Ongoing",
@@ -232,8 +254,8 @@ export const PROJECT_DATA: Project[] = [
         result: "Reduced editorial turnaround time by nearly 35%, allowing the team to break news faster and retain a larger, more engaged audience.",
         testimonial: undefined,
         gallery: [
-            "/assets/company-mocks/mobilemasala.png",
-            "/assets/company-mocks/mobilemasala1.png"
+            "https://spotmiesstorage.blob.core.windows.net/media/mobilemasala.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/mobilemasala1.png"
         ]
     },
     {
@@ -270,7 +292,7 @@ export const PROJECT_DATA: Project[] = [
         title: "Farm Vaidya",
         category: "Web App, AgriTech",
         description: "Empowering agriculture with Gen AI-powered multilingual voice solutions.",
-        image: "/assets/company-mocks/farmvidya.png", 
+        image: "https://spotmiesstorage.blob.core.windows.net/media/farmvidya.png",
         link: "https://www.farmvaidya.ai/",
         client: "Farm Vaidya",
         timeline: "Ongoing",
@@ -283,13 +305,13 @@ export const PROJECT_DATA: Project[] = [
         result: "Democratized access to expert knowledge, enabling farmers to make data-driven decisions that improve crop yields and sustainability.",
         testimonial: undefined,
         gallery: [
-            "/assets/company-mocks/farmvidya.png",
-            "/assets/company-mocks/farmvidya1.png",
-            "/assets/company-mocks/farmvidya2.png",
-            "/assets/company-mocks/farmvidya3.png",
-            "/assets/company-mocks/farmvidya4.png",
-            "/assets/company-mocks/farmvidya5.png",
-            "/assets/company-mocks/farmvidya6.png"
+            "https://spotmiesstorage.blob.core.windows.net/media/farmvidya.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/farmvidya1.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/farmvidya2.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/farmvidya3.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/farmvidya4.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/farmvidya5.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/farmvidya6.png"
         ]
     },
     {
@@ -297,7 +319,7 @@ export const PROJECT_DATA: Project[] = [
         title: "WingDent",
         category: "Web App, Healthcare",
         description: "Tele-dentistry platform providing professional dental care at your doorstep.",
-        image: "/assets/company-mocks/wingdent.png",
+        image: "https://spotmiesstorage.blob.core.windows.net/media/wingdent.png",
         link: "https://wingdent.com/",
         client: "WingDent",
         timeline: "Ongoing",
@@ -310,15 +332,15 @@ export const PROJECT_DATA: Project[] = [
         result: "Made professional dental care significantly more affordable and accessible, bringing the clinic experience into the comfort of the patient's home.",
         testimonial: undefined,
         gallery: [
-            "/assets/company-mocks/wingdent.png",
-            "/assets/company-mocks/wingdent1.png",
-            "/assets/company-mocks/wingdent2.png",
-            "/assets/company-mocks/wingdent3.png",
-            "/assets/company-mocks/wingdent4.png",
-            "/assets/company-mocks/wingdent5.png",
-            "/assets/company-mocks/wingdent6.png",
-            "/assets/company-mocks/wingdent7.png",
-            "/assets/company-mocks/wingdent8.png"
+            "https://spotmiesstorage.blob.core.windows.net/media/wingdent.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/wingdent1.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/wingdent2.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/wingdent3.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/wingdent4.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/wingdent5.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/wingdent6.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/wingdent7.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/wingdent8.png"
         ]
     },
     {
@@ -533,7 +555,7 @@ export const PROJECT_DATA: Project[] = [
         title: "Referral Bazaar",
         category: "Mobile App, Retail",
         description: "Automating local shop referrals, discounts, and wallet settlements.",
-        image: "/assets/company-mocks/referalbazzar.png",
+        image: "https://spotmiesstorage.blob.core.windows.net/media/referalbazzar.png",
         link: "",
         client: "Referral Bazaar",
         timeline: "Ongoing",
@@ -550,8 +572,8 @@ export const PROJECT_DATA: Project[] = [
             position: "Founder at Referral Bazaar"
         },
         gallery: [
-            "/assets/company-mocks/referalbazzar.png",
-            "/assets/company-mocks/referalbazzar1.png"
+            "https://spotmiesstorage.blob.core.windows.net/media/referalbazzar.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/referalbazzar1.png"
         ]
     },
     {

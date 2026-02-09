@@ -32,19 +32,19 @@ const ALL_COMPANIES = [
     { name: "Vitals", desc: "Healthcare", src: "https://spotmiesstorage.blob.core.windows.net/media/comp23.png" },
     { name: "VarunMotors", desc: "Travel", src: "https://spotmiesstorage.blob.core.windows.net/media/comp24.png" },
     { name: "Reaidy", desc: "HRTech", src: "https://www.reaidy.io/assets/logo_dark-DMRlJ8_-.png" },
-    { "name": "Awaken", "desc": "Fintech", "src": "/assets/compan/awaken.png" },
-    { "name": "Amero X", "desc": "Blockchain & Fintech", "src": "/assets/compan/amerox.png" },
-    { "name": "BoomBoomTalk", "desc": "Social", "src": "/assets/compan/boomboomtalk.png" },
-    { "name": "Commuter", "desc": "Travel", "src": "/assets/compan/commuter.png" },
-    { "name": "EduMoon", "desc": "EdTech", "src": "/assets/compan/edumoon.png" },
-    { "name": "Farm Vaidya", "desc": "AgriTech", "src": "/assets/compan/farmvidya.png" },
-    { "name": "Mobile Masala", "desc": "Entertainment", "src": "/assets/compan/mobile-masala.png" },
-    { "name": "OROLEXA", "desc": "Healthcare", "src": "/assets/compan/orelexa.png" },
-    { "name": "TheReachX", "desc": "Marketing", "src": "/assets/compan/reachx.png" },
-    { "name": "Referral Bazaar", "desc": "Retail", "src": "/assets/compan/referalbazaar.png" },
-    { "name": "Stoory", "desc": "Marketing", "src": "/assets/compan/stoory.png" },
-    { "name": "Teckybot", "desc": "EdTech", "src": "/assets/compan/teckybot.png" },
-    { "name": "WingDent", "desc": "Healthcare", "src": "/assets/compan/wingdent.png" }
+    { "name": "Awaken", "desc": "Fintech", "src": "https://spotmiesstorage.blob.core.windows.net/media/awaken0.png" },
+    { "name": "Amero X", "desc": "Blockchain & Fintech", "src": "https://spotmiesstorage.blob.core.windows.net/media/amero0.png" },
+    { "name": "BoomBoomTalk", "desc": "Social", "src": "https://spotmiesstorage.blob.core.windows.net/media/boomboomtalk0.png" },
+    { "name": "Commuter", "desc": "Travel", "src": "https://spotmiesstorage.blob.core.windows.net/media/commuter0.png" },
+    { "name": "EduMoon", "desc": "EdTech", "src": "https://spotmiesstorage.blob.core.windows.net/media/edumoon0.png" },
+    { "name": "Farm Vaidya", "desc": "AgriTech", "src": "https://spotmiesstorage.blob.core.windows.net/media/farmvidya0.png" },
+    { "name": "Mobile Masala", "desc": "Entertainment", "src": "https://spotmiesstorage.blob.core.windows.net/media/mobile-masala0.png" },
+    { "name": "OROLEXA", "desc": "Healthcare", "src": "https://spotmiesstorage.blob.core.windows.net/media/orelexa0.png" },
+    { "name": "TheReachX", "desc": "Marketing", "src": "https://spotmiesstorage.blob.core.windows.net/media/reachx0.png" },
+    { "name": "Referral Bazaar", "desc": "Retail", "src": "https://spotmiesstorage.blob.core.windows.net/media/referalbazaar0.png" },
+    { "name": "Stoory", "desc": "Marketing", "src": "https://spotmiesstorage.blob.core.windows.net/media/stoory0.png" },
+    { "name": "Teckybot", "desc": "EdTech", "src": "https://spotmiesstorage.blob.core.windows.net/media/teckybot0.png" },
+    { "name": "WingDent", "desc": "Healthcare", "src": "https://spotmiesstorage.blob.core.windows.net/media/wingdent0.png" }
 ];
 
 const TOTAL_CELLS = 15;
