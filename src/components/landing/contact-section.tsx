@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, Linkedin, Instagram, Youtube, Send } from "lucide-react"; 
+import { Mail, Phone, Linkedin, Instagram, Youtube, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LocationMap } from "@/components/ui/expand-map";
 import { AmbientBackground } from "@/components/ui/ambient-background";
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxmCKtzq0paW6ovftholsG1MqTpYVngu6JE6n12HWYnysF78xpS/exec";
-const N8N_WEBHOOK_URL = "https://n8n.srv1253159.hstgr.cloud/webhook/website-form";
+const N8N_WEBHOOK_URL = "https://n8n.srv1343937.hstgr.cloud/webhook/website-form-spotmies";
 
 // Custom Icon: Material Symbols Rounded "location_on" (Outlined)
 const LocationOnIcon = ({ className }: { className?: string }) => (
