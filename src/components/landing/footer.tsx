@@ -51,10 +51,10 @@ export default function Footer() {
                         <ul className="space-y-3 text-sm">
                             {['Home', 'About Us', 'Services', 'Blog', 'Careers'].map((item) => {
                                 let href = "/";
-                                if (item === "Home") href = "/";
+                                if (item === "Home") href = "/#hero";
                                 else if (item === "About Us") href = "/about";
                                 else if (item === "Careers") href = "/careers";
-                                else if (item === "Blog") href = "/blogs";
+                                else if (item === "Blog") href = "/blog";
                                 else href = `/#${item.toLowerCase()}`;
 
                                 return (
@@ -82,7 +82,7 @@ export default function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/#contactUs" onClick={(e) => handleScroll(e, "/#contactUs")} className="hover:text-[#00eef9] transition-colors">
+                                <Link href="/#contact" onClick={(e) => handleScroll(e, "/#contact")} className="hover:text-[#00eef9] transition-colors">
                                     Contact Us
                                 </Link>
                             </li>

@@ -195,7 +195,7 @@ export default function ClientsSectionDark() {
                         const initialData = ALL_COMPANIES[index];
                         const isSpecial = ["WingDent", "OROLEXA", "Awaken"].includes(initialData.name);
                         const hasDarkLogoBox = ["Teckybot", "EduMoon"].includes(initialData.name);
-                        
+
                         const isLastItem = index === TOTAL_CELLS - 1;
 
                         return (
