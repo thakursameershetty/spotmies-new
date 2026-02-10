@@ -195,7 +195,7 @@ export const PROJECT_DATA: Project[] = [
         timeline: "Ongoing",
         role: "Design & Development",
         rating: 5,
-        priority: false,
+        priority: true,
         introduction: "No. 1 bike rental service provider in Andhra Pradesh offering flexible hourly and daily rental options with safety gear included.",
         challenge: "Customers found it difficult to find flexible rental options and prioritized safety.",
         approach: "We implemented a flexible booking system that allows users to choose between hourly and daily rental plans. We also highlighted safety by ensuring gear is included with every rental and showcased the wide range of fleet options online for easy browsing.",
