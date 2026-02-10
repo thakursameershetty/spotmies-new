@@ -98,7 +98,7 @@ export const PROJECT_DATA: Project[] = [
         timeline: "Ongoing",
         role: "Design & Development",
         rating: 5,
-        priority: true, // FEATURED
+        priority: true,
         introduction: "A connected healthcare ecosystem designed to bridge the gap between patients and caregivers through continuous, real-time monitoring of critical health parameters.",
         challenge: "Patients with chronic conditions and elderly individuals often struggle with timely health monitoring. Missing early signs of abnormal vitals can lead to delayed medical intervention and serious complications.",
         approach: "We engineered a seamless IoT ecosystem centering on a wearable device that continuously tracks key vitals such as ECG, heart rate, respiration, SpO2, and blood pressure. This data is synced in real-time to a intuitive mobile application, enabling doctors and caregivers to receive instant alerts and monitor patient health proactively.",
@@ -195,7 +195,7 @@ export const PROJECT_DATA: Project[] = [
         timeline: "Ongoing",
         role: "Design & Development",
         rating: 5,
-        priority: true,
+        priority: false,
         introduction: "No. 1 bike rental service provider in Andhra Pradesh offering flexible hourly and daily rental options with safety gear included.",
         challenge: "Customers found it difficult to find flexible rental options and prioritized safety.",
         approach: "We implemented a flexible booking system that allows users to choose between hourly and daily rental plans. We also highlighted safety by ensuring gear is included with every rental and showcased the wide range of fleet options online for easy browsing.",
@@ -211,6 +211,30 @@ export const PROJECT_DATA: Project[] = [
             "https://spotmiesstorage.blob.core.windows.net/media/image_1.png",
             "https://spotmiesstorage.blob.core.windows.net/media/image_4.png",
             "https://spotmiesstorage.blob.core.windows.net/media/image_3.png"
+        ]
+    },
+    {
+        id: 27,
+        title: "SafeGuard Air",
+        category: "IoT/Mobile App, Environment",
+        description: "Smart IoT + AI platform for real-time air quality monitoring and safety alerts.",
+        image: "https://spotmiesstorage.blob.core.windows.net/media/safeguardair.png",
+        link: "https://www.safeguardair.com/",
+        client: "SafeGuard Air",
+        timeline: "Ongoing",
+        role: "Design & Development",
+        rating: 5,
+        priority: true, // FEATURED
+        introduction: "A smart IoT + AI-powered platform designed to continuously monitor air quality and provide actionable insights for healthier environments.",
+        challenge: "Poor air quality often goes unnoticed until it causes health issues. Traditional monitoring systems are costly, limited in coverage, and fail to provide real-time alerts to individuals and organizations.",
+        approach: "Spotmies developed SafeGuard Air, a smart IoT + AI-powered platform that continuously monitors air quality, detects pollutants, and provides instant alerts via mobile and web dashboards. The system is designed for both personal and enterprise use.",
+        result: "SafeGuard Air delivers real-time awareness, enabling individuals and businesses to take preventive action, reduce exposure to harmful pollutants, and ensure healthier, safer environments.",
+        testimonial: undefined,
+        gallery: [
+            "https://spotmiesstorage.blob.core.windows.net/media/safeguardair.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/safeguardair1.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/safeguardair2.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/safeguardair3.png"
         ]
     },
     {
@@ -285,6 +309,28 @@ export const PROJECT_DATA: Project[] = [
             "https://spotmiesstorage.blob.core.windows.net/media/image_37.png",
             "https://spotmiesstorage.blob.core.windows.net/media/image_38.png",
             "https://spotmiesstorage.blob.core.windows.net/media/image_35.png"
+        ]
+    },
+    {
+        id: 26,
+        title: "MyBodyQode",
+        category: "Web App, HealthTech",
+        description: "Unlock your genetic potential with AI-powered preventive health insights tailored to your DNA.",
+        image: "https://spotmiesstorage.blob.core.windows.net/media/mybodyqode.png",
+        link: "https://mybodyqode.vercel.app/",
+        client: "MyBodyQode",
+        timeline: "Ongoing",
+        role: "Design & Development",
+        rating: 5,
+        priority: false, // FEATURED
+        introduction: "A DNA + AI preventive health platform that unlocks genetic potential with AI-powered insights tailored to your unique DNA profile.",
+        challenge: "Understanding personal health at a genetic level is complex. General health advice often fails because it doesn't account for an individual's unique DNA profile, leading to ineffective preventive care strategies.",
+        approach: "We built an AI-driven platform that integrates DNA sequencing data with lifestyle markers. The system analyzes this complex dataset to generate hyper-personalized nutrition, fitness, and health recommendations tailored specifically to the user's genetic makeup.",
+        result: "Empowered users with actionable, science-backed health insights, allowing them to make informed lifestyle choices that align perfectly with their genetic predisposition.",
+        testimonial: undefined,
+        gallery: [
+            "https://spotmiesstorage.blob.core.windows.net/media/mybodyqode.png",
+            "https://spotmiesstorage.blob.core.windows.net/media/mybodyqode1.png"
         ]
     },
     {
